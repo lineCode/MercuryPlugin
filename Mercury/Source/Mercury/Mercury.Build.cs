@@ -13,14 +13,11 @@ public class Mercury : ModuleRules
 		{
 			"Core",
 			"CoreUObject",
-			"Engine"
-		});
-		
-		PrivateDependencyModuleNames.AddRange(new[]
-		{
+			"Engine",
 			"HTTP",
 			"Json",
-			"JsonUtilities"
+			"JsonUtilities",
+			"WebSockets"
 		});
 	}
 }

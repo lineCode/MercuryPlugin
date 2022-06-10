@@ -164,7 +164,7 @@ EMercuryRequestStatus UMercuryRequest::GetStatus() const
 		UE_LOG(LogMercury, Error, TEXT("Unknown request status: %d"), Status);
 	}
 
-	return EMercuryRequestStatus::Failed;
+	return EMercuryRequestStatus::Unknown;
 }
 
 FHttpResponsePtr UMercuryRequest::GetResponse() const

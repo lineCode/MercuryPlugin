@@ -3,20 +3,11 @@
 #pragma once
 
 #include "MercuryBase.h"
+#include "MercuryTypes.h"
 #include "Interfaces/IHttpRequest.h"
 
 #include "MercuryRequest.generated.h"
 
-
-UENUM(BlueprintType)
-enum class EMercuryRequestStatus : uint8
-{
-	NotStarted,
-	Processing,
-	Failed,
-	Failed_ConnectionError,
-	Succeeded
-};
 
 UCLASS(BlueprintType)
 class MERCURY_API UMercuryRequest final : public UObject, public FHttpRequestPtr, public TMercuryBase<IHttpRequest>
