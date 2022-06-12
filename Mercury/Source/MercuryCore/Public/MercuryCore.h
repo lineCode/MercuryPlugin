@@ -3,9 +3,9 @@
 #pragma once
 
 
-DECLARE_LOG_CATEGORY_EXTERN(LogMercury, All, All);
+DECLARE_LOG_CATEGORY_EXTERN(LogMercuryCore, All, All);
 
-class FMercuryModule : public IModuleInterface
+class FMercuryCoreModule : public IModuleInterface
 {
 	virtual void StartupModule() override;
 	virtual void ShutdownModule() override;

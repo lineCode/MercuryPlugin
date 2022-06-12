@@ -16,7 +16,12 @@
 	"Installed": false,
 	"Modules": [
 		{
-			"Name": "Mercury",
+			"Name": "MercuryCore",
+			"Type": "Runtime",
+			"LoadingPhase": "PreDefault"
+		},
+		{
+			"Name": "MercuryWeb",
 			"Type": "Runtime",
 			"LoadingPhase": "PreDefault"
 		}

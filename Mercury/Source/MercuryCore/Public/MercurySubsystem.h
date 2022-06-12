@@ -6,7 +6,7 @@
 
 
 UCLASS()
-class MERCURY_API UMercurySubsystem : public UGameInstanceSubsystem
+class MERCURYCORE_API UMercurySubsystem : public UGameInstanceSubsystem
 {
 	GENERATED_BODY()
 };

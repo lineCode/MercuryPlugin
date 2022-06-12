@@ -3,9 +3,10 @@
 using UnrealBuildTool;
 
 
-public class Mercury : ModuleRules
+// ReSharper disable once InconsistentNaming
+public class MercuryCore : ModuleRules
 {
-	public Mercury(ReadOnlyTargetRules target) : base(target)
+	public MercuryCore(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 		
@@ -13,11 +14,7 @@ public class Mercury : ModuleRules
 		{
 			"Core",
 			"CoreUObject",
-			"Engine",
-			"HTTP",
-			"Json",
-			"JsonUtilities",
-			"WebSockets"
+			"Engine"
 		});
 	}
 }
