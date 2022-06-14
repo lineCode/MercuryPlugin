@@ -2,65 +2,25 @@
 
 #pragma once
 
-#include "HttpModule.h"
 #include "MercuryWebTypes.h"
+#include "Interfaces/IHttpRequest.h"
 
-#include "MercuryWebUtilities.generated.h"
+#include "MercuryWebLibrary.generated.h"
+
+class FHttpModule;
 
 
-UCLASS(Abstract)
-class MERCURYWEB_API UMercuryWebUtilities : public UBlueprintFunctionLibrary
+UCLASS(Abstract, DisplayName = "Mercury Web Blueprint Function Library")
+class MERCURYWEB_API UMercuryWebLibrary : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()
-
-	static TObjectPtr<FHttpModule> HttpModule;
-
-public:
-	explicit UMercuryWebUtilities(const FObjectInitializer& ObjectInitializer);
-
-private:
-	static FHttpRequestPtr CreateRequest();
-	static void RequestData(
-		const FHttpRequestPtr& Request,
-		const FString& URL,
-		const FString& Verb,
-		const TMap<FString, FString>& Headers,
-		const FMercuryHttpProcessRequestCompleteDelegate* const& ProcessRequestComplete,
-		const FMercuryHttpRequestProgressDelegate* const& RequestProgress,
-		const FMercuryHttpRequestWillRetryDelegate* const& RequestWillRetry,
-		const FMercuryHttpHeaderReceivedDelegate* const& HeaderReceived
-	);
 	
-	static void OnHttpProcessRequestComplete(
-		FHttpRequestPtr Request,
-		FHttpResponsePtr Response,
-		bool bConnectedSuccessfully,
-		FMercuryHttpProcessRequestCompleteDelegate MercuryHttpProcessRequestComplete
-	);
-
-	static void OnHttpRequestProgress(
-		FHttpRequestPtr Request,
-		int32 BytesSent,
-		int32 BytesReceived,
-		FMercuryHttpRequestProgressDelegate MercuryHttpRequestProgress
-	);
-
-	static void OnHttpRequestWillRetry(
-		FHttpRequestPtr Request,
-		FHttpResponsePtr Response,
-		float SecondsToRetry,
-		FMercuryHttpRequestWillRetryDelegate MercuryHttpRequestWillRetry
-	);
-
-	static void OnHttpHeaderReceived(
-		FHttpRequestPtr Request,
-		const FString& HeaderName,
-		const FString& NewHeaderValue,
-		FMercuryHttpHeaderReceivedDelegate MercuryHttpHeaderReceived
-	);
+	static FHttpModule* HttpModule;
 
 public:
-	UFUNCTION(BlueprintCallable, Category = "Mercury|HTTP", DisplayName = "Request Data (Payload)", meta = (
+	static FHttpRequestPtr CreateHttpRequest();
+	
+	UFUNCTION(BlueprintCallable, DisplayName = "Request Data (Payload)", Category = "Mercury|HTTP", meta = (
 		AutoCreateRefTerm = "ContentPayload, ProcessRequestComplete, RequestProgress, RequestWillRetry, HeaderReceived",
 		Keywords = "Request Data HTTP Response URL JSON Byte Array Payload"
 	))
@@ -78,14 +38,14 @@ public:
 		const FString& URL,
 		const FString& Verb,
 		const TMap<FString, FString>& Headers,
-		const TArray<uint8>& ContentPayload,
+		const TArray<uint8>& ContentPayload = TArray<uint8>(),
 		const FMercuryHttpProcessRequestCompleteDelegate* const& ProcessRequestComplete = nullptr,
 		const FMercuryHttpRequestProgressDelegate* const& RequestProgress = nullptr,
 		const FMercuryHttpRequestWillRetryDelegate* const& RequestWillRetry = nullptr,
 		const FMercuryHttpHeaderReceivedDelegate* const& HeaderReceived = nullptr
 	);
 	
-	UFUNCTION(BlueprintCallable, Category = "Mercury|HTTP", DisplayName = "Request Data (String Content)", meta = (
+	UFUNCTION(BlueprintCallable, DisplayName = "Request Data (String Content)", Category = "Mercury|HTTP", meta = (
 		AutoCreateRefTerm = "ProcessRequestComplete, RequestProgress, RequestWillRetry, HeaderReceived",
 		Keywords = "Request Data HTTP Response URL JSON String Content"
 	))
@@ -110,7 +70,18 @@ public:
 		const FMercuryHttpHeaderReceivedDelegate* const& HeaderReceived = nullptr
 	);
 
-	UFUNCTION(BlueprintCallable, Category = "Mercury|HTTP", DisplayName = "Request Data (Streamed File)", meta = (
+	static void RequestDataFromStream(
+		const FString& URL,
+		const FString& Verb,
+		const TMap<FString, FString>& Headers,
+		const TSharedRef<FArchive, ESPMode::ThreadSafe>& Stream,
+		const FMercuryHttpProcessRequestCompleteDelegate* const& ProcessRequestComplete = nullptr,
+		const FMercuryHttpRequestProgressDelegate* const& RequestProgress = nullptr,
+		const FMercuryHttpRequestWillRetryDelegate* const& RequestWillRetry = nullptr,
+		const FMercuryHttpHeaderReceivedDelegate* const& HeaderReceived = nullptr
+	);
+
+	UFUNCTION(BlueprintCallable, DisplayName = "Request Data (Streamed File)", Category = "Mercury|HTTP", meta = (
 		AutoCreateRefTerm = "ProcessRequestComplete, RequestProgress, RequestWillRetry, HeaderReceived",
 		Keywords = "Request Data HTTP Response URL JSON Streamed File"
 	))
@@ -133,5 +104,45 @@ public:
 		const FMercuryHttpRequestProgressDelegate* const& RequestProgress = nullptr,
 		const FMercuryHttpRequestWillRetryDelegate* const& RequestWillRetry = nullptr,
 		const FMercuryHttpHeaderReceivedDelegate* const& HeaderReceived = nullptr
+	);
+
+private:
+	static void RequestData(
+		const FHttpRequestPtr& Request,
+		const FString& URL,
+		const FString& Verb,
+		const TMap<FString, FString>& Headers,
+		const FMercuryHttpProcessRequestCompleteDelegate* const& ProcessRequestComplete,
+		const FMercuryHttpRequestProgressDelegate* const& RequestProgress,
+		const FMercuryHttpRequestWillRetryDelegate* const& RequestWillRetry,
+		const FMercuryHttpHeaderReceivedDelegate* const& HeaderReceived
+	);
+
+	static void OnMercuryHttpProcessRequestComplete(
+		FHttpRequestPtr Request,
+		FHttpResponsePtr Response,
+		bool bConnectedSuccessfully,
+		FMercuryHttpProcessRequestCompleteDelegate OnMercuryHttpProcessRequestComplete
+	);
+
+	static void OnMercuryHttpRequestProgress(
+		FHttpRequestPtr Request,
+		int32 BytesSent,
+		int32 BytesReceived,
+		FMercuryHttpRequestProgressDelegate OnMercuryHttpRequestProgress
+	);
+
+	static void OnMercuryHttpRequestWillRetry(
+		FHttpRequestPtr Request,
+		FHttpResponsePtr Response,
+		float SecondsToRetry,
+		FMercuryHttpRequestWillRetryDelegate OnMercuryHttpRequestWillRetry
+	);
+
+	static void OnMercuryHttpHeaderReceived(
+		FHttpRequestPtr Request,
+		const FString& HeaderName,
+		const FString& NewHeaderValue,
+		FMercuryHttpHeaderReceivedDelegate OnMercuryHttpHeaderReceived
 	);
 };

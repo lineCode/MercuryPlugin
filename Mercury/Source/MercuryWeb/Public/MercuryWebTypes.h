@@ -8,7 +8,9 @@
 class UMercuryHttpRequest;
 class UMercuryHttpResponse;
 
-UENUM(BlueprintType)
+UENUM(BlueprintType, meta = (
+	Keywords = "HTTP Request Status Not Started Processing Failed Connection Error Succeeded Unknown"
+))
 enum class EMercuryHttpRequestStatus : uint8
 {
 	NotStarted UMETA(DisplayName = "Not Started"),
@@ -19,7 +21,7 @@ enum class EMercuryHttpRequestStatus : uint8
 	Unknown UMETA(DisplayName = "Unknown")
 };
 
-UDELEGATE(BlueprintCallable)
+UDELEGATE(BlueprintCallable, DisplayName = "Process Request Complete Event")
 DECLARE_DYNAMIC_DELEGATE_ThreeParams(
 	FMercuryHttpProcessRequestCompleteDelegate,
 	UMercuryHttpRequest* const&, Request,
@@ -27,7 +29,7 @@ DECLARE_DYNAMIC_DELEGATE_ThreeParams(
 	bool, bConnectedSuccessfully
 );
 
-UDELEGATE(BlueprintCallable)
+UDELEGATE(BlueprintCallable, DisplayName = "Request Progress Event")
 DECLARE_DYNAMIC_DELEGATE_ThreeParams(
 	FMercuryHttpRequestProgressDelegate,
 	UMercuryHttpRequest* const&, Request,
@@ -35,7 +37,7 @@ DECLARE_DYNAMIC_DELEGATE_ThreeParams(
 	const int32&, BytesReceived
 );
 
-UDELEGATE(BlueprintCallable)
+UDELEGATE(BlueprintCallable, DisplayName = "Request Will Retry Event")
 DECLARE_DYNAMIC_DELEGATE_ThreeParams(
 	FMercuryHttpRequestWillRetryDelegate,
 	UMercuryHttpRequest* const&, Request,
@@ -43,7 +45,7 @@ DECLARE_DYNAMIC_DELEGATE_ThreeParams(
 	const float&, SecondsToRetry
 );
 	
-UDELEGATE(BlueprintCallable)
+UDELEGATE(BlueprintCallable, DisplayName = "Header Received Event")
 DECLARE_DYNAMIC_DELEGATE_ThreeParams(
 	FMercuryHttpHeaderReceivedDelegate,
 	UMercuryHttpRequest* const&, Request,

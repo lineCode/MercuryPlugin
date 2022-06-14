@@ -2,43 +2,40 @@
 
 #pragma once
 
-#include "MercuryHttp.h"
-#include "Interfaces/IHttpResponse.h"
 #include "Interfaces/IHttpRequest.h"
+#include "MercuryHttpBase.h"
 
 #include "MercuryHttpResponse.generated.h"
 
 
-UCLASS(BlueprintType)
-class MERCURYWEB_API UMercuryHttpResponse : public UObject, public FHttpResponsePtr, public TMercuryHttp<IHttpResponse>
+UCLASS(BlueprintType, DisplayName = "Mercury HTTP Response")
+class MERCURYWEB_API UMercuryHttpResponse : public UMercuryHttpBase
 {
 	GENERATED_BODY()
 
+	FHttpResponsePtr Reference;
+
 public:
-	UFUNCTION(BlueprintCallable)
-	FString GetURL() const;
-
-	UFUNCTION(BlueprintCallable)
-	FString GetURLParameter(const FString& ParameterName) const;
-
-	UFUNCTION(BlueprintCallable)
-	FString GetHeader(const FString& HeaderName) const;
-
-	UFUNCTION(BlueprintCallable)
-	TArray<FString> GetAllHeaders() const;
-
-	UFUNCTION(BlueprintCallable)
-	FString GetContentType() const;
-
-	UFUNCTION(BlueprintCallable)
-	int32 GetContentLength() const;
-
-	UFUNCTION(BlueprintCallable)
-	const TArray<uint8>& GetContent() const;
+	explicit UMercuryHttpResponse(const FObjectInitializer& ObjectInitializer);
 	
-	UFUNCTION(BlueprintCallable)
+	virtual FString GetURL() const override;
+	virtual FString GetURLParameter(const FString& ParameterName) const override;
+	virtual FString GetHeader(const FString& HeaderName) const override;
+	virtual TArray<FString> GetAllHeaders() const override;
+	virtual FString GetContentType() const override;
+	virtual int32 GetContentLength() const override;
+	virtual TArray<uint8> GetContent() const override;
+	
+	UFUNCTION(BlueprintPure, DisplayName = "Get Response Code", Category = "HTTP|Response", meta = (
+		Keywords = "Get Response Code Status"
+	))
 	int32 GetResponseCode() const;
 	
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintPure, DisplayName = "Get Content As String", Category = "HTTP|Response", meta = (
+		Keywords = "Get Content As String"
+	))
 	FString GetContentAsString() const;
+	
+	FORCEINLINE const FHttpResponsePtr& GetReference() const { return Reference; }
+	FORCEINLINE FHttpResponsePtr& GetReference() { return Reference; }
 };

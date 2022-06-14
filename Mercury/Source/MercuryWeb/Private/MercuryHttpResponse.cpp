@@ -2,48 +2,55 @@
 
 #include "MercuryHttpResponse.h"
 
+#include "Interfaces/IHttpResponse.h"
+
+
+UMercuryHttpResponse::UMercuryHttpResponse(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
+{
+	Reference = nullptr;
+}
 
 FString UMercuryHttpResponse::GetURL() const
 {
-	return Reference->GetURL();
+	return Reference ? Reference->GetURL() : TEXT("");
 }
 
 FString UMercuryHttpResponse::GetURLParameter(const FString& ParameterName) const
 {
-	return Reference->GetURLParameter(ParameterName);
+	return Reference ? Reference->GetURLParameter(ParameterName) : TEXT("");
 }
 
 FString UMercuryHttpResponse::GetHeader(const FString& HeaderName) const
 {
-	return Reference->GetHeader(HeaderName);
+	return Reference ? Reference->GetHeader(HeaderName) : TEXT("");
 }
 
 TArray<FString> UMercuryHttpResponse::GetAllHeaders() const
 {
-	return Reference->GetAllHeaders();
+	return Reference ? Reference->GetAllHeaders() : TArray<FString>();
 }
 
 FString UMercuryHttpResponse::GetContentType() const
 {
-	return Reference->GetContentType();
+	return Reference ? Reference->GetContentType() : TEXT("");
 }
 
 int32 UMercuryHttpResponse::GetContentLength() const
 {
-	return Reference->GetContentLength();
+	return Reference ? Reference->GetContentLength() : 0;
 }
 
-const TArray<uint8>& UMercuryHttpResponse::GetContent() const
+TArray<uint8> UMercuryHttpResponse::GetContent() const
 {
-	return Reference->GetContent();
+	return Reference ? Reference->GetContent() : TArray<uint8>();
 }
 
 int32 UMercuryHttpResponse::GetResponseCode() const
 {
-	return Reference->GetResponseCode();
+	return Reference ? Reference->GetResponseCode() : -1;
 }
 
 FString UMercuryHttpResponse::GetContentAsString() const
 {
-	return Reference->GetContentAsString();
+	return Reference ? Reference->GetContentAsString() : TEXT("");
 }
