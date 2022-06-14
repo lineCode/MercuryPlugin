@@ -2,9 +2,7 @@
 
 #include "MercuryWebLibrary.h"
 
-#include "HttpModule.h"
 #include "MercuryHttpRequest.h"
-#include "MercuryHttpResponse.h"
 
 
 void UMercuryWebLibrary::RequestDataWithPayload(
@@ -21,7 +19,7 @@ void UMercuryWebLibrary::RequestDataWithPayload(
 	UMercuryHttpRequest* const& Request = NewObject<UMercuryHttpRequest>();
 	Request->SetContent(ContentPayload);
 	RequestData(
-		Request->GetReference(),
+		Request,
 		URL,
 		Verb,
 		Headers,
@@ -46,7 +44,7 @@ void UMercuryWebLibrary::RequestDataWithStringContent(
 	UMercuryHttpRequest* const& Request = NewObject<UMercuryHttpRequest>();
 	Request->SetContentAsString(Content);
 	RequestData(
-		Request->GetReference(),
+		Request,
 		URL,
 		Verb,
 		Headers,
@@ -71,7 +69,7 @@ void UMercuryWebLibrary::RequestDataFromStream(
 	UMercuryHttpRequest* const& Request = NewObject<UMercuryHttpRequest>();
 	Request->SetContentFromStream(Stream);
 	RequestData(
-		Request->GetReference(),
+		Request,
 		URL,
 		Verb,
 		Headers,
@@ -96,7 +94,7 @@ void UMercuryWebLibrary::RequestDataWithStreamedFile(
 	UMercuryHttpRequest* const& Request = NewObject<UMercuryHttpRequest>();
 	Request->SetContentAsStreamedFile(Filename);
 	RequestData(
-		Request->GetReference(),
+		Request,
 		URL,
 		Verb,
 		Headers,
@@ -108,7 +106,7 @@ void UMercuryWebLibrary::RequestDataWithStreamedFile(
 }
 
 void UMercuryWebLibrary::RequestData(
-	const FHttpRequestPtr& Request,
+	UMercuryHttpRequest* const Request,
 	const FString& URL,
 	const FString& Verb,
 	const TMap<FString, FString>& Headers,
@@ -127,106 +125,22 @@ void UMercuryWebLibrary::RequestData(
 
 	if (ProcessRequestComplete)
 	{
-		Request->OnProcessRequestComplete().BindStatic(
-			&UMercuryWebLibrary::OnMercuryHttpProcessRequestComplete,
-			*ProcessRequestComplete
-		);
+		Request->OnProcessRequestComplete() = *ProcessRequestComplete;
 	}
 	if (RequestProgress)
 	{
-		Request->OnRequestProgress().BindStatic(
-			&UMercuryWebLibrary::OnMercuryHttpRequestProgress,
-			*RequestProgress
-		);
+		Request->OnRequestProgress() = *RequestProgress;
 	}
 	if (RequestWillRetry)
 	{
-		Request->OnRequestWillRetry().BindStatic(
-			&UMercuryWebLibrary::OnMercuryHttpRequestWillRetry,
-			*RequestWillRetry
-		);
+		Request->OnRequestWillRetry() = *RequestWillRetry;
 	}
 	if (HeaderReceived)
 	{
-		Request->OnHeaderReceived().BindStatic(
-			&UMercuryWebLibrary::OnMercuryHttpHeaderReceived,
-			*HeaderReceived
-		);
+		Request->OnHeaderReceived() = *HeaderReceived;
 	}
 	
 	Request->ProcessRequest();
-}
-
-void UMercuryWebLibrary::OnMercuryHttpProcessRequestComplete(
-	const FHttpRequestPtr Request,
-	const FHttpResponsePtr Response,
-	const bool bConnectedSuccessfully,
-	const FMercuryHttpProcessRequestCompleteDelegate OnMercuryHttpProcessRequestComplete
-)
-{
-	if (!OnMercuryHttpProcessRequestComplete.IsBound())
-		return;
-	
-	UMercuryHttpRequest* const& MercuryHttpRequest = NewObject<UMercuryHttpRequest>();
-	MercuryHttpRequest->GetReference() = Request;
-
-	UMercuryHttpResponse* const& MercuryHttpResponse = NewObject<UMercuryHttpResponse>();
-	MercuryHttpResponse->GetReference() = Response;
-	MercuryHttpRequest->GetMercuryHttpResponse() = MercuryHttpResponse;
-	
-	OnMercuryHttpProcessRequestComplete.Execute(MercuryHttpRequest, MercuryHttpResponse, bConnectedSuccessfully);
-}
-
-void UMercuryWebLibrary::OnMercuryHttpRequestProgress(
-	const FHttpRequestPtr Request,
-	const int32 BytesSent,
-	const int32 BytesReceived,
-	const FMercuryHttpRequestProgressDelegate OnMercuryHttpRequestProgress
-)
-{
-	if (!OnMercuryHttpRequestProgress.IsBound())
-		return;
-	
-	UMercuryHttpRequest* const& MercuryHttpRequest = NewObject<UMercuryHttpRequest>();
-	MercuryHttpRequest->GetReference() = Request;
-	
-	OnMercuryHttpRequestProgress.Execute(MercuryHttpRequest, BytesSent, BytesReceived);
-}
-
-void UMercuryWebLibrary::OnMercuryHttpRequestWillRetry(
-	const FHttpRequestPtr Request,
-	const FHttpResponsePtr Response,
-	const float SecondsToRetry,
-	const FMercuryHttpRequestWillRetryDelegate OnMercuryHttpRequestWillRetry
-)
-{
-	if (!OnMercuryHttpRequestWillRetry.IsBound())
-		return;
-	
-	UMercuryHttpRequest* const& MercuryHttpRequest = NewObject<UMercuryHttpRequest>();
-	MercuryHttpRequest->GetReference() = Request;
-
-	UMercuryHttpResponse* const& MercuryHttpResponse = NewObject<UMercuryHttpResponse>();
-	MercuryHttpResponse->GetReference() = Response;
-	MercuryHttpRequest->GetMercuryHttpResponse() = MercuryHttpResponse;
-	
-	OnMercuryHttpRequestWillRetry.Execute(MercuryHttpRequest, MercuryHttpResponse, SecondsToRetry);
-}
-
-void UMercuryWebLibrary::OnMercuryHttpHeaderReceived(
-	const FHttpRequestPtr Request,
-	const FString& HeaderName,
-	const FString& NewHeaderValue,
-	const FMercuryHttpHeaderReceivedDelegate OnMercuryHttpHeaderReceived
-)
-{
-	if (!OnMercuryHttpHeaderReceived.IsBound())
-		return;
-	
-	UMercuryHttpRequest* const& MercuryHttpRequest = NewObject<UMercuryHttpRequest>();
-	MercuryHttpRequest->GetReference() = Request;
-	
-	OnMercuryHttpHeaderReceived.Execute(MercuryHttpRequest, HeaderName, NewHeaderValue);
 }
 
 void UMercuryWebLibrary::K2_RequestDataWithPayload(

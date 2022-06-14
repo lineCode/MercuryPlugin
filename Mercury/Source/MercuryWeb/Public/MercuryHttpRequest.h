@@ -24,22 +24,22 @@ class MERCURYWEB_API UMercuryHttpRequest : public UMercuryHttpBase
 	))
 	TObjectPtr<UMercuryHttpResponse> MercuryHttpResponse;
 
-	UPROPERTY(BlueprintReadWrite, DisplayName = "Process Request Complete Event", Category = "HTTP|Request", meta = (
+	UPROPERTY(BlueprintReadOnly, DisplayName = "Process Request Complete Event", Category = "HTTP|Request", meta = (
 		AllowPrivateAccess = "true"
 	))
 	FMercuryHttpProcessRequestCompleteDelegate OnMercuryHttpProcessRequestCompleteDelegate;
 	
-	UPROPERTY(BlueprintReadWrite, DisplayName = "Request Progress Event", Category = "HTTP|Request", meta = (
+	UPROPERTY(BlueprintReadOnly, DisplayName = "Request Progress Event", Category = "HTTP|Request", meta = (
 		AllowPrivateAccess = "true"
 	))
 	FMercuryHttpRequestProgressDelegate OnMercuryHttpRequestProgressDelegate;
 	
-	UPROPERTY(BlueprintReadWrite, DisplayName = "Request Will Retry Event", Category = "HTTP|Request", meta = (
+	UPROPERTY(BlueprintReadOnly, DisplayName = "Request Will Retry Event", Category = "HTTP|Request", meta = (
 		AllowPrivateAccess = "true"
 	))
 	FMercuryHttpRequestWillRetryDelegate OnMercuryHttpRequestWillRetryDelegate;
 	
-	UPROPERTY(BlueprintReadWrite, DisplayName = "Header Received Event", Category = "HTTP|Request", meta = (
+	UPROPERTY(BlueprintReadOnly, DisplayName = "Header Received Event", Category = "HTTP|Request", meta = (
 		AllowPrivateAccess = "true"
 	))
 	FMercuryHttpHeaderReceivedDelegate OnMercuryHttpHeaderReceivedDelegate;
@@ -150,89 +150,64 @@ private:
 	UFUNCTION(BlueprintCallable, DisplayName = "Set Process Request Complete Event", Category = "HTTP|Request", meta = (
 		Keywords = "On Set Process Request Complete Delegate Event"
 	))
-	UMercuryHttpRequest* SetProcessRequestCompleteEvent(const FMercuryHttpProcessRequestCompleteDelegate& Value)
-	{
-		OnProcessRequestComplete() = Value;
-		return this;
-	}
-	UFUNCTION(BlueprintInternalUseOnly, DisplayName = "On Process Request Complete", Category = "HTTP|Request", meta = (
-		Keywords = "On Process Request Complete Callback Delegate Event"
-	))
-	void OnProcessRequestCompleteCallback(
-		UMercuryHttpRequest* const& Request,
-		UMercuryHttpResponse* const& Response,
-		bool bConnectedSuccessfully
-	);
+	UMercuryHttpRequest* K2_SetProcessRequestCompleteEvent(const FMercuryHttpProcessRequestCompleteDelegate& Value);
+	void BindProcessRequestCompleteDelegate();
 
 	UFUNCTION(BlueprintCallable, DisplayName = "Set Request Progress Event", Category = "HTTP|Request", meta = (
 		Keywords = "On Set Request Progress Delegate Event"
 	))
-	UMercuryHttpRequest* SetRequestProgressEvent(const FMercuryHttpRequestProgressDelegate& Value)
-	{
-		OnRequestProgress() = Value;
-		return this;
-	}
-	UFUNCTION(BlueprintInternalUseOnly, DisplayName = "On Request Progress", Category = "HTTP|Request", meta = (
-		Keywords = "On Request Progress Callback Delegate Event"
-	))
-	void OnMercuryHttpRequestProgressCallback(
-		UMercuryHttpRequest* const& Request,
-		const int32& BytesSent,
-		const int32& BytesReceived
-	);
+	UMercuryHttpRequest* K2_SetRequestProgressEvent(const FMercuryHttpRequestProgressDelegate& Value);
+	void BindRequestProgressDelegate();
 
 	UFUNCTION(BlueprintCallable, DisplayName = "Set Request Will Retry Event", Category = "HTTP|Request", meta = (
 		Keywords = "On Set Request Will Retry Delegate Event"
 	))
-	UMercuryHttpRequest* SetRequestWillRetryEvent(const FMercuryHttpRequestWillRetryDelegate& Value)
-	{
-		OnRequestWillRetry() = Value;
-		return this;
-	}
-	UFUNCTION(BlueprintInternalUseOnly, DisplayName = "On Request Will Retry", Category = "HTTP|Request", meta = (
-		Keywords = "On Request Will Retry Callback Delegate Event"
-	))
-	void OnMercuryHttpRequestWillRetryCallback(
-		UMercuryHttpRequest* const& Request,
-		UMercuryHttpResponse* const& Response,
-		const float& SecondsToRetry
-	);
+	UMercuryHttpRequest* K2_SetRequestWillRetryEvent(const FMercuryHttpRequestWillRetryDelegate& Value);
+	void BindRequestWillRetryDelegate();
 
 	UFUNCTION(BlueprintCallable, DisplayName = "Set Header Received Event", Category = "HTTP|Request", meta = (
 		Keywords = "On Set Header Received Delegate Event"
 	))
-	UMercuryHttpRequest* SetHeaderReceivedEvent(const FMercuryHttpHeaderReceivedDelegate& Value)
-	{
-		OnHeaderReceived() = Value;
-		return this;
-	}
-	UFUNCTION(BlueprintInternalUseOnly, DisplayName = "On Header Received", Category = "HTTP|Request", meta = (
-		Keywords = "On Header Received Callback Delegate Event"
-	))
-	void OnMercuryHttpHeaderReceivedCallback(
-		UMercuryHttpRequest* const& Request,
-		const FString& HeaderName,
-		const FString& NewHeaderValue
-	);
-	
+	UMercuryHttpRequest* K2_SetHeaderReceivedEvent(const FMercuryHttpHeaderReceivedDelegate& Value);
+	void BindHeaderReceivedDelegate();
+
 public:
 	FORCEINLINE const FHttpRequestPtr& GetReference() const { return Reference; }
 	FORCEINLINE FHttpRequestPtr& GetReference() { return Reference; }
 
 	FORCEINLINE const TObjectPtr<UMercuryHttpResponse>& GetMercuryHttpResponse() const { return MercuryHttpResponse; }
 	FORCEINLINE TObjectPtr<UMercuryHttpResponse>& GetMercuryHttpResponse() { return MercuryHttpResponse; }
-	
+
+	FORCEINLINE const FMercuryHttpProcessRequestCompleteDelegate& OnProcessRequestComplete() const
+	{
+		return OnMercuryHttpProcessRequestCompleteDelegate;
+	}
 	FORCEINLINE FMercuryHttpProcessRequestCompleteDelegate& OnProcessRequestComplete()
 	{
 		return OnMercuryHttpProcessRequestCompleteDelegate;
+	}
+
+	FORCEINLINE const FMercuryHttpRequestProgressDelegate& OnRequestProgress() const
+	{
+		return OnMercuryHttpRequestProgressDelegate;
 	}
 	FORCEINLINE FMercuryHttpRequestProgressDelegate& OnRequestProgress()
 	{
 		return OnMercuryHttpRequestProgressDelegate;
 	}
+
+	FORCEINLINE const FMercuryHttpRequestWillRetryDelegate& OnRequestWillRetry() const
+	{
+		return OnMercuryHttpRequestWillRetryDelegate;
+	}
 	FORCEINLINE FMercuryHttpRequestWillRetryDelegate& OnRequestWillRetry()
 	{
 		return OnMercuryHttpRequestWillRetryDelegate;
+	}
+
+	FORCEINLINE const FMercuryHttpHeaderReceivedDelegate& OnHeaderReceived() const
+	{
+		return OnMercuryHttpHeaderReceivedDelegate;
 	}
 	FORCEINLINE FMercuryHttpHeaderReceivedDelegate& OnHeaderReceived()
 	{

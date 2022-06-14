@@ -3,7 +3,6 @@
 #pragma once
 
 #include "MercuryWebTypes.h"
-#include "Interfaces/IHttpRequest.h"
 
 #include "MercuryWebLibrary.generated.h"
 
@@ -60,7 +59,7 @@ public:
 
 private:
 	static void RequestData(
-		const FHttpRequestPtr& Request,
+		UMercuryHttpRequest* const Request,
 		const FString& URL,
 		const FString& Verb,
 		const TMap<FString, FString>& Headers,
@@ -68,34 +67,6 @@ private:
 		const FMercuryHttpRequestProgressDelegate* const& RequestProgress,
 		const FMercuryHttpRequestWillRetryDelegate* const& RequestWillRetry,
 		const FMercuryHttpHeaderReceivedDelegate* const& HeaderReceived
-	);
-
-	static void OnMercuryHttpProcessRequestComplete(
-		FHttpRequestPtr Request,
-		FHttpResponsePtr Response,
-		bool bConnectedSuccessfully,
-		FMercuryHttpProcessRequestCompleteDelegate OnMercuryHttpProcessRequestComplete
-	);
-
-	static void OnMercuryHttpRequestProgress(
-		FHttpRequestPtr Request,
-		int32 BytesSent,
-		int32 BytesReceived,
-		FMercuryHttpRequestProgressDelegate OnMercuryHttpRequestProgress
-	);
-
-	static void OnMercuryHttpRequestWillRetry(
-		FHttpRequestPtr Request,
-		FHttpResponsePtr Response,
-		float SecondsToRetry,
-		FMercuryHttpRequestWillRetryDelegate OnMercuryHttpRequestWillRetry
-	);
-
-	static void OnMercuryHttpHeaderReceived(
-		FHttpRequestPtr Request,
-		const FString& HeaderName,
-		const FString& NewHeaderValue,
-		FMercuryHttpHeaderReceivedDelegate OnMercuryHttpHeaderReceived
 	);
 
 	UFUNCTION(BlueprintCallable, DisplayName = "Request Data (Payload)", Category = "Mercury|HTTP", meta = (
