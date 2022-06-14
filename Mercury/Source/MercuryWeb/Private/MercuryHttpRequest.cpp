@@ -2,13 +2,17 @@
 
 #include "MercuryHttpRequest.h"
 
+#include "HttpModule.h"
 #include "MercuryHttpResponse.h"
 #include "MercuryWeb.h"
+
+FHttpModule* UMercuryHttpRequest::HttpModule = &FHttpModule::Get();
 
 
 UMercuryHttpRequest::UMercuryHttpRequest(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
-	Reference = nullptr;
+	check(HttpModule);
+	Reference = HttpModule->CreateRequest();
 	MercuryHttpResponse = CreateDefaultSubobject<UMercuryHttpResponse>(TEXT("Mercury HTTP Response"));
 	
 	OnMercuryHttpProcessRequestCompleteDelegate.BindDynamic(
@@ -69,110 +73,138 @@ FString UMercuryHttpRequest::GetVerb() const
 	return Reference ? Reference->GetVerb() : TEXT("");
 }
 
-// ReSharper disable once CppUE4BlueprintCallableFunctionMayBeConst
-void UMercuryHttpRequest::SetVerb(const FString& Verb)
+UMercuryHttpRequest* UMercuryHttpRequest::SetVerb(const FString& Verb)
 {
 	if (!Reference)
-		return;
-	
+		return nullptr;
+
 	Reference->SetVerb(Verb);
+	return this;
 }
 
-// ReSharper disable once CppUE4BlueprintCallableFunctionMayBeConst
-void UMercuryHttpRequest::SetURL(const FString& URL)
+UMercuryHttpRequest* UMercuryHttpRequest::SetURL(const FString& URL)
 {
 	if (!Reference)
-		return;
-	
+		return nullptr;
+
 	Reference->SetURL(URL);
+	return this;
 }
 
-// ReSharper disable once CppUE4BlueprintCallableFunctionMayBeConst
-void UMercuryHttpRequest::SetContent(const TArray<uint8>& ContentPayload)
+UMercuryHttpRequest* UMercuryHttpRequest::SetContent(const TArray<uint8>& ContentPayload)
 {
 	if (!Reference)
-		return;
+		return nullptr;
 
 	Reference->SetContent(ContentPayload);
+	return this;
 }
-
-void UMercuryHttpRequest::SetContent(TArray<uint8>&& ContentPayload)
+UMercuryHttpRequest* UMercuryHttpRequest::SetContent(TArray<uint8>&& ContentPayload)
 {
 	if (!Reference)
-		return;
+		return nullptr;
 
 	Reference->SetContent(ContentPayload);
+	return this;
 }
 
-// ReSharper disable once CppUE4BlueprintCallableFunctionMayBeConst
-void UMercuryHttpRequest::SetContentAsString(const FString& ContentString)
+UMercuryHttpRequest* UMercuryHttpRequest::SetContentAsString(const FString& ContentString)
 {
 	if (!Reference)
-		return;
+		return nullptr;
 
 	Reference->SetContentAsString(ContentString);
+	return this;
 }
 
-// ReSharper disable once CppUE4BlueprintCallableFunctionMayBeConst
+UMercuryHttpRequest* UMercuryHttpRequest::SetContentAsStreamedFile(const FString& Filename, bool& bRequestStreamed)
+{
+	bRequestStreamed = SetContentAsStreamedFile(Filename);
+	return bRequestStreamed ? this : nullptr;
+}
 bool UMercuryHttpRequest::SetContentAsStreamedFile(const FString& Filename)
 {
 	return Reference ? Reference->SetContentAsStreamedFile(Filename) : false;
 }
 
+UMercuryHttpRequest* UMercuryHttpRequest::SetContentFromStream(
+	const TSharedRef<FArchive, ESPMode::ThreadSafe>& Stream,
+	bool& bRequestStreamed
+)
+{
+	bRequestStreamed = SetContentFromStream(Stream);
+	return bRequestStreamed ? this : nullptr;
+}
 bool UMercuryHttpRequest::SetContentFromStream(const TSharedRef<FArchive, ESPMode::ThreadSafe>& Stream)
 {
 	return Reference ? Reference->SetContentFromStream(Stream) : false;
 }
 
-// ReSharper disable once CppUE4BlueprintCallableFunctionMayBeConst
-void UMercuryHttpRequest::SetHeader(const FString& HeaderName, const FString& HeaderValue)
+UMercuryHttpRequest* UMercuryHttpRequest::SetHeader(const FString& HeaderName, const FString& HeaderValue)
 {
 	if (!Reference)
-		return;
+		return nullptr;
 
 	Reference->SetHeader(HeaderName, HeaderValue);
+	return this;
 }
 
-// ReSharper disable once CppUE4BlueprintCallableFunctionMayBeConst
-void UMercuryHttpRequest::AppendToHeader(const FString& HeaderName, const FString& AdditionalHeaderValue)
+UMercuryHttpRequest* UMercuryHttpRequest::SetHeaders(const TMap<FString, FString>& Headers)
 {
 	if (!Reference)
-		return;
-
-	Reference->AppendToHeader(HeaderName, AdditionalHeaderValue);
+		return nullptr;
+	
+	for (const TTuple<FString, FString>& Header : Headers)
+	{
+		SetHeader(Header.Key, Header.Value);
+	}
+	return this;
 }
 
-// ReSharper disable once CppUE4BlueprintCallableFunctionMayBeConst
-void UMercuryHttpRequest::SetTimeout(const float InTimeoutSeconds)
+UMercuryHttpRequest* UMercuryHttpRequest::AppendToHeader(const FString& HeaderName, const FString& HeaderValue)
 {
 	if (!Reference)
-		return;
+		return nullptr;
+
+	Reference->AppendToHeader(HeaderName, HeaderValue);
+	return this;
+}
+
+UMercuryHttpRequest* UMercuryHttpRequest::SetTimeout(const float InTimeoutSeconds)
+{
+	if (!Reference)
+		return nullptr;
 
 	Reference->SetTimeout(InTimeoutSeconds);
+	return this;
 }
 
-// ReSharper disable once CppUE4BlueprintCallableFunctionMayBeConst
-void UMercuryHttpRequest::ClearTimeout()
+UMercuryHttpRequest* UMercuryHttpRequest::ClearTimeout()
 {
 	if (!Reference)
-		return;
+		return nullptr;
 
 	Reference->ClearTimeout();
+	return this;
 }
 
-// ReSharper disable once CppUE4BlueprintCallableFunctionMayBeConst
+UMercuryHttpRequest* UMercuryHttpRequest::ProcessRequest(bool& bSuccessfullyStarted)
+{
+	bSuccessfullyStarted = ProcessRequest();
+	return bSuccessfullyStarted ? this : nullptr;
+}
 bool UMercuryHttpRequest::ProcessRequest()
 {
 	return Reference ? Reference->ProcessRequest() : false;
 }
 
-// ReSharper disable once CppUE4BlueprintCallableFunctionMayBeConst
-void UMercuryHttpRequest::CancelRequest()
+UMercuryHttpRequest* UMercuryHttpRequest::CancelRequest()
 {
 	if (!Reference)
-		return;
+		return nullptr;
 
 	Reference->CancelRequest();
+	return this;
 }
 
 EMercuryHttpRequestStatus UMercuryHttpRequest::GetMercuryHttpStatus() const
@@ -203,13 +235,13 @@ EMercuryHttpRequestStatus UMercuryHttpRequest::GetMercuryHttpStatus() const
 	}
 }
 
-// ReSharper disable once CppUE4BlueprintCallableFunctionMayBeConst
-void UMercuryHttpRequest::Tick(const float DeltaSeconds)
+UMercuryHttpRequest* UMercuryHttpRequest::Tick(const float DeltaSeconds)
 {
 	if (!Reference)
-		return;
+		return nullptr;
 
 	Reference->Tick(DeltaSeconds);
+	return this;
 }
 
 float UMercuryHttpRequest::GetElapsedTime() const

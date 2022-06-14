@@ -17,19 +17,19 @@ public:
 		Keywords = "Get URL Link Host Server"
 	))
 	virtual FString GetURL() const
-	PURE_VIRTUAL(UMercuryHttpBase::GetURL, return "";);
+	PURE_VIRTUAL(UMercuryHttpBase::GetURL, return TEXT(""););
 
 	UFUNCTION(BlueprintPure, DisplayName = "Get URL Parameter", Category = "HTTP|Base", meta = (
 		Keywords = "Get URL Parameter Argument Link Server Name"
 	))
 	virtual FString GetURLParameter(const FString& ParameterName) const
-	PURE_VIRTUAL(UMercuryHttpBase::GetURLParameter, return "";);
+	PURE_VIRTUAL(UMercuryHttpBase::GetURLParameter, return TEXT(""););
 
 	UFUNCTION(BlueprintPure, DisplayName = "Get Header", Category = "HTTP|Base", meta = (
 		Keywords = "Get Header Name"
 	))
 	virtual FString GetHeader(const FString& HeaderName) const
-	PURE_VIRTUAL(UMercuryHttpBase::GetHeader, return "";);
+	PURE_VIRTUAL(UMercuryHttpBase::GetHeader, return TEXT(""););
 
 	UFUNCTION(BlueprintPure, DisplayName = "Get All Headers", Category = "HTTP|Base", meta = (
 		Keywords = "Get All Headers Names"
@@ -41,7 +41,7 @@ public:
 		Keywords = "Get Content Type"
 	))
 	virtual FString GetContentType() const
-	PURE_VIRTUAL(UMercuryHttpBase::GetContentType, return "";);
+	PURE_VIRTUAL(UMercuryHttpBase::GetContentType, return TEXT(""););
 
 	UFUNCTION(BlueprintPure, DisplayName = "Get Content Length", Category = "HTTP|Base", meta = (
 		Keywords = "Get Content Length"

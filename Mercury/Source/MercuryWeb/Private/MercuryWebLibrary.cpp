@@ -6,37 +6,7 @@
 #include "MercuryHttpRequest.h"
 #include "MercuryHttpResponse.h"
 
-FHttpModule* UMercuryWebLibrary::HttpModule = &FHttpModule::Get();
 
-
-FHttpRequestPtr UMercuryWebLibrary::CreateHttpRequest()
-{
-	check(HttpModule);
-	return HttpModule->CreateRequest();
-}
-
-void UMercuryWebLibrary::K2_RequestDataWithPayload(
-	const FString& URL,
-	const FString& Verb,
-	const TMap<FString, FString>& Headers,
-	const TArray<uint8>& ContentPayload,
-	const FMercuryHttpProcessRequestCompleteDelegate& ProcessRequestComplete,
-	const FMercuryHttpRequestProgressDelegate& RequestProgress,
-	const FMercuryHttpRequestWillRetryDelegate& RequestWillRetry,
-	const FMercuryHttpHeaderReceivedDelegate& HeaderReceived
-)
-{
-	RequestDataWithPayload(
-		URL,
-		Verb,
-		Headers,
-		ContentPayload,
-		&ProcessRequestComplete,
-		&RequestProgress,
-		&RequestWillRetry,
-		&HeaderReceived
-	);
-}
 void UMercuryWebLibrary::RequestDataWithPayload(
 	const FString& URL,
 	const FString& Verb,
@@ -48,10 +18,10 @@ void UMercuryWebLibrary::RequestDataWithPayload(
 	const FMercuryHttpHeaderReceivedDelegate* const& HeaderReceived
 )
 {
-	const FHttpRequestPtr& Request = CreateHttpRequest();
+	UMercuryHttpRequest* const& Request = NewObject<UMercuryHttpRequest>();
 	Request->SetContent(ContentPayload);
 	RequestData(
-		Request,
+		Request->GetReference(),
 		URL,
 		Verb,
 		Headers,
@@ -62,28 +32,6 @@ void UMercuryWebLibrary::RequestDataWithPayload(
 	);
 }
 
-void UMercuryWebLibrary::K2_RequestDataWithStringContent(
-	const FString& URL,
-	const FString& Verb,
-	const TMap<FString, FString>& Headers,
-	const FString& Content,
-	const FMercuryHttpProcessRequestCompleteDelegate& ProcessRequestComplete,
-	const FMercuryHttpRequestProgressDelegate& RequestProgress,
-	const FMercuryHttpRequestWillRetryDelegate& RequestWillRetry,
-	const FMercuryHttpHeaderReceivedDelegate& HeaderReceived
-)
-{
-	RequestDataWithStringContent(
-		URL,
-		Verb,
-		Headers,
-		Content,
-		&ProcessRequestComplete,
-		&RequestProgress,
-		&RequestWillRetry,
-		&HeaderReceived
-	);
-}
 void UMercuryWebLibrary::RequestDataWithStringContent(
 	const FString& URL,
 	const FString& Verb,
@@ -95,10 +43,10 @@ void UMercuryWebLibrary::RequestDataWithStringContent(
 	const FMercuryHttpHeaderReceivedDelegate* const& HeaderReceived
 )
 {
-	const FHttpRequestPtr& Request = CreateHttpRequest();
+	UMercuryHttpRequest* const& Request = NewObject<UMercuryHttpRequest>();
 	Request->SetContentAsString(Content);
 	RequestData(
-		Request,
+		Request->GetReference(),
 		URL,
 		Verb,
 		Headers,
@@ -120,10 +68,10 @@ void UMercuryWebLibrary::RequestDataFromStream(
 	const FMercuryHttpHeaderReceivedDelegate* const& HeaderReceived
 )
 {
-	const FHttpRequestPtr& Request = CreateHttpRequest();
+	UMercuryHttpRequest* const& Request = NewObject<UMercuryHttpRequest>();
 	Request->SetContentFromStream(Stream);
 	RequestData(
-		Request,
+		Request->GetReference(),
 		URL,
 		Verb,
 		Headers,
@@ -134,28 +82,6 @@ void UMercuryWebLibrary::RequestDataFromStream(
 	);
 }
 
-void UMercuryWebLibrary::K2_RequestDataWithStreamedFile(
-	const FString& URL,
-	const FString& Verb,
-	const TMap<FString, FString>& Headers,
-	const FString& Filename,
-	const FMercuryHttpProcessRequestCompleteDelegate& ProcessRequestComplete,
-	const FMercuryHttpRequestProgressDelegate& RequestProgress,
-	const FMercuryHttpRequestWillRetryDelegate& RequestWillRetry,
-	const FMercuryHttpHeaderReceivedDelegate& HeaderReceived
-)
-{
-	RequestDataWithStreamedFile(
-		URL,
-		Verb,
-		Headers,
-		Filename,
-		&ProcessRequestComplete,
-		&RequestProgress,
-		&RequestWillRetry,
-		&HeaderReceived
-	);
-}
 void UMercuryWebLibrary::RequestDataWithStreamedFile(
 	const FString& URL,
 	const FString& Verb,
@@ -167,10 +93,10 @@ void UMercuryWebLibrary::RequestDataWithStreamedFile(
 	const FMercuryHttpHeaderReceivedDelegate* const& HeaderReceived
 )
 {
-	const FHttpRequestPtr& Request = CreateHttpRequest();
+	UMercuryHttpRequest* const& Request = NewObject<UMercuryHttpRequest>();
 	Request->SetContentAsStreamedFile(Filename);
 	RequestData(
-		Request,
+		Request->GetReference(),
 		URL,
 		Verb,
 		Headers,
@@ -301,4 +227,73 @@ void UMercuryWebLibrary::OnMercuryHttpHeaderReceived(
 	MercuryHttpRequest->GetReference() = Request;
 	
 	OnMercuryHttpHeaderReceived.Execute(MercuryHttpRequest, HeaderName, NewHeaderValue);
+}
+
+void UMercuryWebLibrary::K2_RequestDataWithPayload(
+	const FString& URL,
+	const FString& Verb,
+	const TMap<FString, FString>& Headers,
+	const TArray<uint8>& ContentPayload,
+	const FMercuryHttpProcessRequestCompleteDelegate& ProcessRequestComplete,
+	const FMercuryHttpRequestProgressDelegate& RequestProgress,
+	const FMercuryHttpRequestWillRetryDelegate& RequestWillRetry,
+	const FMercuryHttpHeaderReceivedDelegate& HeaderReceived
+)
+{
+	RequestDataWithPayload(
+		URL,
+		Verb,
+		Headers,
+		ContentPayload,
+		&ProcessRequestComplete,
+		&RequestProgress,
+		&RequestWillRetry,
+		&HeaderReceived
+	);
+}
+
+void UMercuryWebLibrary::K2_RequestDataWithStringContent(
+	const FString& URL,
+	const FString& Verb,
+	const TMap<FString, FString>& Headers,
+	const FString& Content,
+	const FMercuryHttpProcessRequestCompleteDelegate& ProcessRequestComplete,
+	const FMercuryHttpRequestProgressDelegate& RequestProgress,
+	const FMercuryHttpRequestWillRetryDelegate& RequestWillRetry,
+	const FMercuryHttpHeaderReceivedDelegate& HeaderReceived
+)
+{
+	RequestDataWithStringContent(
+		URL,
+		Verb,
+		Headers,
+		Content,
+		&ProcessRequestComplete,
+		&RequestProgress,
+		&RequestWillRetry,
+		&HeaderReceived
+	);
+}
+
+void UMercuryWebLibrary::K2_RequestDataWithStreamedFile(
+	const FString& URL,
+	const FString& Verb,
+	const TMap<FString, FString>& Headers,
+	const FString& Filename,
+	const FMercuryHttpProcessRequestCompleteDelegate& ProcessRequestComplete,
+	const FMercuryHttpRequestProgressDelegate& RequestProgress,
+	const FMercuryHttpRequestWillRetryDelegate& RequestWillRetry,
+	const FMercuryHttpHeaderReceivedDelegate& HeaderReceived
+)
+{
+	RequestDataWithStreamedFile(
+		URL,
+		Verb,
+		Headers,
+		Filename,
+		&ProcessRequestComplete,
+		&RequestProgress,
+		&RequestWillRetry,
+		&HeaderReceived
+	);
 }
