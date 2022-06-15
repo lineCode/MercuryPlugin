@@ -71,7 +71,6 @@ public:
 	UMercuryHttpRequest* SetURL(const FString& URL);
 
 	UFUNCTION(BlueprintCallable, DisplayName = "Set Content", Category = "HTTP|Request", meta = (
-		AutoCreateRefTerm = "ContentPayload",
 		Keywords = "Set Content Payload"
 	))
 	UMercuryHttpRequest* SetContent(const TArray<uint8>& ContentPayload);
@@ -100,7 +99,6 @@ public:
 	UMercuryHttpRequest* SetHeader(const FString& HeaderName, const FString& HeaderValue);
 
 	UFUNCTION(BlueprintCallable, DisplayName = "Set Headers", Category = "HTTP|Request", meta = (
-		AutoCreateRefTerm = "Headers",
 		Keywords = "Set Headers Names Values Map"
 	))
 	UMercuryHttpRequest* SetHeaders(const TMap<FString, FString>& Headers);
@@ -150,26 +148,27 @@ private:
 	UFUNCTION(BlueprintCallable, DisplayName = "Set Process Request Complete Event", Category = "HTTP|Request", meta = (
 		Keywords = "On Set Process Request Complete Delegate Event"
 	))
-	UMercuryHttpRequest* K2_SetProcessRequestCompleteEvent(const FMercuryHttpProcessRequestCompleteDelegate& Value);
-	void BindProcessRequestCompleteDelegate();
+	UMercuryHttpRequest* K2_SetProcessRequestCompleteEvent(const FMercuryHttpProcessRequestCompleteDelegate& Event);
 
 	UFUNCTION(BlueprintCallable, DisplayName = "Set Request Progress Event", Category = "HTTP|Request", meta = (
 		Keywords = "On Set Request Progress Delegate Event"
 	))
-	UMercuryHttpRequest* K2_SetRequestProgressEvent(const FMercuryHttpRequestProgressDelegate& Value);
-	void BindRequestProgressDelegate();
+	UMercuryHttpRequest* K2_SetRequestProgressEvent(const FMercuryHttpRequestProgressDelegate& Event);
 
 	UFUNCTION(BlueprintCallable, DisplayName = "Set Request Will Retry Event", Category = "HTTP|Request", meta = (
 		Keywords = "On Set Request Will Retry Delegate Event"
 	))
-	UMercuryHttpRequest* K2_SetRequestWillRetryEvent(const FMercuryHttpRequestWillRetryDelegate& Value);
-	void BindRequestWillRetryDelegate();
+	UMercuryHttpRequest* K2_SetRequestWillRetryEvent(const FMercuryHttpRequestWillRetryDelegate& Event);
 
 	UFUNCTION(BlueprintCallable, DisplayName = "Set Header Received Event", Category = "HTTP|Request", meta = (
 		Keywords = "On Set Header Received Delegate Event"
 	))
-	UMercuryHttpRequest* K2_SetHeaderReceivedEvent(const FMercuryHttpHeaderReceivedDelegate& Value);
-	void BindHeaderReceivedDelegate();
+	UMercuryHttpRequest* K2_SetHeaderReceivedEvent(const FMercuryHttpHeaderReceivedDelegate& Event);
+	
+	void BindProcessRequestComplete(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bConnectedSuccessfully);
+	void BindRequestProgress(FHttpRequestPtr Request, int32 BytesSent, int32 BytesReceived);
+	void BindRequestWillRetry(FHttpRequestPtr Request, FHttpResponsePtr Response, float SecondsToRetry);
+	void BindHeaderReceived(FHttpRequestPtr Request, const FString& HeaderName, const FString& NewHeaderValue);
 
 public:
 	FORCEINLINE const FHttpRequestPtr& GetReference() const { return Reference; }
