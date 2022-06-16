@@ -21,6 +21,11 @@
 			"LoadingPhase": "PreDefault"
 		},
 		{
+			"Name": "MercuryJson",
+			"Type": "Runtime",
+			"LoadingPhase": "PreDefault"
+		},
+		{
 			"Name": "MercuryWeb",
 			"Type": "Runtime",
 			"LoadingPhase": "PreDefault"
