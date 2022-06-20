@@ -44,6 +44,26 @@ class MERCURYWEB_API UMercuryHttpRequest : public UMercuryHttpBase
 	))
 	FMercuryHttpHeaderReceivedDelegate OnMercuryHttpHeaderReceivedDelegate;
 
+	UPROPERTY(BlueprintReadOnly, DisplayName = "Process Request Complete", Category = "HTTP|Request", meta = (
+		AllowPrivateAccess = "true"
+	))
+	uint8 bProcessRequestCompleteDone : 1;
+
+	UPROPERTY(BlueprintReadOnly, DisplayName = "Request Progress", Category = "HTTP|Request", meta = (
+		AllowPrivateAccess = "true"
+	))
+	uint8 bRequestProgressDone : 1;
+
+	UPROPERTY(BlueprintReadOnly, DisplayName = "Request Will Retry", Category = "HTTP|Request", meta = (
+		AllowPrivateAccess = "true"
+	))
+	uint8 bRequestWillRetryDone : 1;
+
+	UPROPERTY(BlueprintReadOnly, DisplayName = "Header Received", Category = "HTTP|Request", meta = (
+		AllowPrivateAccess = "true"
+	))
+	uint8 bHeaderReceivedDone : 1;
+
 public:
 	explicit UMercuryHttpRequest(const FObjectInitializer& ObjectInitializer);
 
@@ -217,4 +237,9 @@ public:
 	{
 		return OnMercuryHttpHeaderReceivedDelegate;
 	}
+
+	FORCEINLINE const bool& IsProcessRequestCompleteDone() const { return bProcessRequestCompleteDone; }
+	FORCEINLINE const bool& IsRequestProgressDone() const { return bRequestProgressDone; }
+	FORCEINLINE const bool& IsRequestWillRetryDone() const { return bRequestWillRetryDone; }
+	FORCEINLINE const bool& IsHeaderReceivedDone() const { return bHeaderReceivedDone; }
 };
