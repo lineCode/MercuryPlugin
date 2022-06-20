@@ -237,44 +237,6 @@ float UMercuryHttpRequest::GetElapsedTime() const
 	return Reference ? Reference->GetElapsedTime() : 0.0f;
 }
 
-UMercuryHttpRequest* UMercuryHttpRequest::K2_SetProcessRequestCompleteEvent(
-	const FMercuryHttpProcessRequestCompleteDelegate& Event
-)
-{
-	if (!Reference)
-		return nullptr;
-
-	OnMercuryHttpProcessRequestCompleteDelegate = Event;
-	return this;
-}
-
-UMercuryHttpRequest* UMercuryHttpRequest::K2_SetRequestProgressEvent(const FMercuryHttpRequestProgressDelegate& Event)
-{
-	if (!Reference)
-		return nullptr;
-
-	OnMercuryHttpRequestProgressDelegate = Event;
-	return this;
-}
-
-UMercuryHttpRequest* UMercuryHttpRequest::K2_SetRequestWillRetryEvent(const FMercuryHttpRequestWillRetryDelegate& Event)
-{
-	if (!Reference)
-		return nullptr;
-
-	OnMercuryHttpRequestWillRetryDelegate = Event;
-	return this;
-}
-
-UMercuryHttpRequest* UMercuryHttpRequest::K2_SetHeaderReceivedEvent(const FMercuryHttpHeaderReceivedDelegate& Event)
-{
-	if (!Reference)
-		return nullptr;
-
-	OnMercuryHttpHeaderReceivedDelegate = Event;
-	return this;
-}
-
 void UMercuryHttpRequest::BindProcessRequestComplete(
 	const FHttpRequestPtr Request,
 	const FHttpResponsePtr Response,
@@ -341,4 +303,42 @@ void UMercuryHttpRequest::BindHeaderReceived(
 	MercuryRequest->GetReference() = Request;
 	
 	OnMercuryHttpHeaderReceivedDelegate.Execute(MercuryRequest, HeaderName, NewHeaderValue);
+}
+
+UMercuryHttpRequest* UMercuryHttpRequest::K2_SetProcessRequestCompleteEvent(
+	const FMercuryHttpProcessRequestCompleteDelegate& Event
+)
+{
+	if (!Reference)
+		return nullptr;
+
+	OnMercuryHttpProcessRequestCompleteDelegate = Event;
+	return this;
+}
+
+UMercuryHttpRequest* UMercuryHttpRequest::K2_SetRequestProgressEvent(const FMercuryHttpRequestProgressDelegate& Event)
+{
+	if (!Reference)
+		return nullptr;
+
+	OnMercuryHttpRequestProgressDelegate = Event;
+	return this;
+}
+
+UMercuryHttpRequest* UMercuryHttpRequest::K2_SetRequestWillRetryEvent(const FMercuryHttpRequestWillRetryDelegate& Event)
+{
+	if (!Reference)
+		return nullptr;
+
+	OnMercuryHttpRequestWillRetryDelegate = Event;
+	return this;
+}
+
+UMercuryHttpRequest* UMercuryHttpRequest::K2_SetHeaderReceivedEvent(const FMercuryHttpHeaderReceivedDelegate& Event)
+{
+	if (!Reference)
+		return nullptr;
+
+	OnMercuryHttpHeaderReceivedDelegate = Event;
+	return this;
 }

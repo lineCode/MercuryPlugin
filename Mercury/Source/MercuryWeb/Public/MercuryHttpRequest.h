@@ -58,92 +58,102 @@ public:
 	UFUNCTION(BlueprintPure, DisplayName = "Get Verb", Category = "HTTP|Request", meta = (
 		Keywords = "Get Verb"
 	))
-	FString GetVerb() const;
+	virtual FString GetVerb() const;
 
 	UFUNCTION(BlueprintCallable, DisplayName = "Set Verb", Category = "HTTP|Request", meta = (
 		Keywords = "Set Verb"
 	))
-	UMercuryHttpRequest* SetVerb(const FString& Verb);
+	virtual UMercuryHttpRequest* SetVerb(const FString& Verb);
 
 	UFUNCTION(BlueprintCallable, DisplayName = "Set URL", Category = "HTTP|Request", meta = (
 		Keywords = "Set URL Link Host Server"
 	))
-	UMercuryHttpRequest* SetURL(const FString& URL);
+	virtual UMercuryHttpRequest* SetURL(const FString& URL);
 
 	UFUNCTION(BlueprintCallable, DisplayName = "Set Content", Category = "HTTP|Request", meta = (
 		Keywords = "Set Content Payload"
 	))
-	UMercuryHttpRequest* SetContent(const TArray<uint8>& ContentPayload);
-	UMercuryHttpRequest* SetContent(TArray<uint8>&& ContentPayload);
+	virtual UMercuryHttpRequest* SetContent(const TArray<uint8>& ContentPayload);
+	virtual UMercuryHttpRequest* SetContent(TArray<uint8>&& ContentPayload);
 
 	UFUNCTION(BlueprintCallable, DisplayName = "Set Content As String", Category = "HTTP|Request", meta = (
 		Keywords = "Set Content As String"
 	))
-	UMercuryHttpRequest* SetContentAsString(const FString& ContentString);
+	virtual UMercuryHttpRequest* SetContentAsString(const FString& ContentString);
 
 	UFUNCTION(BlueprintCallable, DisplayName = "Set Content As Streamed File", Category = "HTTP|Request", meta = (
 		Keywords = "Set Content As Streamed File"
 	))
-	UMercuryHttpRequest* SetContentAsStreamedFile(const FString& Filename, bool& bRequestStreamed);
-	bool SetContentAsStreamedFile(const FString& Filename);
+	virtual UMercuryHttpRequest* SetContentAsStreamedFile(const FString& Filename, bool& bRequestStreamed);
+	virtual bool SetContentAsStreamedFile(const FString& Filename);
 	
-	UMercuryHttpRequest* SetContentFromStream(
+	virtual UMercuryHttpRequest* SetContentFromStream(
 		const TSharedRef<FArchive, ESPMode::ThreadSafe>& Stream,
 		bool& bRequestStreamed
 	);
-	bool SetContentFromStream(const TSharedRef<FArchive, ESPMode::ThreadSafe>& Stream);
+	virtual bool SetContentFromStream(const TSharedRef<FArchive, ESPMode::ThreadSafe>& Stream);
 
 	UFUNCTION(BlueprintCallable, DisplayName = "Set Header", Category = "HTTP|Request", meta = (
 		Keywords = "Set Header Name Value"
 	))
-	UMercuryHttpRequest* SetHeader(const FString& HeaderName, const FString& HeaderValue);
+	virtual UMercuryHttpRequest* SetHeader(const FString& HeaderName, const FString& HeaderValue);
 
 	UFUNCTION(BlueprintCallable, DisplayName = "Set Headers", Category = "HTTP|Request", meta = (
 		Keywords = "Set Headers Names Values Map"
 	))
-	UMercuryHttpRequest* SetHeaders(const TMap<FString, FString>& Headers);
+	virtual UMercuryHttpRequest* SetHeaders(const TMap<FString, FString>& Headers);
 
 	UFUNCTION(BlueprintCallable, DisplayName = "Append To Header", Category = "HTTP|Request", meta = (
 		Keywords = "Append Add Insert To In Header Name Value"
 	))
-	UMercuryHttpRequest* AppendToHeader(const FString& HeaderName, const FString& HeaderValue);
+	virtual UMercuryHttpRequest* AppendToHeader(const FString& HeaderName, const FString& HeaderValue);
 
 	UFUNCTION(BlueprintCallable, DisplayName = "Set Timeout", Category = "HTTP|Request", meta = (
 		Keywords = "Set Timeout Limit"
 	))
-	UMercuryHttpRequest* SetTimeout(float InTimeoutSeconds);
+	virtual UMercuryHttpRequest* SetTimeout(float InTimeoutSeconds);
 
 	UFUNCTION(BlueprintCallable, DisplayName = "Clear Timeout", Category = "HTTP|Request", meta = (
 		Keywords = "Clear Timeout Limit Reset"
 	))
-	UMercuryHttpRequest* ClearTimeout();
+	virtual UMercuryHttpRequest* ClearTimeout();
 
 	UFUNCTION(BlueprintCallable, DisplayName = "Process Request", Category = "HTTP|Request", meta = (
 		Keywords = "Process Request Execute Fetch"
 	))
-	UMercuryHttpRequest* ProcessRequest(bool& bSuccessfullyStarted);
-	bool ProcessRequest();
+	virtual UMercuryHttpRequest* ProcessRequest(bool& bSuccessfullyStarted);
+	virtual bool ProcessRequest();
 
 	UFUNCTION(BlueprintCallable, DisplayName = "Cancel Request", Category = "HTTP|Request", meta = (
 		Keywords = "Cancel Request Stop Halt Interrupt"
 	))
-	UMercuryHttpRequest* CancelRequest();
+	virtual UMercuryHttpRequest* CancelRequest();
 
 	UFUNCTION(BlueprintPure, DisplayName = "Get HTTP Status", Category = "HTTP|Request", meta = (
 		Keywords = "Get HTTP Status"
 	))
-	EMercuryHttpRequestStatus GetMercuryHttpStatus() const;
+	virtual EMercuryHttpRequestStatus GetMercuryHttpStatus() const;
 
 	UFUNCTION(BlueprintCallable, DisplayName = "Tick", Category = "HTTP|Request", meta = (
 		Keywords = "Tick Update"
 	))
-	UMercuryHttpRequest* Tick(float DeltaSeconds);
+	virtual UMercuryHttpRequest* Tick(float DeltaSeconds);
 
 	UFUNCTION(BlueprintPure, DisplayName = "Get Elapsed Time", Category = "HTTP|Request", meta = (
 		Keywords = "Get Elapsed Time Count"
 	))
-	float GetElapsedTime() const;
+	virtual float GetElapsedTime() const;
 
+protected:
+	virtual void BindProcessRequestComplete(
+		FHttpRequestPtr Request,
+		FHttpResponsePtr Response,
+		bool bConnectedSuccessfully
+	);
+	virtual void BindRequestProgress(FHttpRequestPtr Request, int32 BytesSent, int32 BytesReceived);
+	virtual void BindRequestWillRetry(FHttpRequestPtr Request, FHttpResponsePtr Response, float SecondsToRetry);
+	virtual void BindHeaderReceived(FHttpRequestPtr Request, const FString& HeaderName, const FString& NewHeaderValue);
+	
 private:
 	UFUNCTION(BlueprintCallable, DisplayName = "Set Process Request Complete Event", Category = "HTTP|Request", meta = (
 		Keywords = "On Set Process Request Complete Delegate Event"
@@ -164,11 +174,6 @@ private:
 		Keywords = "On Set Header Received Delegate Event"
 	))
 	UMercuryHttpRequest* K2_SetHeaderReceivedEvent(const FMercuryHttpHeaderReceivedDelegate& Event);
-	
-	void BindProcessRequestComplete(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bConnectedSuccessfully);
-	void BindRequestProgress(FHttpRequestPtr Request, int32 BytesSent, int32 BytesReceived);
-	void BindRequestWillRetry(FHttpRequestPtr Request, FHttpResponsePtr Response, float SecondsToRetry);
-	void BindHeaderReceived(FHttpRequestPtr Request, const FString& HeaderName, const FString& NewHeaderValue);
 
 public:
 	FORCEINLINE const FHttpRequestPtr& GetReference() const { return Reference; }

@@ -102,31 +102,31 @@ public:
 	))
 	virtual bool CompareEqual(const UMercuryJsonValue* const& Left, const UMercuryJsonValue* const& Right) const;
 
-protected:
+private:
 	UFUNCTION(BlueprintPure, DisplayName = "As Argument Type (Array)", Category = "JSON|Value", meta = (
 		Keywords = "JSON Value As Argument Type Array"
 	))
-	virtual void K2_AsArgumentTypeArray(TArray<UMercuryJsonValue*>& Value) const;
+	void K2_AsArgumentTypeArray(TArray<UMercuryJsonValue*>& Value) const;
 
 	UFUNCTION(BlueprintPure, DisplayName = "As Argument Type (Bool)", Category = "JSON|Value", meta = (
 		Keywords = "JSON Value As Argument Type Bool Boolean"
 	))
-	virtual void K2_AsArgumentTypeBool(bool& Value) const;
+	void K2_AsArgumentTypeBool(bool& Value) const;
 
 	UFUNCTION(BlueprintPure, DisplayName = "As Argument Type (Number)", Category = "JSON|Value", meta = (
 		Keywords = "JSON Value As Argument Type Number Float Double Real"
 	))
-	virtual void K2_AsArgumentTypeNumber(double& Value) const;
+	void K2_AsArgumentTypeNumber(double& Value) const;
 
 	UFUNCTION(BlueprintPure, DisplayName = "As Argument Type (Object)", Category = "JSON|Value", meta = (
 		Keywords = "JSON Value As Argument Type Object"
 	))
-	virtual void K2_AsArgumentTypeObject(UMercuryJsonObject*& Value) const;
+	void K2_AsArgumentTypeObject(UMercuryJsonObject*& Value) const;
 
 	UFUNCTION(BlueprintPure, DisplayName = "As Argument Type (String)", Category = "JSON|Value", meta = (
 		Keywords = "JSON Value As Argument Type String Character"
 	))
-	virtual void K2_AsArgumentTypeString(FString& Value) const;
+	void K2_AsArgumentTypeString(FString& Value) const;
 
 public:
 	FORCEINLINE const TSharedPtr<FJsonValue>& GetReference() const { return Reference; }

@@ -29,12 +29,12 @@ public:
 	UFUNCTION(BlueprintPure, DisplayName = "Get Response Code", Category = "HTTP|Response", meta = (
 		Keywords = "Get Response Code Status"
 	))
-	int32 GetResponseCode() const;
+	virtual int32 GetResponseCode() const;
 	
 	UFUNCTION(BlueprintPure, DisplayName = "Get Content As String", Category = "HTTP|Response", meta = (
 		Keywords = "Get Content As String"
 	))
-	FString GetContentAsString() const;
+	virtual FString GetContentAsString() const;
 	
 	FORCEINLINE const FHttpResponsePtr& GetReference() const { return Reference; }
 	FORCEINLINE FHttpResponsePtr& GetReference() { return Reference; }
