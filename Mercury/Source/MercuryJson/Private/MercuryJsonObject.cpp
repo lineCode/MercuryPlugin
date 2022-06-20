@@ -251,37 +251,54 @@ bool UMercuryJsonObject::TryGetArrayField(const FString& FieldName, TArray<UMerc
 
 bool UMercuryJsonObject::TryGetBoolField(const FString& FieldName, bool& OutBool) const
 {
-	return Reference ? Reference->TryGetBoolField(FieldName, OutBool) : false;
+	OutBool = false;
+	if (!Reference)
+		return false;
+	
+	return Reference->TryGetBoolField(FieldName, OutBool);
 }
 
 bool UMercuryJsonObject::TryGetNumberField(const FString& FieldName, double& OutNumber) const
 {
-	return Reference ? Reference->TryGetNumberField(FieldName, OutNumber) : false;
-}
-
-bool UMercuryJsonObject::TryGetObjectField(const FString& FieldName, UMercuryJsonObject* const& OutObject) const
-{
+	OutNumber = 0.0;
 	if (!Reference)
 		return false;
+	
+	return Reference->TryGetNumberField(FieldName, OutNumber);
+}
 
+bool UMercuryJsonObject::TryGetObjectField(const FString& FieldName, UMercuryJsonObject*& OutObject) const
+{
 	const TSharedPtr<FJsonObject>* ObjectField;
-	const bool& bGotObject = Reference->TryGetObjectField(FieldName, ObjectField);
+	const bool& bGotObject = Reference ? Reference->TryGetObjectField(FieldName, ObjectField) : false;
 
-	OutObject->GetReference() = *ObjectField;
+	OutObject->GetReference() = bGotObject ? *ObjectField : nullptr;
 	return bGotObject;
 }
 
 bool UMercuryJsonObject::TryGetStringField(const FString& FieldName, FString& OutString) const
 {
-	return Reference ? Reference->TryGetStringField(FieldName, OutString) : false;
+	OutString = TEXT("");
+	if (!Reference)
+		return false;
+	
+	return Reference->TryGetStringField(FieldName, OutString);
 }
 
 bool UMercuryJsonObject::TryGetEnumArrayField(const FString& FieldName, TArray<int32>& OutArray) const
 {
-	return Reference ? Reference->TryGetEnumArrayField(FieldName, OutArray) : false;
+	OutArray.Empty();
+	if (!Reference)
+		return false;
+	
+	return Reference->TryGetEnumArrayField(FieldName, OutArray);
 }
 
 bool UMercuryJsonObject::TryGetStringArrayField(const FString& FieldName, TArray<FString>& OutArray) const
 {
-	return Reference ? Reference->TryGetStringArrayField(FieldName, OutArray) : false;
+	OutArray.Empty();
+	if (!Reference)
+		return false;
+	
+	return Reference->TryGetStringArrayField(FieldName, OutArray);
 }

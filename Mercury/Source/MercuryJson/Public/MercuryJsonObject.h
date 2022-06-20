@@ -2,22 +2,12 @@
 
 #pragma once
 
+#include "MercuryJsonValueType.h"
+
 #include "MercuryJsonObject.generated.h"
 
 class UMercuryJsonValue;
 
-
-UENUM(BlueprintType, meta = (Keywords = "JSON Value Type None Null Number Boolean String Array Object"))
-enum class EMercuryJsonValueType : uint8
-{
-	None UMETA(DisplayName = "None"),
-	Null UMETA(DisplayName = "Null"),
-	Number UMETA(DisplayName = "Number"),
-	Boolean UMETA(DisplayName = "Boolean"),
-	String UMETA(DisplayName = "String"),
-	Array UMETA(DisplayName = "Array"),
-	Object UMETA(DisplayName = "Object")
-};
 
 UCLASS(Blueprintable, BlueprintType, DisplayName = "Mercury JSON Object")
 class MERCURYJSON_API UMercuryJsonObject : public UObject
@@ -142,7 +132,7 @@ public:
 		Keywords = "JSON Object Try Attempt Get Object Field Name Value"
 	))
 	virtual UPARAM(DisplayName = "Success") bool
-	TryGetObjectField(const FString& FieldName, UMercuryJsonObject* const& OutObject) const;
+	TryGetObjectField(const FString& FieldName, UMercuryJsonObject*& OutObject) const;
 
 	UFUNCTION(BlueprintPure, DisplayName = "Try Get String Field", Category = "JSON|Object", meta = (
 		Keywords = "JSON Object Try Attempt Get String Character Field Name Value"
