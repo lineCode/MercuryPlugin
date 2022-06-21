@@ -4,9 +4,9 @@
 
 #include "MercuryWebTypes.generated.h"
 
-
 class UMercuryHttpRequest;
 class UMercuryHttpResponse;
+
 
 UENUM(BlueprintType, meta = (
 	Keywords = "HTTP Request Status Not Started Processing Failed Connection Error Succeeded Unknown"

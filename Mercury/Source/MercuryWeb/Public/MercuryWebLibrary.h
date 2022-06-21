@@ -70,6 +70,7 @@ private:
 	);
 
 	UFUNCTION(BlueprintCallable, DisplayName = "Request Data (Payload)", Category = "Mercury|HTTP", meta = (
+		AdvancedDisplay = "4",
 		AutoCreateRefTerm = "ContentPayload, ProcessRequestComplete, RequestProgress, RequestWillRetry, HeaderReceived",
 		Keywords = "Request Data HTTP Response URL JSON Byte Array Payload"
 	))
@@ -85,6 +86,7 @@ private:
 	);
 
 	UFUNCTION(BlueprintCallable, DisplayName = "Request Data (String Content)", Category = "Mercury|HTTP", meta = (
+		AdvancedDisplay = "4",
 		AutoCreateRefTerm = "ProcessRequestComplete, RequestProgress, RequestWillRetry, HeaderReceived",
 		Keywords = "Request Data HTTP Response URL JSON String Content"
 	))
@@ -100,6 +102,7 @@ private:
 	);
 
 	UFUNCTION(BlueprintCallable, DisplayName = "Request Data (Streamed File)", Category = "Mercury|HTTP", meta = (
+		AdvancedDisplay = "4",
 		AutoCreateRefTerm = "ProcessRequestComplete, RequestProgress, RequestWillRetry, HeaderReceived",
 		Keywords = "Request Data HTTP Response URL JSON Streamed File"
 	))

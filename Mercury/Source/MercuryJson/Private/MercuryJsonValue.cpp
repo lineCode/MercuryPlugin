@@ -182,10 +182,10 @@ bool UMercuryJsonValue::TryGetNumber(double& OutNumber) const
 
 bool UMercuryJsonValue::TryGetObject(UMercuryJsonObject*& OutObject) const
 {
-	const TSharedPtr<FJsonObject>* ObjectField;
+	const TSharedPtr<FJsonObject>* ObjectField = nullptr;
 	const bool& bGotObject = Reference ? Reference->TryGetObject(ObjectField) : false;
 
-	OutObject->GetReference() = bGotObject ? *ObjectField : nullptr;
+	OutObject->GetReference() = bGotObject && ObjectField ? *ObjectField : nullptr;
 	return bGotObject;
 }
 

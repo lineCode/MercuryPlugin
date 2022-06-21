@@ -142,7 +142,7 @@ public:
 		Keywords = "Process Request Execute Fetch"
 	))
 	virtual UMercuryHttpRequest* ProcessRequest(bool& bSuccessfullyStarted);
-	virtual bool ProcessRequest();
+	virtual bool ProcessRequest() const;
 
 	UFUNCTION(BlueprintCallable, DisplayName = "Cancel Request", Category = "HTTP|Request", meta = (
 		Keywords = "Cancel Request Stop Halt Interrupt"
@@ -238,8 +238,8 @@ public:
 		return OnMercuryHttpHeaderReceivedDelegate;
 	}
 
-	FORCEINLINE const bool& IsProcessRequestCompleteDone() const { return bProcessRequestCompleteDone; }
-	FORCEINLINE const bool& IsRequestProgressDone() const { return bRequestProgressDone; }
-	FORCEINLINE const bool& IsRequestWillRetryDone() const { return bRequestWillRetryDone; }
-	FORCEINLINE const bool& IsHeaderReceivedDone() const { return bHeaderReceivedDone; }
+	FORCEINLINE bool IsProcessRequestCompleteDone() const { return bProcessRequestCompleteDone; }
+	FORCEINLINE bool IsRequestProgressDone() const { return bRequestProgressDone; }
+	FORCEINLINE bool IsRequestWillRetryDone() const { return bRequestWillRetryDone; }
+	FORCEINLINE bool IsHeaderReceivedDone() const { return bHeaderReceivedDone; }
 };

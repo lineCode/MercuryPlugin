@@ -186,7 +186,7 @@ UMercuryHttpRequest* UMercuryHttpRequest::ProcessRequest(bool& bSuccessfullyStar
 	bSuccessfullyStarted = ProcessRequest();
 	return bSuccessfullyStarted ? this : nullptr;
 }
-bool UMercuryHttpRequest::ProcessRequest()
+bool UMercuryHttpRequest::ProcessRequest() const
 {
 	return Reference ? Reference->ProcessRequest() : false;
 }
@@ -249,7 +249,10 @@ void UMercuryHttpRequest::BindProcessRequestComplete(
 )
 {
 	if (!OnMercuryHttpProcessRequestCompleteDelegate.IsBound())
+	{
+		bProcessRequestCompleteDone = true;
 		return;
+	}
 	
 	UMercuryHttpRequest* const& MercuryRequest = NewObject<UMercuryHttpRequest>();
 	MercuryRequest->GetReference() = Request;
@@ -258,7 +261,7 @@ void UMercuryHttpRequest::BindProcessRequestComplete(
 	MercuryResponse->GetReference() = Response;
 	MercuryRequest->GetMercuryHttpResponse() = MercuryResponse;
 	
-	OnMercuryHttpProcessRequestCompleteDelegate.Execute(MercuryRequest, MercuryResponse, bConnectedSuccessfully);
+	OnMercuryHttpProcessRequestCompleteDelegate.ExecuteIfBound(MercuryRequest, MercuryResponse, bConnectedSuccessfully);
 	bProcessRequestCompleteDone = true;
 }
 
@@ -269,7 +272,10 @@ void UMercuryHttpRequest::BindRequestProgress(
 )
 {
 	if (!OnMercuryHttpRequestProgressDelegate.IsBound())
+	{
+		bRequestProgressDone = true;
 		return;
+	}
 	
 	UMercuryHttpRequest* const& MercuryRequest = NewObject<UMercuryHttpRequest>();
 	MercuryRequest->GetReference() = Request;
@@ -285,7 +291,10 @@ void UMercuryHttpRequest::BindRequestWillRetry(
 )
 {
 	if (!OnMercuryHttpRequestWillRetryDelegate.IsBound())
+	{
+		bRequestWillRetryDone = true;
 		return;
+	}
 	
 	UMercuryHttpRequest* const& MercuryRequest = NewObject<UMercuryHttpRequest>();
 	MercuryRequest->GetReference() = Request;
@@ -305,7 +314,10 @@ void UMercuryHttpRequest::BindHeaderReceived(
 )
 {
 	if (!OnMercuryHttpHeaderReceivedDelegate.IsBound())
+	{
+		bHeaderReceivedDone = true;
 		return;
+	}
 	
 	UMercuryHttpRequest* const& MercuryRequest = NewObject<UMercuryHttpRequest>();
 	MercuryRequest->GetReference() = Request;
