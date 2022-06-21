@@ -7,7 +7,7 @@
 class IHttpBase;
 
 
-UCLASS(Abstract, BlueprintType, DisplayName = "Mercury HTTP Base")
+UCLASS(Abstract, Blueprintable, BlueprintType, DisplayName = "Mercury HTTP Base")
 class MERCURYWEB_API UMercuryHttpBase : public UObject
 {
 	GENERATED_BODY()

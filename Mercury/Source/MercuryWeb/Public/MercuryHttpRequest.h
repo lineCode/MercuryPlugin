@@ -11,7 +11,7 @@
 class FHttpModule;
 
 
-UCLASS(BlueprintType, DisplayName = "Mercury HTTP Request")
+UCLASS(Blueprintable, BlueprintType, DisplayName = "Mercury HTTP Request")
 class MERCURYWEB_API UMercuryHttpRequest : public UMercuryHttpBase
 {
 	GENERATED_BODY()

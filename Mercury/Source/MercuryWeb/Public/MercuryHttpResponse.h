@@ -8,7 +8,7 @@
 #include "MercuryHttpResponse.generated.h"
 
 
-UCLASS(BlueprintType, DisplayName = "Mercury HTTP Response")
+UCLASS(Blueprintable, BlueprintType, DisplayName = "Mercury HTTP Response")
 class MERCURYWEB_API UMercuryHttpResponse : public UMercuryHttpBase
 {
 	GENERATED_BODY()
