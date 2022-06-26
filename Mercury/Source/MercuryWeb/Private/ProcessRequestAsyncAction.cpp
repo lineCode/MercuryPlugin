@@ -5,14 +5,27 @@
 #include "MercuryHttpRequest.h"
 
 
+UProcessRequestAsyncAction::UProcessRequestAsyncAction(
+	const FObjectInitializer& ObjectInitializer
+) : Super(ObjectInitializer)
+{
+	OnProcessRequestCompletePin = FProcessRequestAsyncPin();
+	OnRequestProgressPin = FProcessRequestAsyncPin();
+	OnRequestWillRetryPin = FProcessRequestAsyncPin();
+	OnHeaderReceivedPin = FProcessRequestAsyncPin();
+
+	WorldContext = nullptr;
+	Request = nullptr;
+}
+
 UProcessRequestAsyncAction* UProcessRequestAsyncAction::ProcessRequestAsync(
 	const UObject* WorldContextObject,
 	const UMercuryHttpRequest* const& MercuryRequest
 )
 {
 	UProcessRequestAsyncAction* const& AsyncAction = NewObject<UProcessRequestAsyncAction>();
-	AsyncAction->WorldContext = WorldContextObject;
-	AsyncAction->Request = MercuryRequest;
+	AsyncAction->GetWorldContext() = WorldContextObject;
+	AsyncAction->GetRequest() = MercuryRequest;
 	return AsyncAction;
 }
 

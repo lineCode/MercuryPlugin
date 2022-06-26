@@ -68,6 +68,8 @@ class MERCURYWEB_API UProcessRequestAsyncAction : public UBlueprintAsyncActionBa
 	FTimerHandle HeaderReceivedTimer;
 
 public:
+	explicit UProcessRequestAsyncAction(const FObjectInitializer& ObjectInitializer);
+	
 	UFUNCTION(BlueprintCallable, DisplayName = "Process Request Async", Category = "HTTP|Request", meta = (
 		BlueprintInternalUseOnly = "true",
 		Keywords = "Mercury HTTP Process Request Async World Context Object",
