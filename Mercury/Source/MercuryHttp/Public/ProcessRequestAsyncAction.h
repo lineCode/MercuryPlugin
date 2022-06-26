@@ -13,26 +13,26 @@ UDELEGATE(BlueprintCallable, DisplayName = "Process Request Async Pin")
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FProcessRequestAsyncPin);
 
 UCLASS(Blueprintable, BlueprintType, DisplayName = "Process Request Async Action")
-class MERCURYWEB_API UProcessRequestAsyncAction : public UBlueprintAsyncActionBase
+class MERCURYHTTP_API UProcessRequestAsyncAction : public UBlueprintAsyncActionBase
 {
 	GENERATED_BODY()
 
-	UPROPERTY(BlueprintAssignable, DisplayName = "Process Request Complete", Category = "Output", meta = (
+	UPROPERTY(BlueprintAssignable, DisplayName = "On Process Request Complete", Category = "Output", meta = (
 		AllowPrivateAccess = "true"
 	))
 	FProcessRequestAsyncPin OnProcessRequestCompletePin;
 
-	UPROPERTY(BlueprintAssignable, DisplayName = "Request Progress", Category = "Output", meta = (
+	UPROPERTY(BlueprintAssignable, DisplayName = "On Request Progress", Category = "Output", meta = (
 		AllowPrivateAccess = "true"
 	))
 	FProcessRequestAsyncPin OnRequestProgressPin;
 
-	UPROPERTY(BlueprintAssignable, DisplayName = "Request Will Retry", Category = "Output", meta = (
+	UPROPERTY(BlueprintAssignable, DisplayName = "On Request Will Retry", Category = "Output", meta = (
 		AllowPrivateAccess = "true"
 	))
 	FProcessRequestAsyncPin OnRequestWillRetryPin;
 
-	UPROPERTY(BlueprintAssignable, DisplayName = "Header Received", Category = "Output", meta = (
+	UPROPERTY(BlueprintAssignable, DisplayName = "On Header Received", Category = "Output", meta = (
 		AllowPrivateAccess = "true"
 	))
 	FProcessRequestAsyncPin OnHeaderReceivedPin;
@@ -47,22 +47,22 @@ class MERCURYWEB_API UProcessRequestAsyncAction : public UBlueprintAsyncActionBa
 	))
 	TObjectPtr<const UMercuryHttpRequest> Request;
 
-	UPROPERTY(BlueprintReadOnly, DisplayName = "Process Request Complete Timer", Category = "Internal|Timer", meta = (
+	UPROPERTY(BlueprintReadOnly, DisplayName = "Process Request Complete Timer", Category = "Internal|Timers", meta = (
 		AllowPrivateAccess = "true"
 	))
 	FTimerHandle ProcessRequestCompleteTimer;
 
-	UPROPERTY(BlueprintReadOnly, DisplayName = "Request Progress Timer", Category = "Internal|Timer", meta = (
+	UPROPERTY(BlueprintReadOnly, DisplayName = "Request Progress Timer", Category = "Internal|Timers", meta = (
 		AllowPrivateAccess = "true"
 	))
 	FTimerHandle RequestProgressTimer;
 
-	UPROPERTY(BlueprintReadOnly, DisplayName = "Request Will Retry Timer", Category = "Internal|Timer", meta = (
+	UPROPERTY(BlueprintReadOnly, DisplayName = "Request Will Retry Timer", Category = "Internal|Timers", meta = (
 		AllowPrivateAccess = "true"
 	))
 	FTimerHandle RequestWillRetryTimer;
 
-	UPROPERTY(BlueprintReadOnly, DisplayName = "Header Received Timer", Category = "Internal|Timer", meta = (
+	UPROPERTY(BlueprintReadOnly, DisplayName = "Header Received Timer", Category = "Internal|Timers", meta = (
 		AllowPrivateAccess = "true"
 	))
 	FTimerHandle HeaderReceivedTimer;

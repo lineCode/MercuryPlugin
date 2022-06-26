@@ -3,8 +3,8 @@
 #include "MercuryHttpRequest.h"
 
 #include "HttpModule.h"
+#include "MercuryHttp.h"
 #include "MercuryHttpResponse.h"
-#include "MercuryWeb.h"
 
 FHttpModule* UMercuryHttpRequest::HttpModule = &FHttpModule::Get();
 
@@ -223,7 +223,7 @@ EMercuryHttpRequestStatus UMercuryHttpRequest::GetMercuryHttpStatus() const
 		return EMercuryHttpRequestStatus::Succeeded;
 
 	default:
-		UE_LOG(LogMercuryWeb, Error, TEXT("Unknown request status: %d"), Status);
+		UE_LOG(LogMercuryHttp, Error, TEXT("Unknown request status: %d"), Status);
 		return EMercuryHttpRequestStatus::Unknown;
 	}
 }

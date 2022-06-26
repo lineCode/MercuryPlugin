@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "MercuryWebTypes.generated.h"
+#include "MercuryHttpTypes.generated.h"
 
 class UMercuryHttpRequest;
 class UMercuryHttpResponse;

@@ -2,13 +2,13 @@
 
 #pragma once
 
-#include "MercuryHttpBase.generated.h"
+#include "MercuryHttpBaseObject.generated.h"
 
 class IHttpBase;
 
 
-UCLASS(Abstract, Blueprintable, BlueprintType, DisplayName = "Mercury HTTP Base")
-class MERCURYWEB_API UMercuryHttpBase : public UObject
+UCLASS(Abstract, Blueprintable, BlueprintType, DisplayName = "Mercury HTTP Base Object")
+class MERCURYHTTP_API UMercuryHttpBaseObject : public UObject
 {
 	GENERATED_BODY()
 

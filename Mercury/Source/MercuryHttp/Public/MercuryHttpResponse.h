@@ -3,13 +3,13 @@
 #pragma once
 
 #include "Interfaces/IHttpRequest.h"
-#include "MercuryHttpBase.h"
+#include "MercuryHttpBaseObject.h"
 
 #include "MercuryHttpResponse.generated.h"
 
 
 UCLASS(Blueprintable, BlueprintType, DisplayName = "Mercury HTTP Response")
-class MERCURYWEB_API UMercuryHttpResponse : public UMercuryHttpBase
+class MERCURYHTTP_API UMercuryHttpResponse : public UMercuryHttpBaseObject
 {
 	GENERATED_BODY()
 

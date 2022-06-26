@@ -4,9 +4,9 @@ using UnrealBuildTool;
 
 
 // ReSharper disable once InconsistentNaming
-public class MercuryWeb : ModuleRules
+public class MercuryHttp : ModuleRules
 {
-	public MercuryWeb(ReadOnlyTargetRules Target) : base(Target)
+	public MercuryHttp(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 		
@@ -15,7 +15,7 @@ public class MercuryWeb : ModuleRules
 			"Core",
 			"CoreUObject",
 			"Engine",
-			"WebSockets"
+			"HTTP"
 		});
 	}
 }
