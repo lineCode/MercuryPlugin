@@ -67,7 +67,7 @@ void UProcessRequestAsyncAction::Activate()
 			TimerManager.ClearTimer(ProcessRequestCompleteTimer);
 			OnProcessRequestCompletePin.Broadcast();
 		},
-		0.001f,
+		0.01f,
 		true
 	);
 	
@@ -81,7 +81,7 @@ void UProcessRequestAsyncAction::Activate()
 			TimerManager.ClearTimer(RequestProgressTimer);
 			OnRequestProgressPin.Broadcast();
 		},
-		0.001f,
+		0.01f,
 		true
 	);
 	
@@ -95,7 +95,7 @@ void UProcessRequestAsyncAction::Activate()
 			TimerManager.ClearTimer(RequestWillRetryTimer);
 			OnRequestWillRetryPin.Broadcast();
 		},
-		0.001f,
+		0.01f,
 		true
 	);
 	
@@ -109,7 +109,7 @@ void UProcessRequestAsyncAction::Activate()
 			TimerManager.ClearTimer(HeaderReceivedTimer);
 			OnHeaderReceivedPin.Broadcast();
 		},
-		0.001f,
+		0.01f,
 		true
 	);
 }
