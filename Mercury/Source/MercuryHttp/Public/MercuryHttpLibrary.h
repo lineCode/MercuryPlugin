@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "MercuryHttpTypes.h"
+#include "MercuryHttpDelegates.h"
 
 #include "MercuryHttpLibrary.generated.h"
 

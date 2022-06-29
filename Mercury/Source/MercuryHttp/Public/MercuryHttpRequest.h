@@ -4,11 +4,25 @@
 
 #include "Interfaces/IHttpRequest.h"
 #include "MercuryHttpClassBase.h"
-#include "MercuryHttpTypes.h"
+#include "MercuryHttpDelegates.h"
 
 #include "MercuryHttpRequest.generated.h"
 
 class FHttpModule;
+
+
+UENUM(BlueprintType, meta = (
+	Keywords = "HTTP Request Status Not Started Processing Failed Connection Error Succeeded Unknown"
+))
+enum class EMercuryHttpRequestStatus : uint8
+{
+	NotStarted UMETA(DisplayName = "Not Started"),
+	Processing UMETA(DisplayName = "Processing"),
+	Failed UMETA(DisplayName = "Failed"),
+	Failed_ConnectionError UMETA(DisplayName = "Connection Error"),
+	Succeeded UMETA(DisplayName = "Succeeded"),
+	Unknown UMETA(DisplayName = "Unknown")
+};
 
 
 UCLASS(Blueprintable, BlueprintType, DisplayName = "Mercury HTTP Request")

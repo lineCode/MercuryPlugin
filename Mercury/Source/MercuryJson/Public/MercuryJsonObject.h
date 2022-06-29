@@ -3,11 +3,11 @@
 #pragma once
 
 #include "MercuryJsonClassBase.h"
-#include "MercuryJsonValueType.h"
 
 #include "MercuryJsonObject.generated.h"
 
 class UMercuryJsonValue;
+enum class EMercuryJsonValueType : uint8;
 
 
 UCLASS(Blueprintable, BlueprintType, DisplayName = "Mercury JSON Object")

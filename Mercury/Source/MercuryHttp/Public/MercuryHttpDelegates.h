@@ -2,24 +2,11 @@
 
 #pragma once
 
-#include "MercuryHttpTypes.generated.h"
+#include "MercuryHttpDelegates.generated.h"
 
 class UMercuryHttpRequest;
 class UMercuryHttpResponse;
 
-
-UENUM(BlueprintType, meta = (
-	Keywords = "HTTP Request Status Not Started Processing Failed Connection Error Succeeded Unknown"
-))
-enum class EMercuryHttpRequestStatus : uint8
-{
-	NotStarted UMETA(DisplayName = "Not Started"),
-	Processing UMETA(DisplayName = "Processing"),
-	Failed UMETA(DisplayName = "Failed"),
-	Failed_ConnectionError UMETA(DisplayName = "Connection Error"),
-	Succeeded UMETA(DisplayName = "Succeeded"),
-	Unknown UMETA(DisplayName = "Unknown")
-};
 
 UDELEGATE(BlueprintCallable, DisplayName = "Process Request Complete Event")
 DECLARE_DYNAMIC_DELEGATE_ThreeParams(
