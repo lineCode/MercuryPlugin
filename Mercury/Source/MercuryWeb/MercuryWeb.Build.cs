@@ -15,6 +15,7 @@ public class MercuryWeb : ModuleRules
 			"Core",
 			"CoreUObject",
 			"Engine",
+			"Networking",
 			"WebSockets"
 		});
 	}
