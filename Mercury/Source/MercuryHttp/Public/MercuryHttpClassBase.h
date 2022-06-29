@@ -4,6 +4,7 @@
 
 #include "MercuryHttpClassBase.generated.h"
 
+class FHttpModule;
 class IHttpBase;
 
 
@@ -12,7 +13,12 @@ class MERCURYHTTP_API UMercuryHttpClassBase : public UObject
 {
 	GENERATED_BODY()
 
+protected:
+	static FHttpModule* const HttpModule;
+
 public:
+	explicit UMercuryHttpClassBase(const FObjectInitializer& ObjectInitializer);
+	
 	UFUNCTION(BlueprintPure, DisplayName = "Get URL", Category = "HTTP|Base", meta = (
 		Keywords = "Get URL Link Host Server"
 	))

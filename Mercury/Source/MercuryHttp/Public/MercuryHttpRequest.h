@@ -2,13 +2,13 @@
 
 #pragma once
 
-#include "Interfaces/IHttpRequest.h"
 #include "MercuryHttpClassBase.h"
 #include "MercuryHttpDelegates.h"
 
 #include "MercuryHttpRequest.generated.h"
 
-class FHttpModule;
+class IHttpRequest;
+class IHttpResponse;
 
 
 UENUM(BlueprintType, meta = (
@@ -29,9 +29,8 @@ UCLASS(Blueprintable, BlueprintType, DisplayName = "Mercury HTTP Request")
 class MERCURYHTTP_API UMercuryHttpRequest : public UMercuryHttpClassBase
 {
 	GENERATED_BODY()
-
-	static FHttpModule* HttpModule;
-	FHttpRequestPtr Reference;
+	
+	TSharedPtr<IHttpRequest> Reference;
 	
 	UPROPERTY(BlueprintReadOnly, DisplayName = "HTTP Response", Category = "HTTP|Request", meta = (
 		AllowPrivateAccess = "true"
@@ -180,13 +179,25 @@ public:
 
 protected:
 	virtual void BindProcessRequestComplete(
-		FHttpRequestPtr Request,
-		FHttpResponsePtr Response,
+		TSharedPtr<IHttpRequest> Request,
+		TSharedPtr<IHttpResponse> Response,
 		bool bConnectedSuccessfully
 	);
-	virtual void BindRequestProgress(FHttpRequestPtr Request, int32 BytesSent, int32 BytesReceived);
-	virtual void BindRequestWillRetry(FHttpRequestPtr Request, FHttpResponsePtr Response, float SecondsToRetry);
-	virtual void BindHeaderReceived(FHttpRequestPtr Request, const FString& HeaderName, const FString& NewHeaderValue);
+	virtual void BindRequestProgress(
+		TSharedPtr<IHttpRequest> Request,
+		int32 BytesSent,
+		int32 BytesReceived
+	);
+	virtual void BindRequestWillRetry(
+		TSharedPtr<IHttpRequest> Request,
+		TSharedPtr<IHttpResponse> Response,
+		float SecondsToRetry
+	);
+	virtual void BindHeaderReceived(
+		TSharedPtr<IHttpRequest> Request,
+		const FString& HeaderName,
+		const FString& NewHeaderValue
+	);
 	
 private:
 	UFUNCTION(BlueprintCallable, DisplayName = "Set Process Request Complete Event", Category = "HTTP|Request", meta = (
@@ -210,8 +221,8 @@ private:
 	UMercuryHttpRequest* K2_SetHeaderReceivedEvent(const FMercuryHttpHeaderReceivedDelegate& Event);
 
 public:
-	FORCEINLINE const FHttpRequestPtr& GetReference() const { return Reference; }
-	FORCEINLINE FHttpRequestPtr& GetReference() { return Reference; }
+	FORCEINLINE const TSharedPtr<IHttpRequest>& GetReference() const { return Reference; }
+	FORCEINLINE TSharedPtr<IHttpRequest>& GetReference() { return Reference; }
 
 	FORCEINLINE const TObjectPtr<UMercuryHttpResponse>& GetMercuryHttpResponse() const { return MercuryHttpResponse; }
 	FORCEINLINE TObjectPtr<UMercuryHttpResponse>& GetMercuryHttpResponse() { return MercuryHttpResponse; }

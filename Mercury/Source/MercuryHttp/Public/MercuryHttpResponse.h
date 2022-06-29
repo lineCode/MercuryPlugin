@@ -2,10 +2,11 @@
 
 #pragma once
 
-#include "Interfaces/IHttpRequest.h"
 #include "MercuryHttpClassBase.h"
 
 #include "MercuryHttpResponse.generated.h"
+
+class IHttpResponse;
 
 
 UCLASS(Blueprintable, BlueprintType, DisplayName = "Mercury HTTP Response")
@@ -13,7 +14,7 @@ class MERCURYHTTP_API UMercuryHttpResponse : public UMercuryHttpClassBase
 {
 	GENERATED_BODY()
 
-	FHttpResponsePtr Reference;
+	TSharedPtr<IHttpResponse> Reference;
 
 public:
 	explicit UMercuryHttpResponse(const FObjectInitializer& ObjectInitializer);
@@ -36,6 +37,6 @@ public:
 	))
 	virtual FString GetContentAsString() const;
 	
-	FORCEINLINE const FHttpResponsePtr& GetReference() const { return Reference; }
-	FORCEINLINE FHttpResponsePtr& GetReference() { return Reference; }
+	FORCEINLINE const TSharedPtr<IHttpResponse>& GetReference() const { return Reference; }
+	FORCEINLINE TSharedPtr<IHttpResponse>& GetReference() { return Reference; }
 };

@@ -6,12 +6,9 @@
 #include "MercuryHttp.h"
 #include "MercuryHttpResponse.h"
 
-FHttpModule* UMercuryHttpRequest::HttpModule = &FHttpModule::Get();
-
 
 UMercuryHttpRequest::UMercuryHttpRequest(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
-	check(HttpModule);
 	Reference = HttpModule->CreateRequest();
 	Reference->OnProcessRequestComplete().BindUObject(this, &UMercuryHttpRequest::BindProcessRequestComplete);
 	Reference->OnRequestProgress().BindUObject(this, &UMercuryHttpRequest::BindRequestProgress);
@@ -243,8 +240,8 @@ float UMercuryHttpRequest::GetElapsedTime() const
 }
 
 void UMercuryHttpRequest::BindProcessRequestComplete(
-	const FHttpRequestPtr Request,
-	const FHttpResponsePtr Response,
+	const TSharedPtr<IHttpRequest> Request,
+	const TSharedPtr<IHttpResponse> Response,
 	const bool bConnectedSuccessfully
 )
 {
@@ -266,7 +263,7 @@ void UMercuryHttpRequest::BindProcessRequestComplete(
 }
 
 void UMercuryHttpRequest::BindRequestProgress(
-	const FHttpRequestPtr Request,
+	const TSharedPtr<IHttpRequest> Request,
 	const int32 BytesSent,
 	const int32 BytesReceived
 )
@@ -285,8 +282,8 @@ void UMercuryHttpRequest::BindRequestProgress(
 }
 
 void UMercuryHttpRequest::BindRequestWillRetry(
-	const FHttpRequestPtr Request,
-	const FHttpResponsePtr Response,
+	const TSharedPtr<IHttpRequest> Request,
+	const TSharedPtr<IHttpResponse> Response,
 	const float SecondsToRetry
 )
 {
@@ -308,7 +305,7 @@ void UMercuryHttpRequest::BindRequestWillRetry(
 }
 
 void UMercuryHttpRequest::BindHeaderReceived(
-	const FHttpRequestPtr Request,
+	const TSharedPtr<IHttpRequest> Request,
 	const FString& HeaderName,
 	const FString& NewHeaderValue
 )

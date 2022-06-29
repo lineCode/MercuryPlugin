@@ -5,5 +5,5 @@
 
 UMercuryWebAddress::UMercuryWebAddress(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
-	Reference = MakeShareable(new FIPv4Address());
+	Reference = nullptr;
 }

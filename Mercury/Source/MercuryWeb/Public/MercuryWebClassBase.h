@@ -9,4 +9,10 @@ UCLASS(Abstract, Blueprintable, BlueprintType, DisplayName = "Mercury Web Class 
 class MERCURYWEB_API UMercuryWebClassBase : public UObject
 {
 	GENERATED_BODY()
+
+protected:
+	static ISocketSubsystem* const SocketSubsystem;
+
+public:
+	explicit UMercuryWebClassBase(const FObjectInitializer& ObjectInitializer);
 };

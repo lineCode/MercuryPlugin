@@ -12,12 +12,12 @@ UCLASS(Blueprintable, BlueprintType, DisplayName = "Mercury Web Address")
 class MERCURYWEB_API UMercuryWebAddress : public UMercuryWebClassBase
 {
 	GENERATED_BODY()
-
-	TSharedRef<FIPv4Address> Reference;
+	
+	TSharedPtr<FIPv4Address> Reference;
 
 public:
 	explicit UMercuryWebAddress(const FObjectInitializer& ObjectInitializer);
 	
-	FORCEINLINE const TSharedRef<FIPv4Address>& GetReference() const { return Reference; }
-	FORCEINLINE TSharedRef<FIPv4Address>& GetReference() { return Reference; }
+	FORCEINLINE const TSharedPtr<FIPv4Address>& GetReference() const { return Reference; }
+	FORCEINLINE TSharedPtr<FIPv4Address>& GetReference() { return Reference; }
 };
