@@ -2,15 +2,28 @@
 
 #pragma once
 
-#include "MercuryJsonValueType.h"
+#include "MercuryJsonClassBase.h"
 
 #include "MercuryJsonValue.generated.h"
 
 class UMercuryJsonObject;
 
 
+UENUM(BlueprintType, meta = (Keywords = "JSON Value Type None Null Number Boolean String Array Object"))
+enum class EMercuryJsonValueType : uint8
+{
+	None UMETA(DisplayName = "None"),
+	Null UMETA(DisplayName = "Null"),
+	Number UMETA(DisplayName = "Number"),
+	Boolean UMETA(DisplayName = "Boolean"),
+	String UMETA(DisplayName = "String"),
+	Array UMETA(DisplayName = "Array"),
+	Object UMETA(DisplayName = "Object")
+};
+
+
 UCLASS(Blueprintable, BlueprintType, DisplayName = "Mercury JSON Value")
-class MERCURYJSON_API UMercuryJsonValue : public UObject
+class MERCURYJSON_API UMercuryJsonValue : public UMercuryJsonClassBase
 {
 	GENERATED_BODY()
 

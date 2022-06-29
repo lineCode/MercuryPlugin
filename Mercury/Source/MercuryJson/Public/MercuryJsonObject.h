@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "MercuryJsonClassBase.h"
 #include "MercuryJsonValueType.h"
 
 #include "MercuryJsonObject.generated.h"
@@ -10,7 +11,7 @@ class UMercuryJsonValue;
 
 
 UCLASS(Blueprintable, BlueprintType, DisplayName = "Mercury JSON Object")
-class MERCURYJSON_API UMercuryJsonObject : public UObject
+class MERCURYJSON_API UMercuryJsonObject : public UMercuryJsonClassBase
 {
 	GENERATED_BODY()
 
