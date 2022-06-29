@@ -3,7 +3,7 @@
 #pragma once
 
 #include "Interfaces/IHttpRequest.h"
-#include "MercuryHttpBaseObject.h"
+#include "MercuryHttpClassBase.h"
 #include "MercuryHttpTypes.h"
 
 #include "MercuryHttpRequest.generated.h"
@@ -12,7 +12,7 @@ class FHttpModule;
 
 
 UCLASS(Blueprintable, BlueprintType, DisplayName = "Mercury HTTP Request")
-class MERCURYHTTP_API UMercuryHttpRequest : public UMercuryHttpBaseObject
+class MERCURYHTTP_API UMercuryHttpRequest : public UMercuryHttpClassBase
 {
 	GENERATED_BODY()
 
