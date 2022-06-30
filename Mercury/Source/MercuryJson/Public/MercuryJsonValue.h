@@ -28,7 +28,7 @@ class MERCURYJSON_API UMercuryJsonValue : public UMercuryJsonClassBase
 	GENERATED_BODY()
 
 protected:
-	TSharedPtr<FJsonValue> Reference;
+	TSharedPtr<FJsonValue> Resource;
 
 public:
 	explicit UMercuryJsonValue(const FObjectInitializer& ObjectInitializer);
@@ -142,6 +142,6 @@ private:
 	void K2_AsArgumentTypeString(FString& Value) const;
 
 public:
-	FORCEINLINE const TSharedPtr<FJsonValue>& GetReference() const { return Reference; }
-	FORCEINLINE TSharedPtr<FJsonValue>& GetReference() { return Reference; }
+	FORCEINLINE const TSharedPtr<FJsonValue>& GetResource() const { return Resource; }
+	FORCEINLINE TSharedPtr<FJsonValue>& GetResource() { return Resource; }
 };

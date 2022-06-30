@@ -14,7 +14,7 @@ class MERCURYHTTP_API UMercuryHttpResponse : public UMercuryHttpClassBase
 {
 	GENERATED_BODY()
 
-	TSharedPtr<IHttpResponse> Reference;
+	TSharedPtr<IHttpResponse> Resource;
 
 public:
 	explicit UMercuryHttpResponse(const FObjectInitializer& ObjectInitializer);
@@ -37,6 +37,6 @@ public:
 	))
 	virtual FString GetContentAsString() const;
 	
-	FORCEINLINE const TSharedPtr<IHttpResponse>& GetReference() const { return Reference; }
-	FORCEINLINE TSharedPtr<IHttpResponse>& GetReference() { return Reference; }
+	FORCEINLINE const TSharedPtr<IHttpResponse>& GetResource() const { return Resource; }
+	FORCEINLINE TSharedPtr<IHttpResponse>& GetResource() { return Resource; }
 };

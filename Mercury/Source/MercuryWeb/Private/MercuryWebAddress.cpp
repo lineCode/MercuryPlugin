@@ -5,5 +5,5 @@
 
 UMercuryWebAddress::UMercuryWebAddress(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
-	Reference = nullptr;
+	Resource = nullptr;
 }

@@ -8,15 +8,15 @@
 
 UMercuryJsonValue::UMercuryJsonValue(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
-	Reference = MakeShareable(new FJsonValueNull());
+	Resource = MakeShareable(new FJsonValueNull());
 }
 
 EMercuryJsonValueType UMercuryJsonValue::GetType() const
 {
-	if (!Reference)
+	if (!Resource)
 		return EMercuryJsonValueType::Null;
 	
-	switch (Reference->Type)
+	switch (Resource->Type)
 	{
 	case EJson::None:
 		return EMercuryJsonValueType::None;
@@ -49,12 +49,12 @@ EMercuryJsonValueType UMercuryJsonValue::GetType() const
 TArray<UMercuryJsonValue*> UMercuryJsonValue::AsArray() const
 {
 	TArray<UMercuryJsonValue*> MercuryJsonValues;
-	TArray<TSharedPtr<FJsonValue>> JsonValues = Reference ? Reference->AsArray() : TArray<TSharedPtr<FJsonValue>>();
+	TArray<TSharedPtr<FJsonValue>> JsonValues = Resource ? Resource->AsArray() : TArray<TSharedPtr<FJsonValue>>();
 	
 	for (const TSharedPtr<FJsonValue>& JsonValue : JsonValues)
 	{
 		UMercuryJsonValue* const& MercuryJsonValue = NewObject<UMercuryJsonValue>();
-		MercuryJsonValue->GetReference() = JsonValue;
+		MercuryJsonValue->GetResource() = JsonValue;
 		MercuryJsonValues.Add(MercuryJsonValue);
 	}
 
@@ -63,47 +63,47 @@ TArray<UMercuryJsonValue*> UMercuryJsonValue::AsArray() const
 
 bool UMercuryJsonValue::AsBool() const
 {
-	return Reference ? Reference->AsBool() : false;
+	return Resource ? Resource->AsBool() : false;
 }
 
 double UMercuryJsonValue::AsNumber() const
 {
-	return Reference ? Reference->AsNumber() : 0.0;
+	return Resource ? Resource->AsNumber() : 0.0;
 }
 
 UMercuryJsonObject* UMercuryJsonValue::AsObject() const
 {
-	if (!Reference)
+	if (!Resource)
 		return nullptr;
 	
 	UMercuryJsonObject* const& JsonObject = NewObject<UMercuryJsonObject>();
-	JsonObject->GetReference() = Reference->AsObject();
+	JsonObject->GetResource() = Resource->AsObject();
 	return JsonObject;
 }
 
 FString UMercuryJsonValue::AsString() const
 {
-	return Reference ? Reference->AsString() : TEXT("");
+	return Resource ? Resource->AsString() : TEXT("");
 }
 
 bool UMercuryJsonValue::IsNull() const
 {
-	return Reference ? Reference->IsNull() : true;
+	return Resource ? Resource->IsNull() : true;
 }
 
 void UMercuryJsonValue::AsArgumentType(TArray<UMercuryJsonValue*>& Value) const
 {
 	Value.Empty();
-	if (!Reference)
+	if (!Resource)
 		return;
 	
 	TArray<TSharedPtr<FJsonValue>> JsonValues;
-	Reference->AsArgumentType(JsonValues);
+	Resource->AsArgumentType(JsonValues);
 	
 	for (const TSharedPtr<FJsonValue>& JsonValue : JsonValues)
 	{
 		UMercuryJsonValue* const& MercuryJsonValue = NewObject<UMercuryJsonValue>();
-		MercuryJsonValue->GetReference() = JsonValue;
+		MercuryJsonValue->GetResource() = JsonValue;
 		Value.Add(MercuryJsonValue);
 	}
 }
@@ -111,52 +111,52 @@ void UMercuryJsonValue::AsArgumentType(TArray<UMercuryJsonValue*>& Value) const
 void UMercuryJsonValue::AsArgumentType(bool& Value) const
 {
 	Value = false;
-	if (!Reference)
+	if (!Resource)
 		return;
 
-	Reference->AsArgumentType(Value);
+	Resource->AsArgumentType(Value);
 }
 
 void UMercuryJsonValue::AsArgumentType(double& Value) const
 {
 	Value = 0.0;
-	if (!Reference)
+	if (!Resource)
 		return;
 
-	Reference->AsArgumentType(Value);
+	Resource->AsArgumentType(Value);
 }
 
 void UMercuryJsonValue::AsArgumentType(UMercuryJsonObject*& Value) const
 {
-	Value->GetReference() = nullptr;
-	if (!Reference)
+	Value->GetResource() = nullptr;
+	if (!Resource)
 		return;
 	
-	Reference->AsArgumentType(Value->GetReference());
+	Resource->AsArgumentType(Value->GetResource());
 }
 
 void UMercuryJsonValue::AsArgumentType(FString& Value) const
 {
 	Value = TEXT("");
-	if (!Reference)
+	if (!Resource)
 		return;
 
-	Reference->AsArgumentType(Value);
+	Resource->AsArgumentType(Value);
 }
 
 bool UMercuryJsonValue::TryGetArray(TArray<UMercuryJsonValue*>& OutArray) const
 {
 	OutArray.Empty();
-	if (!Reference)
+	if (!Resource)
 		return false;
 	
 	const TArray<TSharedPtr<FJsonValue>>* ArrayField;
-	const bool& bGotArray = Reference->TryGetArray(ArrayField);
+	const bool& bGotArray = Resource->TryGetArray(ArrayField);
 
 	for (const TSharedPtr<FJsonValue>& JsonValue : *ArrayField)
 	{
 		UMercuryJsonValue* const& MercuryJsonValue = NewObject<UMercuryJsonValue>();
-		MercuryJsonValue->GetReference() = JsonValue;
+		MercuryJsonValue->GetResource() = JsonValue;
 		OutArray.Add(MercuryJsonValue);
 	}
 	return bGotArray;
@@ -165,50 +165,50 @@ bool UMercuryJsonValue::TryGetArray(TArray<UMercuryJsonValue*>& OutArray) const
 bool UMercuryJsonValue::TryGetBool(bool& OutBool) const
 {
 	OutBool = false;
-	if (!Reference)
+	if (!Resource)
 		return false;
 	
-	return Reference->TryGetBool(OutBool);
+	return Resource->TryGetBool(OutBool);
 }
 
 bool UMercuryJsonValue::TryGetNumber(double& OutNumber) const
 {
 	OutNumber = 0.0;
-	if (!Reference)
+	if (!Resource)
 		return false;
 
-	return Reference->TryGetNumber(OutNumber);
+	return Resource->TryGetNumber(OutNumber);
 }
 
 bool UMercuryJsonValue::TryGetObject(UMercuryJsonObject*& OutObject) const
 {
 	const TSharedPtr<FJsonObject>* ObjectField = nullptr;
-	const bool& bGotObject = Reference ? Reference->TryGetObject(ObjectField) : false;
+	const bool& bGotObject = Resource ? Resource->TryGetObject(ObjectField) : false;
 
-	OutObject->GetReference() = bGotObject && ObjectField ? *ObjectField : nullptr;
+	OutObject->GetResource() = bGotObject && ObjectField ? *ObjectField : nullptr;
 	return bGotObject;
 }
 
 bool UMercuryJsonValue::TryGetString(FString& OutString) const
 {
 	OutString = TEXT("");
-	if (!Reference)
+	if (!Resource)
 		return false;
 
-	return Reference->TryGetString(OutString);
+	return Resource->TryGetString(OutString);
 }
 
 UMercuryJsonValue* UMercuryJsonValue::Duplicate(const UMercuryJsonValue* const& Source)
 {
 	UMercuryJsonValue* const& Destination = NewObject<UMercuryJsonValue>();
-	Destination->GetReference() = Reference ? Reference->Duplicate(Source->GetReference()) : nullptr;
+	Destination->GetResource() = Resource ? Resource->Duplicate(Source->GetResource()) : nullptr;
 	return Destination;
 }
 
 bool UMercuryJsonValue::CompareEqual(const UMercuryJsonValue* const& Left, const UMercuryJsonValue* const& Right) const
 {
-	return Reference && Left->GetReference() && Right->GetReference() ?
-		Reference->CompareEqual(*Left->GetReference(), *Right->GetReference()) : false;
+	return Resource && Left->GetResource() && Right->GetResource() ?
+		Resource->CompareEqual(*Left->GetResource(), *Right->GetResource()) : false;
 }
 
 void UMercuryJsonValue::K2_AsArgumentTypeArray(TArray<UMercuryJsonValue*>& Value) const

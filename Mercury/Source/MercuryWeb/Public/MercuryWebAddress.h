@@ -13,11 +13,11 @@ class MERCURYWEB_API UMercuryWebAddress : public UMercuryWebClassBase
 {
 	GENERATED_BODY()
 	
-	TSharedPtr<FIPv4Address> Reference;
+	TSharedPtr<FIPv4Address> Resource;
 
 public:
 	explicit UMercuryWebAddress(const FObjectInitializer& ObjectInitializer);
 	
-	FORCEINLINE const TSharedPtr<FIPv4Address>& GetReference() const { return Reference; }
-	FORCEINLINE TSharedPtr<FIPv4Address>& GetReference() { return Reference; }
+	FORCEINLINE const TSharedPtr<FIPv4Address>& GetResource() const { return Resource; }
+	FORCEINLINE TSharedPtr<FIPv4Address>& GetResource() { return Resource; }
 };

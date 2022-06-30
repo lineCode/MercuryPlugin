@@ -12,6 +12,7 @@ class UMercuryHttpRequest;
 UDELEGATE(BlueprintCallable, DisplayName = "Process Request Async Pin")
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FProcessRequestAsyncPin);
 
+
 UCLASS(Blueprintable, BlueprintType, DisplayName = "Process Request Async Action")
 class MERCURYHTTP_API UProcessRequestAsyncAction : public UBlueprintAsyncActionBase
 {

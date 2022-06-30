@@ -11,6 +11,7 @@ class UEnvironmentService : public UInterface
 	GENERATED_BODY()
 };
 
+
 class MERCURYCORE_API IEnvironmentService
 {
 	GENERATED_BODY()

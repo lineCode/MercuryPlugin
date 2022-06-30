@@ -29,8 +29,8 @@ UCLASS(Blueprintable, BlueprintType, DisplayName = "Mercury HTTP Request")
 class MERCURYHTTP_API UMercuryHttpRequest : public UMercuryHttpClassBase
 {
 	GENERATED_BODY()
-	
-	TSharedPtr<IHttpRequest> Reference;
+
+	TSharedPtr<IHttpRequest> Resource;
 	
 	UPROPERTY(BlueprintReadOnly, DisplayName = "HTTP Response", Category = "HTTP|Request", meta = (
 		AllowPrivateAccess = "true"
@@ -221,9 +221,9 @@ private:
 	UMercuryHttpRequest* K2_SetHeaderReceivedEvent(const FMercuryHttpHeaderReceivedDelegate& Event);
 
 public:
-	FORCEINLINE const TSharedPtr<IHttpRequest>& GetReference() const { return Reference; }
-	FORCEINLINE TSharedPtr<IHttpRequest>& GetReference() { return Reference; }
-
+	FORCEINLINE const TSharedPtr<IHttpRequest>& GetResource() const { return Resource; }
+	FORCEINLINE TSharedPtr<IHttpRequest>& GetResource() { return Resource; }
+	
 	FORCEINLINE const TObjectPtr<UMercuryHttpResponse>& GetMercuryHttpResponse() const { return MercuryHttpResponse; }
 	FORCEINLINE TObjectPtr<UMercuryHttpResponse>& GetMercuryHttpResponse() { return MercuryHttpResponse; }
 

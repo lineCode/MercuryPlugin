@@ -16,7 +16,7 @@ class MERCURYJSON_API UMercuryJsonObject : public UMercuryJsonClassBase
 	GENERATED_BODY()
 
 protected:
-	TSharedPtr<FJsonObject> Reference;
+	TSharedPtr<FJsonObject> Resource;
 
 public:
 	explicit UMercuryJsonObject(const FObjectInitializer& ObjectInitializer);
@@ -153,6 +153,6 @@ public:
 	virtual UPARAM(DisplayName = "Success") bool
 	TryGetStringArrayField(const FString& FieldName, TArray<FString>& OutArray) const;
 
-	FORCEINLINE const TSharedPtr<FJsonObject>& GetReference() const { return Reference; }
-	FORCEINLINE TSharedPtr<FJsonObject>& GetReference() { return Reference; }
+	FORCEINLINE const TSharedPtr<FJsonObject>& GetResource() const { return Resource; }
+	FORCEINLINE TSharedPtr<FJsonObject>& GetResource() { return Resource; }
 };
