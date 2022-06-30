@@ -10,12 +10,12 @@
 UMercuryHttpRequest::UMercuryHttpRequest(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
 	Reference = HttpModule->CreateRequest();
+	MercuryHttpResponse = CreateDefaultSubobject<UMercuryHttpResponse>(TEXT("Mercury HTTP Response"));
+	
 	Reference->OnProcessRequestComplete().BindUObject(this, &UMercuryHttpRequest::BindProcessRequestComplete);
 	Reference->OnRequestProgress().BindUObject(this, &UMercuryHttpRequest::BindRequestProgress);
 	Reference->OnRequestWillRetry().BindUObject(this, &UMercuryHttpRequest::BindRequestWillRetry);
 	Reference->OnHeaderReceived().BindUObject(this, &UMercuryHttpRequest::BindHeaderReceived);
-
-	MercuryHttpResponse = CreateDefaultSubobject<UMercuryHttpResponse>(TEXT("Mercury HTTP Response"));
 
 	bProcessRequestCompleteDone = false;
 	bRequestProgressDone = false;
