@@ -245,6 +245,7 @@ void UMercuryHttpRequest::BindProcessRequestComplete(
 	const bool bConnectedSuccessfully
 )
 {
+	bProcessRequestCompleteDone = false;
 	if (!OnMercuryHttpProcessRequestCompleteDelegate.IsBound())
 	{
 		bProcessRequestCompleteDone = true;
@@ -268,6 +269,7 @@ void UMercuryHttpRequest::BindRequestProgress(
 	const int32 BytesReceived
 )
 {
+	bRequestProgressDone = false;
 	if (!OnMercuryHttpRequestProgressDelegate.IsBound())
 	{
 		bRequestProgressDone = true;
@@ -287,6 +289,7 @@ void UMercuryHttpRequest::BindRequestWillRetry(
 	const float SecondsToRetry
 )
 {
+	bRequestWillRetryDone = false;
 	if (!OnMercuryHttpRequestWillRetryDelegate.IsBound())
 	{
 		bRequestWillRetryDone = true;
@@ -310,6 +313,7 @@ void UMercuryHttpRequest::BindHeaderReceived(
 	const FString& NewHeaderValue
 )
 {
+	bHeaderReceivedDone = false;
 	if (!OnMercuryHttpHeaderReceivedDelegate.IsBound())
 	{
 		bHeaderReceivedDone = true;
