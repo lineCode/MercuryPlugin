@@ -202,7 +202,7 @@ EMercuryHttpRequestStatus UMercuryHttpRequest::GetMercuryHttpStatus() const
 	if (!Resource)
 		return EMercuryHttpRequestStatus::Unknown;
 	
-	switch (const EHttpRequestStatus::Type& Status = Resource->GetStatus())
+	switch (const EHttpRequestStatus::Type&& Status = Resource->GetStatus())
 	{
 	case EHttpRequestStatus::NotStarted:
 		return EMercuryHttpRequestStatus::NotStarted;
@@ -251,10 +251,10 @@ void UMercuryHttpRequest::BindProcessRequestComplete(
 		return;
 	}
 	
-	UMercuryHttpRequest* const& MercuryRequest = NewObject<UMercuryHttpRequest>();
+	UMercuryHttpRequest* const&& MercuryRequest = NewObject<UMercuryHttpRequest>();
 	MercuryRequest->GetResource() = Request;
 
-	UMercuryHttpResponse* const& MercuryResponse = NewObject<UMercuryHttpResponse>();
+	UMercuryHttpResponse* const&& MercuryResponse = NewObject<UMercuryHttpResponse>();
 	MercuryResponse->GetResource() = Response;
 	MercuryRequest->GetMercuryHttpResponse() = MercuryResponse;
 	
@@ -274,7 +274,7 @@ void UMercuryHttpRequest::BindRequestProgress(
 		return;
 	}
 	
-	UMercuryHttpRequest* const& MercuryRequest = NewObject<UMercuryHttpRequest>();
+	UMercuryHttpRequest* const&& MercuryRequest = NewObject<UMercuryHttpRequest>();
 	MercuryRequest->GetResource() = Request;
 	
 	OnMercuryHttpRequestProgressDelegate.Execute(MercuryRequest, BytesSent, BytesReceived);
@@ -293,10 +293,10 @@ void UMercuryHttpRequest::BindRequestWillRetry(
 		return;
 	}
 	
-	UMercuryHttpRequest* const& MercuryRequest = NewObject<UMercuryHttpRequest>();
+	UMercuryHttpRequest* const&& MercuryRequest = NewObject<UMercuryHttpRequest>();
 	MercuryRequest->GetResource() = Request;
 
-	UMercuryHttpResponse* const& MercuryResponse = NewObject<UMercuryHttpResponse>();
+	UMercuryHttpResponse* const&& MercuryResponse = NewObject<UMercuryHttpResponse>();
 	MercuryResponse->GetResource() = Response;
 	MercuryRequest->GetMercuryHttpResponse() = MercuryResponse;
 	
@@ -316,7 +316,7 @@ void UMercuryHttpRequest::BindHeaderReceived(
 		return;
 	}
 	
-	UMercuryHttpRequest* const& MercuryRequest = NewObject<UMercuryHttpRequest>();
+	UMercuryHttpRequest* const&& MercuryRequest = NewObject<UMercuryHttpRequest>();
 	MercuryRequest->GetResource() = Request;
 	
 	OnMercuryHttpHeaderReceivedDelegate.Execute(MercuryRequest, HeaderName, NewHeaderValue);
