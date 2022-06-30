@@ -258,7 +258,7 @@ void UMercuryHttpRequest::BindProcessRequestComplete(
 	MercuryResponse->GetResource() = Response;
 	MercuryRequest->GetMercuryHttpResponse() = MercuryResponse;
 	
-	OnMercuryHttpProcessRequestCompleteDelegate.ExecuteIfBound(MercuryRequest, MercuryResponse, bConnectedSuccessfully);
+	OnMercuryHttpProcessRequestCompleteDelegate.Execute(MercuryRequest, MercuryResponse, bConnectedSuccessfully);
 	bProcessRequestCompleteDone = true;
 }
 
