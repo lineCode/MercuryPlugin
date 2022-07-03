@@ -45,13 +45,13 @@ public:
 
 	UFUNCTION(BlueprintPure, DisplayName = "To String", Category = "Web|IPv4Address", meta = (
 		CompactNodeTitle = "Cast",
-		Keywords = "Web IPv4Address To String"
+		Keywords = "Web IPv4Address Cast To String"
 	))
 	virtual FString ToString() const;
 
 	UFUNCTION(BlueprintPure, DisplayName = "To Text", Category = "Web|IPv4Address", meta = (
 		CompactNodeTitle = "Cast",
-		Keywords = "Web IPv4Address To Text"
+		Keywords = "Web IPv4Address Cast To Text"
 	))
 	virtual FText ToText() const;
 
