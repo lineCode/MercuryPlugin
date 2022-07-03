@@ -42,7 +42,15 @@
 			]
 		},
 		{
-			"Name": "MercuryWeb",
+			"Name": "MercuryNetwork",
+			"Type": "Runtime",
+			"LoadingPhase": "Default",
+			"AdditionalDependencies": [
+				"MercuryCommon"
+			]
+		},
+		{
+			"Name": "MercurySockets",
 			"Type": "Runtime",
 			"LoadingPhase": "Default",
 			"AdditionalDependencies": [

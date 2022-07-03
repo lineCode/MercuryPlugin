@@ -4,9 +4,9 @@ using UnrealBuildTool;
 
 
 // ReSharper disable once InconsistentNaming
-public class MercuryWeb : ModuleRules
+public class MercuryNetwork : ModuleRules
 {
-	public MercuryWeb(ReadOnlyTargetRules Target) : base(Target)
+	public MercuryNetwork(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 		
@@ -15,9 +15,7 @@ public class MercuryWeb : ModuleRules
 			"Core",
 			"CoreUObject",
 			"Engine",
-			"Networking",
-			"Sockets",
-			"WebSockets"
+			"Networking"
 		});
 		
 		PrivateDependencyModuleNames.AddRange(new[]
