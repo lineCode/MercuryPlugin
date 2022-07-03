@@ -7,10 +7,9 @@
 #include "MercuryWebSubnet.generated.h"
 
 struct FIPv4Subnet;
-struct FIPv4SubnetMask;
 
 class UMercuryWebAddress;
-//class UMercuryWebSubnetMask;
+class UMercuryWebSubnetMask;
 
 
 UCLASS(Blueprintable, BlueprintType, DisplayName = "Mercury Web Subnet")
@@ -26,12 +25,12 @@ public:
 		Keywords = "Web IPv4Subnet Get Address"
 	))
 	virtual UMercuryWebAddress* GetAddress() const;
-/*
+
 	UFUNCTION(BlueprintPure, DisplayName = "Get Mask", Category = "Web|IPv4Subnet", meta = (
 		CompactNodeTitle = "Mask",
 		Keywords = "Web IPv4Subnet Get Mask"
 	))
-	virtual UMercuryWebSubnetMask* GetMask() const;*/
+	virtual UMercuryWebSubnetMask* GetMask() const;
 
 	UFUNCTION(BlueprintPure, DisplayName = "Broadcast Address", Category = "Web|IPv4Subnet", meta = (
 		Keywords = "Web IPv4Subnet Broadcast Address"

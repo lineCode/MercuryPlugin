@@ -2,8 +2,9 @@
 
 #include "MercuryWebSubnet.h"
 
-#include "MercuryWebAddress.h"
 #include "Interfaces/IPv4/IPv4Subnet.h"
+#include "MercuryWebAddress.h"
+#include "MercuryWebSubnetMask.h"
 
 
 UMercuryWebSubnet::UMercuryWebSubnet(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
@@ -20,7 +21,7 @@ UMercuryWebAddress* UMercuryWebSubnet::GetAddress() const
 	*Address->GetResource() = Resource->Address;
 	return Address;
 }
-/*
+
 UMercuryWebSubnetMask* UMercuryWebSubnet::GetMask() const
 {
 	if (!Resource)
@@ -29,7 +30,7 @@ UMercuryWebSubnetMask* UMercuryWebSubnet::GetMask() const
 	UMercuryWebSubnetMask* const&& Mask = NewObject<UMercuryWebSubnetMask>();
 	*Mask->GetResource() = Resource->Mask;
 	return Mask;
-}*/
+}
 
 UMercuryWebAddress* UMercuryWebSubnet::BroadcastAddress() const
 {
