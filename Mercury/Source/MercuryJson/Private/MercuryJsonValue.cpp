@@ -64,7 +64,7 @@ TArray<UMercuryJsonValue*> UMercuryJsonValue::AsArray() const
 
 bool UMercuryJsonValue::AsBool() const
 {
-	return Resource ? Resource->AsBool() : false;
+	return Resource && Resource->AsBool();
 }
 
 double UMercuryJsonValue::AsNumber() const
@@ -89,7 +89,7 @@ FString UMercuryJsonValue::AsString() const
 
 bool UMercuryJsonValue::IsNull() const
 {
-	return Resource ? Resource->IsNull() : true;
+	return Resource && Resource->IsNull();
 }
 
 void UMercuryJsonValue::AsArgumentType(TArray<UMercuryJsonValue*>& Value) const

@@ -114,7 +114,7 @@ UMercuryHttpRequest* UMercuryHttpRequest::SetContentAsStreamedFile(const FString
 }
 bool UMercuryHttpRequest::SetContentAsStreamedFile(const FString& Filename)
 {
-	return Resource ? Resource->SetContentAsStreamedFile(Filename) : false;
+	return Resource && Resource->SetContentAsStreamedFile(Filename);
 }
 
 UMercuryHttpRequest* UMercuryHttpRequest::SetContentFromStream(
@@ -127,7 +127,7 @@ UMercuryHttpRequest* UMercuryHttpRequest::SetContentFromStream(
 }
 bool UMercuryHttpRequest::SetContentFromStream(const TSharedRef<FArchive, ESPMode::ThreadSafe>& Stream)
 {
-	return Resource ? Resource->SetContentFromStream(Stream) : false;
+	return Resource && Resource->SetContentFromStream(Stream);
 }
 
 UMercuryHttpRequest* UMercuryHttpRequest::SetHeader(const FString& HeaderName, const FString& HeaderValue)
@@ -185,7 +185,7 @@ UMercuryHttpRequest* UMercuryHttpRequest::ProcessRequest(bool& bSuccessfullyStar
 }
 bool UMercuryHttpRequest::ProcessRequest() const
 {
-	return Resource ? Resource->ProcessRequest() : false;
+	return Resource && Resource->ProcessRequest();
 }
 
 UMercuryHttpRequest* UMercuryHttpRequest::CancelRequest()

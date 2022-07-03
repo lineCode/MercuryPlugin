@@ -80,7 +80,7 @@ UMercuryJsonValue* UMercuryJsonObject::GetField(const FString& FieldName, const 
 
 bool UMercuryJsonObject::HasField(const FString& FieldName) const
 {
-	return Resource ? Resource->HasField(FieldName) : false;
+	return Resource && Resource->HasField(FieldName);
 }
 
 void UMercuryJsonObject::RemoveField(const FString& FieldName)
@@ -117,7 +117,7 @@ TArray<UMercuryJsonValue*> UMercuryJsonObject::GetArrayField(const FString& Fiel
 
 bool UMercuryJsonObject::GetBoolField(const FString& FieldName) const
 {
-	return Resource ? Resource->GetBoolField(FieldName) : false;
+	return Resource && Resource->GetBoolField(FieldName);
 }
 
 int32 UMercuryJsonObject::GetIntegerField(const FString& FieldName) const
