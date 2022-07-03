@@ -17,5 +17,10 @@ public class MercuryHttp : ModuleRules
 			"Engine",
 			"HTTP"
 		});
+		
+		PrivateDependencyModuleNames.AddRange(new[]
+		{
+			"MercuryCommon"
+		});
 	}
 }

@@ -13,27 +13,41 @@
 	"CanContainContent": false,
 	"IsBetaVersion": true,
 	"IsExperimentalVersion": false,
-	"Installed": false,
+	"Installed": true,
 	"Modules": [
+		{
+			"Name": "MercuryCommon",
+			"Type": "Runtime",
+			"LoadingPhase": "PreDefault"
+		},
 		{
 			"Name": "MercuryCore",
 			"Type": "Runtime",
-			"LoadingPhase": "Default"
+			"LoadingPhase": "PostDefault"
 		},
 		{
 			"Name": "MercuryHttp",
 			"Type": "Runtime",
-			"LoadingPhase": "PreDefault"
+			"LoadingPhase": "Default",
+			"AdditionalDependencies": [
+				"MercuryCommon"
+			]
 		},
 		{
 			"Name": "MercuryJson",
 			"Type": "Runtime",
-			"LoadingPhase": "PreDefault"
+			"LoadingPhase": "Default",
+			"AdditionalDependencies": [
+				"MercuryCommon"
+			]
 		},
 		{
 			"Name": "MercuryWeb",
 			"Type": "Runtime",
-			"LoadingPhase": "PreDefault"
+			"LoadingPhase": "Default",
+			"AdditionalDependencies": [
+				"MercuryCommon"
+			]
 		}
 	]
 }

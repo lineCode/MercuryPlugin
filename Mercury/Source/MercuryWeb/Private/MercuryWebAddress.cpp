@@ -99,14 +99,8 @@ const UMercuryWebAddress* const& UMercuryWebAddress::GetAny()
 
 void UMercuryWebAddress::Parse(const FString& AddressString, UMercuryWebAddress*& OutAddress)
 {
-	const TSharedPtr<FIPv4Address>&& OutResource = MoveTemp(OutAddress->GetResource());
-	OutAddress = nullptr;
-	if (!OutResource)
-		return;
-	
-	FIPv4Address::Parse(AddressString, *OutResource);
 	OutAddress = NewObject<UMercuryWebAddress>();
-	OutAddress->GetResource() = OutResource;
+	FIPv4Address::Parse(AddressString, *OutAddress->GetResource());
 }
 
 const UMercuryWebAddress* const& UMercuryWebAddress::GetInternalLoopback()

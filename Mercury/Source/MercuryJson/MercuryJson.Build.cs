@@ -18,5 +18,10 @@ public class MercuryJson : ModuleRules
 			"Json",
 			"JsonUtilities"
 		});
+		
+		PrivateDependencyModuleNames.AddRange(new[]
+		{
+			"MercuryCommon"
+		});
 	}
 }

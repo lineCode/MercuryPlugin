@@ -2,6 +2,10 @@
 
 #include "MercuryHttp.h"
 
+#include "HttpModule.h"
+
+FHttpModule* const FMercuryHttpModule::HttpModule = &FHttpModule::Get();
+
 
 DEFINE_LOG_CATEGORY(LogMercuryHttp);
 
@@ -9,12 +13,18 @@ DEFINE_LOG_CATEGORY(LogMercuryHttp);
 
 void FMercuryHttpModule::StartupModule()
 {
+	check(HttpModule);
 	UE_LOG(LogMercuryHttp, Warning, TEXT("MercuryHttp: Log Started"));
 }
 
 void FMercuryHttpModule::ShutdownModule()
 {
 	UE_LOG(LogMercuryHttp, Warning, TEXT("MercuryHttp: Log Ended"));
+}
+
+TSharedRef<IHttpRequest> FMercuryHttpModule::CreateRequest()
+{
+	return HttpModule->CreateRequest();
 }
 
 #undef LOCTEXT_NAMESPACE

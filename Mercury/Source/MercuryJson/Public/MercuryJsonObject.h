@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "MercuryJsonClassBase.h"
+#include "MercuryCommon/Public/ResourceOwner.h"
 
 #include "MercuryJsonObject.generated.h"
 
@@ -11,12 +11,9 @@ enum class EMercuryJsonValueType : uint8;
 
 
 UCLASS(Blueprintable, BlueprintType, DisplayName = "Mercury JSON Object")
-class MERCURYJSON_API UMercuryJsonObject : public UMercuryJsonClassBase
+class MERCURYJSON_API UMercuryJsonObject : public UObject, public TResourceOwner<FJsonObject>
 {
 	GENERATED_BODY()
-
-protected:
-	TSharedPtr<FJsonObject> Resource;
 
 public:
 	explicit UMercuryJsonObject(const FObjectInitializer& ObjectInitializer);
@@ -152,7 +149,4 @@ public:
 	))
 	virtual UPARAM(DisplayName = "Success") bool
 	TryGetStringArrayField(const FString& FieldName, TArray<FString>& OutArray) const;
-
-	FORCEINLINE const TSharedPtr<FJsonObject>& GetResource() const { return Resource; }
-	FORCEINLINE TSharedPtr<FJsonObject>& GetResource() { return Resource; }
 };

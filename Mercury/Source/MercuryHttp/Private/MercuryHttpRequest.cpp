@@ -2,14 +2,14 @@
 
 #include "MercuryHttpRequest.h"
 
-#include "HttpModule.h"
 #include "MercuryHttp.h"
 #include "MercuryHttpResponse.h"
+#include "Interfaces/IHttpRequest.h"
 
 
 UMercuryHttpRequest::UMercuryHttpRequest(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
-	Resource = HttpModule->CreateRequest();
+	Resource = FMercuryHttpModule::CreateRequest();
 	MercuryHttpResponse = CreateDefaultSubobject<UMercuryHttpResponse>(TEXT("Mercury HTTP Response"));
 	
 	Resource->OnProcessRequestComplete().BindUObject(this, &UMercuryHttpRequest::BindProcessRequestComplete);

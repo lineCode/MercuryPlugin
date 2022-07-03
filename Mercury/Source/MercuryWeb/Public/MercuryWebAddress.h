@@ -2,17 +2,17 @@
 
 #pragma once
 
+#include "MercuryCommon/Public/ResourceOwner.h"
+
 #include "MercuryWebAddress.generated.h"
 
 struct FIPv4Address;
 
 
 UCLASS(Blueprintable, BlueprintType, DisplayName = "Mercury Web Address")
-class MERCURYWEB_API UMercuryWebAddress : public UObject
+class MERCURYWEB_API UMercuryWebAddress : public UObject, public TResourceOwner<FIPv4Address>
 {
 	GENERATED_BODY()
-	
-	TSharedPtr<FIPv4Address> Resource;
 
 public:
 	explicit UMercuryWebAddress(const FObjectInitializer& ObjectInitializer);
@@ -129,8 +129,4 @@ protected:
 		Keywords = "Web IPv4Address Get Value"
 	))
 	virtual int32 K2_GetValue() const;
-
-public:
-	FORCEINLINE const TSharedPtr<FIPv4Address>& GetResource() const { return Resource; }
-	FORCEINLINE TSharedPtr<FIPv4Address>& GetResource() { return Resource; }
 };

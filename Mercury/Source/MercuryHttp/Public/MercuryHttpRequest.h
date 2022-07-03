@@ -2,8 +2,8 @@
 
 #pragma once
 
-#include "MercuryHttpClassBase.h"
 #include "MercuryHttpDelegates.h"
+#include "ResourceOwner.h"
 
 #include "MercuryHttpRequest.generated.h"
 
@@ -26,12 +26,10 @@ enum class EMercuryHttpRequestStatus : uint8
 
 
 UCLASS(Blueprintable, BlueprintType, DisplayName = "Mercury HTTP Request")
-class MERCURYHTTP_API UMercuryHttpRequest : public UMercuryHttpClassBase
+class MERCURYHTTP_API UMercuryHttpRequest : public UObject, public TResourceOwner<IHttpRequest>
 {
 	GENERATED_BODY()
 
-	TSharedPtr<IHttpRequest> Resource;
-	
 	UPROPERTY(BlueprintReadOnly, DisplayName = "HTTP Response", Category = "HTTP|Request", meta = (
 		AllowPrivateAccess = "true"
 	))
@@ -80,13 +78,40 @@ class MERCURYHTTP_API UMercuryHttpRequest : public UMercuryHttpClassBase
 public:
 	explicit UMercuryHttpRequest(const FObjectInitializer& ObjectInitializer);
 
-	virtual FString GetURL() const override;
-	virtual FString GetURLParameter(const FString& ParameterName) const override;
-	virtual FString GetHeader(const FString& HeaderName) const override;
-	virtual TArray<FString> GetAllHeaders() const override;
-	virtual FString GetContentType() const override;
-	virtual int32 GetContentLength() const override;
-	virtual TArray<uint8> GetContent() const override;
+	UFUNCTION(BlueprintPure, DisplayName = "Get URL", Category = "HTTP|Request", meta = (
+		Keywords = "Get URL Link Host Server"
+	))
+	virtual FString GetURL() const;
+
+	UFUNCTION(BlueprintPure, DisplayName = "Get URL Parameter", Category = "HTTP|Request", meta = (
+		Keywords = "Get URL Parameter Argument Link Server Name"
+	))
+	virtual FString GetURLParameter(const FString& ParameterName) const;
+
+	UFUNCTION(BlueprintPure, DisplayName = "Get Header", Category = "HTTP|Request", meta = (
+		Keywords = "Get Header Name"
+	))
+	virtual FString GetHeader(const FString& HeaderName) const;
+
+	UFUNCTION(BlueprintPure, DisplayName = "Get All Headers", Category = "HTTP|Request", meta = (
+		Keywords = "Get All Headers Names"
+	))
+	virtual TArray<FString> GetAllHeaders() const;
+
+	UFUNCTION(BlueprintPure, DisplayName = "Get Content Type", Category = "HTTP|Request", meta = (
+		Keywords = "Get Content Type"
+	))
+	virtual FString GetContentType() const;
+
+	UFUNCTION(BlueprintPure, DisplayName = "Get Content Length", Category = "HTTP|Request", meta = (
+		Keywords = "Get Content Length"
+	))
+	virtual int32 GetContentLength() const;
+
+	UFUNCTION(BlueprintPure, DisplayName = "Get Content", Category = "HTTP|Request", meta = (
+		Keywords = "Get Content Payload"
+	))
+	virtual TArray<uint8> GetContent() const;
 	
 	UFUNCTION(BlueprintPure, DisplayName = "Get Verb", Category = "HTTP|Request", meta = (
 		Keywords = "Get Verb"
@@ -221,9 +246,6 @@ private:
 	UMercuryHttpRequest* K2_SetHeaderReceivedEvent(const FMercuryHttpHeaderReceivedDelegate& Event);
 
 public:
-	FORCEINLINE const TSharedPtr<IHttpRequest>& GetResource() const { return Resource; }
-	FORCEINLINE TSharedPtr<IHttpRequest>& GetResource() { return Resource; }
-	
 	FORCEINLINE const TObjectPtr<UMercuryHttpResponse>& GetMercuryHttpResponse() const { return MercuryHttpResponse; }
 	FORCEINLINE TObjectPtr<UMercuryHttpResponse>& GetMercuryHttpResponse() { return MercuryHttpResponse; }
 

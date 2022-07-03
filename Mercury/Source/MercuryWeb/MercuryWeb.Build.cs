@@ -19,5 +19,10 @@ public class MercuryWeb : ModuleRules
 			"Sockets",
 			"WebSockets"
 		});
+		
+		PrivateDependencyModuleNames.AddRange(new[]
+		{
+			"MercuryCommon"
+		});
 	}
 }

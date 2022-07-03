@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "MercuryJsonClassBase.h"
+#include "MercuryCommon/Public/ResourceOwner.h"
 
 #include "MercuryJsonValue.generated.h"
 
@@ -23,12 +23,9 @@ enum class EMercuryJsonValueType : uint8
 
 
 UCLASS(Blueprintable, BlueprintType, DisplayName = "Mercury JSON Value")
-class MERCURYJSON_API UMercuryJsonValue : public UMercuryJsonClassBase
+class MERCURYJSON_API UMercuryJsonValue : public UObject, public TResourceOwner<FJsonValue>
 {
 	GENERATED_BODY()
-
-protected:
-	TSharedPtr<FJsonValue> Resource;
 
 public:
 	explicit UMercuryJsonValue(const FObjectInitializer& ObjectInitializer);
@@ -140,8 +137,4 @@ private:
 		Keywords = "JSON Value As Argument Type String Character"
 	))
 	void K2_AsArgumentTypeString(FString& Value) const;
-
-public:
-	FORCEINLINE const TSharedPtr<FJsonValue>& GetResource() const { return Resource; }
-	FORCEINLINE TSharedPtr<FJsonValue>& GetResource() { return Resource; }
 };
