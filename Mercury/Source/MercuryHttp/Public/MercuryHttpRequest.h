@@ -208,42 +208,46 @@ protected:
 		TSharedPtr<IHttpResponse> Response,
 		bool bConnectedSuccessfully
 	);
+	
 	virtual void BindRequestProgress(
 		TSharedPtr<IHttpRequest> Request,
 		int32 BytesSent,
 		int32 BytesReceived
 	);
+	
 	virtual void BindRequestWillRetry(
 		TSharedPtr<IHttpRequest> Request,
 		TSharedPtr<IHttpResponse> Response,
 		float SecondsToRetry
 	);
+	
 	virtual void BindHeaderReceived(
 		TSharedPtr<IHttpRequest> Request,
 		const FString& HeaderName,
 		const FString& NewHeaderValue
 	);
 	
-private:
 	UFUNCTION(BlueprintCallable, DisplayName = "Set Process Request Complete Event", Category = "HTTP|Request", meta = (
 		Keywords = "On Set Process Request Complete Delegate Event"
 	))
-	UMercuryHttpRequest* K2_SetProcessRequestCompleteEvent(const FMercuryHttpProcessRequestCompleteDelegate& Event);
+	virtual UMercuryHttpRequest* K2_SetProcessRequestCompleteEvent(
+		const FMercuryHttpProcessRequestCompleteDelegate& Event
+	);
 
 	UFUNCTION(BlueprintCallable, DisplayName = "Set Request Progress Event", Category = "HTTP|Request", meta = (
 		Keywords = "On Set Request Progress Delegate Event"
 	))
-	UMercuryHttpRequest* K2_SetRequestProgressEvent(const FMercuryHttpRequestProgressDelegate& Event);
+	virtual UMercuryHttpRequest* K2_SetRequestProgressEvent(const FMercuryHttpRequestProgressDelegate& Event);
 
 	UFUNCTION(BlueprintCallable, DisplayName = "Set Request Will Retry Event", Category = "HTTP|Request", meta = (
 		Keywords = "On Set Request Will Retry Delegate Event"
 	))
-	UMercuryHttpRequest* K2_SetRequestWillRetryEvent(const FMercuryHttpRequestWillRetryDelegate& Event);
+	virtual UMercuryHttpRequest* K2_SetRequestWillRetryEvent(const FMercuryHttpRequestWillRetryDelegate& Event);
 
 	UFUNCTION(BlueprintCallable, DisplayName = "Set Header Received Event", Category = "HTTP|Request", meta = (
 		Keywords = "On Set Header Received Delegate Event"
 	))
-	UMercuryHttpRequest* K2_SetHeaderReceivedEvent(const FMercuryHttpHeaderReceivedDelegate& Event);
+	virtual UMercuryHttpRequest* K2_SetHeaderReceivedEvent(const FMercuryHttpHeaderReceivedDelegate& Event);
 
 public:
 	FORCEINLINE const TObjectPtr<UMercuryHttpResponse>& GetMercuryHttpResponse() const { return MercuryHttpResponse; }
