@@ -28,6 +28,7 @@ public:
 	explicit UMercuryNetworkSubnetMask(const FObjectInitializer& ObjectInitializer);
 
 	UFUNCTION(BlueprintPure, DisplayName = "Get Subnet Class", Category = "Network|IPv4SubnetMask", meta = (
+		CompactNodeTitle = "Subnet Class",
 		Keywords = "Network IPv4SubnetMask Get Subnet Class"
 	))
 	virtual EMercuryNetworkSubnetMaskClass GetSubnetClass() const;
@@ -74,7 +75,8 @@ public:
 	))
 	virtual int32 GetValue() const;
 
-	UFUNCTION(BlueprintPure, DisplayName = "Parse", Category = "Network|IPv4SubnetMask", meta = (
+	UFUNCTION(BlueprintPure, DisplayName = "Parse Mask", Category = "Network|IPv4SubnetMask", meta = (
+		CompactNodeTitle = "Parse",
 		Keywords = "Static Network IPv4SubnetMask Parse Mask String"
 	))
 	static void Parse(const FString& MaskString, UMercuryNetworkSubnetMask*& OutMask);

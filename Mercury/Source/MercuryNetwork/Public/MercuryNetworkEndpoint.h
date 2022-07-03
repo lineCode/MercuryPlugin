@@ -11,7 +11,7 @@ struct FIPv4Endpoint;
 class UMercuryNetworkAddress;
 
 
-UCLASS(Blueprintable, BlueprintType, DisplayName = "Mercury Network Address")
+UCLASS(Blueprintable, BlueprintType, DisplayName = "Mercury Network Endpoint")
 class MERCURYNETWORK_API UMercuryNetworkEndpoint : public UObject, public TResourceOwner<FIPv4Endpoint>
 {
 	GENERATED_BODY()
@@ -36,7 +36,8 @@ public:
 	))
 	static void Initialize();
 
-	UFUNCTION(BlueprintPure, DisplayName = "Parse", Category = "Network|IPv4Endpoint", meta = (
+	UFUNCTION(BlueprintPure, DisplayName = "Parse Endpoint", Category = "Network|IPv4Endpoint", meta = (
+		CompactNodeTitle = "Parse",
 		Keywords = "Static Network IPv4Endpoint Parse Endpoint String"
 	))
 	static void Parse(const FString& EndpointString, UMercuryNetworkEndpoint*& OutEndpoint);

@@ -106,7 +106,8 @@ public:
 	))
 	static const UMercuryNetworkAddress* const& GetAny();
 
-	UFUNCTION(BlueprintPure, DisplayName = "Parse", Category = "Network|IPv4Address", meta = (
+	UFUNCTION(BlueprintPure, DisplayName = "Parse Address", Category = "Network|IPv4Address", meta = (
+		CompactNodeTitle = "Parse",
 		Keywords = "Static Network IPv4Address Parse Address String"
 	))
 	static void Parse(const FString& AddressString, UMercuryNetworkAddress*& OutAddress);
@@ -119,7 +120,7 @@ public:
 
 	UFUNCTION(BlueprintPure, DisplayName = "Get LAN Broadcast", Category = "Network|IPv4Address", meta = (
 		CompactNodeTitle = "LAN Broadcast",
-		Keywords = "Static Network IPv4Address Get Lan Broadcast"
+		Keywords = "Static Network IPv4Address Get LAN Broadcast"
 	))
 	static const UMercuryNetworkAddress* const& GetLanBroadcast();
 

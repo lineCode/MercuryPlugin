@@ -24,11 +24,13 @@ public:
 	virtual void Duplicate(const UMercuryJsonObject* const& Source, UMercuryJsonObject* const& Destination);
 
 	UFUNCTION(BlueprintPure, DisplayName = "Get Values", Category = "JSON|Object", meta = (
+		CompactNodeTitle = "Values",
 		Keywords = "JSON Object Get Values Map Name Value"
 	))
 	virtual TMap<FString, UMercuryJsonValue*> GetValues() const;
 
 	UFUNCTION(BlueprintPure, DisplayName = "Get Field", Category = "JSON|Object", meta = (
+		CompactNodeTitle = "Field",
 		Keywords = "JSON Object Get Field Name Value Type"
 	))
 	virtual UMercuryJsonValue* GetField(const FString& FieldName, EMercuryJsonValueType ValueType) const;
@@ -49,31 +51,37 @@ public:
 	virtual void SetField(const FString& FieldName, const UMercuryJsonValue* const& Value);
 
 	UFUNCTION(BlueprintPure, DisplayName = "Get Array Field", Category = "JSON|Object", meta = (
+		CompactNodeTitle = "Array Field",
 		Keywords = "JSON Object Get Array Field Name Value"
 	))
 	virtual TArray<UMercuryJsonValue*> GetArrayField(const FString& FieldName) const;
 
 	UFUNCTION(BlueprintPure, DisplayName = "Get Bool Field", Category = "JSON|Object", meta = (
+		CompactNodeTitle = "Bool Field",
 		Keywords = "JSON Object Get Bool Boolean Field Name Value"
 	))
 	virtual bool GetBoolField(const FString& FieldName) const;
 
 	UFUNCTION(BlueprintPure, DisplayName = "Get Integer Field", Category = "JSON|Object", meta = (
+		CompactNodeTitle = "Integer Field",
 		Keywords = "JSON Object Get Integer Natural Field Name Value"
 	))
 	virtual int32 GetIntegerField(const FString& FieldName) const;
 
 	UFUNCTION(BlueprintPure, DisplayName = "Get Number Field", Category = "JSON|Object", meta = (
+		CompactNodeTitle = "Number Field",
 		Keywords = "JSON Object Get Number Float Double Real Field Name Value"
 	))
 	virtual double GetNumberField(const FString& FieldName) const;
 
 	UFUNCTION(BlueprintPure, DisplayName = "Get Object Field", Category = "JSON|Object", meta = (
+		CompactNodeTitle = "Object Field",
 		Keywords = "JSON Object Get Object Field Name Value"
 	))
 	virtual UMercuryJsonObject* GetObjectField(const FString& FieldName) const;
 
 	UFUNCTION(BlueprintPure, DisplayName = "Get String Field", Category = "JSON|Object", meta = (
+		CompactNodeTitle = "String Field",
 		Keywords = "JSON Object Get String Character Field Name Value"
 	))
 	virtual FString GetStringField(const FString& FieldName) const;

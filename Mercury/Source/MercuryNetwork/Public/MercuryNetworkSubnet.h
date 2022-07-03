@@ -54,7 +54,8 @@ public:
 	))
 	virtual FText ToText() const;
 
-	UFUNCTION(BlueprintPure, DisplayName = "Parse", Category = "Network|IPv4Subnet", meta = (
+	UFUNCTION(BlueprintPure, DisplayName = "Parse Subnet", Category = "Network|IPv4Subnet", meta = (
+		CompactNodeTitle = "Parse",
 		Keywords = "Static Network IPv4Subnet Parse Subnet String"
 	))
 	static void Parse(const FString& SubnetString, UMercuryNetworkSubnet*& OutSubnet);

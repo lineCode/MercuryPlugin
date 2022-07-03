@@ -79,41 +79,49 @@ public:
 	explicit UMercuryHttpRequest(const FObjectInitializer& ObjectInitializer);
 
 	UFUNCTION(BlueprintPure, DisplayName = "Get URL", Category = "HTTP|Request", meta = (
+		CompactNodeTitle = "URL",
 		Keywords = "Get URL Link Host Server"
 	))
 	virtual FString GetURL() const;
 
 	UFUNCTION(BlueprintPure, DisplayName = "Get URL Parameter", Category = "HTTP|Request", meta = (
+		CompactNodeTitle = "URL Parameter",
 		Keywords = "Get URL Parameter Argument Link Server Name"
 	))
 	virtual FString GetURLParameter(const FString& ParameterName) const;
 
 	UFUNCTION(BlueprintPure, DisplayName = "Get Header", Category = "HTTP|Request", meta = (
+		CompactNodeTitle = "Header",
 		Keywords = "Get Header Name"
 	))
 	virtual FString GetHeader(const FString& HeaderName) const;
 
 	UFUNCTION(BlueprintPure, DisplayName = "Get All Headers", Category = "HTTP|Request", meta = (
+		CompactNodeTitle = "All Headers",
 		Keywords = "Get All Headers Names"
 	))
 	virtual TArray<FString> GetAllHeaders() const;
 
 	UFUNCTION(BlueprintPure, DisplayName = "Get Content Type", Category = "HTTP|Request", meta = (
+		CompactNodeTitle = "Content Type",
 		Keywords = "Get Content Type"
 	))
 	virtual FString GetContentType() const;
 
 	UFUNCTION(BlueprintPure, DisplayName = "Get Content Length", Category = "HTTP|Request", meta = (
+		CompactNodeTitle = "Content Length",
 		Keywords = "Get Content Length"
 	))
 	virtual int32 GetContentLength() const;
 
 	UFUNCTION(BlueprintPure, DisplayName = "Get Content", Category = "HTTP|Request", meta = (
+		CompactNodeTitle = "Content",
 		Keywords = "Get Content Payload"
 	))
 	virtual TArray<uint8> GetContent() const;
 	
 	UFUNCTION(BlueprintPure, DisplayName = "Get Verb", Category = "HTTP|Request", meta = (
+		CompactNodeTitle = "Verb",
 		Keywords = "Get Verb"
 	))
 	virtual FString GetVerb() const;
@@ -188,6 +196,7 @@ public:
 	virtual UMercuryHttpRequest* CancelRequest();
 
 	UFUNCTION(BlueprintPure, DisplayName = "Get HTTP Status", Category = "HTTP|Request", meta = (
+		CompactNodeTitle = "HTTP Status",
 		Keywords = "Get HTTP Status"
 	))
 	virtual EMercuryHttpRequestStatus GetMercuryHttpStatus() const;
@@ -198,6 +207,7 @@ public:
 	virtual UMercuryHttpRequest* Tick(float DeltaSeconds);
 
 	UFUNCTION(BlueprintPure, DisplayName = "Get Elapsed Time", Category = "HTTP|Request", meta = (
+		CompactNodeTitle = "Elapsed Time",
 		Keywords = "Get Elapsed Time Count"
 	))
 	virtual float GetElapsedTime() const;

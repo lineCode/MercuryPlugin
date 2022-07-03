@@ -31,31 +31,37 @@ public:
 	explicit UMercuryJsonValue(const FObjectInitializer& ObjectInitializer);
 	
 	UFUNCTION(BlueprintPure, DisplayName = "Get Type", Category = "JSON|Value", meta = (
+		CompactNodeTitle = "Type",
 		Keywords = "JSON Value Get Type Mercury"
 	))
 	virtual EMercuryJsonValueType GetType() const;
 	
 	UFUNCTION(BlueprintPure, DisplayName = "As Array", Category = "JSON|Value", meta = (
+		CompactNodeTitle = "Cast",
 		Keywords = "JSON Value As Array"
 	))
 	virtual TArray<UMercuryJsonValue*> AsArray() const;
 
 	UFUNCTION(BlueprintPure, DisplayName = "As Bool", Category = "JSON|Value", meta = (
+		CompactNodeTitle = "Cast",
 		Keywords = "JSON Value As Bool Boolean"
 	))
 	virtual bool AsBool() const;
 
 	UFUNCTION(BlueprintPure, DisplayName = "As Number", Category = "JSON|Value", meta = (
+		CompactNodeTitle = "Cast",
 		Keywords = "JSON Value As Number Float Double Real"
 	))
 	virtual double AsNumber() const;
 
 	UFUNCTION(BlueprintPure, DisplayName = "As Object", Category = "JSON|Value", meta = (
+		CompactNodeTitle = "Cast",
 		Keywords = "JSON Value As Object"
 	))
 	virtual UMercuryJsonObject* AsObject() const;
 
 	UFUNCTION(BlueprintPure, DisplayName = "As String", Category = "JSON|Value", meta = (
+		CompactNodeTitle = "Cast",
 		Keywords = "JSON Value As String Character"
 	))
 	virtual FString AsString() const;
