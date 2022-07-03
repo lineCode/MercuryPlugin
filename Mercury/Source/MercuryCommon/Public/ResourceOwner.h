@@ -10,6 +10,11 @@ protected:
 	TSharedPtr<T> Resource = nullptr;
 	
 public:
-	FORCEINLINE const TSharedPtr<T>& GetResource() const { return Resource; }
-	FORCEINLINE TSharedPtr<T>& GetResource() { return Resource; }
+	virtual ~TResourceOwner() = 0
+	{
+		Resource.Reset();
+	}
+
+	FORCEINLINE virtual const TSharedPtr<T>& GetResource() const { return Resource; }
+	FORCEINLINE virtual TSharedPtr<T>& GetResource() { return Resource; }
 };
