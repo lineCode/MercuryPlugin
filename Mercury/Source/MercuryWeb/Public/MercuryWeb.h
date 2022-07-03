@@ -11,4 +11,7 @@ class FMercuryWebModule : public IModuleInterface
 	
 	virtual void StartupModule() override;
 	virtual void ShutdownModule() override;
+
+public:
+	FORCEINLINE static ISocketSubsystem* const& GetSocketSubsystem() { return SocketSubsystem; }
 };

@@ -3,6 +3,7 @@
 #include "MercuryWebEndpoint.h"
 
 #include "Interfaces/IPv4/IPv4Endpoint.h"
+#include "MercuryWeb.h"
 #include "MercuryWebAddress.h"
 
 
@@ -68,6 +69,11 @@ bool UMercuryWebEndpoint::FromHostAndPort(const FString& HostAndPortString, UMer
 TSharedPtr<FInternetAddr> UMercuryWebEndpoint::ToInternetAddrIPv4() const
 {
 	return Resource ? MakeShareable(&Resource->ToInternetAddrIPV4().Get()) : nullptr;
+}
+
+ISocketSubsystem* const& UMercuryWebEndpoint::CachedSocketSubsystem()
+{
+	return FMercuryWebModule::GetSocketSubsystem();
 }
 
 int32 UMercuryWebEndpoint::K2_GetPort() const

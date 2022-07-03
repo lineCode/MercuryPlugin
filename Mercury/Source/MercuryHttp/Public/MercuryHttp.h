@@ -2,8 +2,7 @@
 
 #pragma once
 
-class FHttpModule;
-class IHttpRequest;
+#include "HttpModule.h"
 
 
 DECLARE_LOG_CATEGORY_EXTERN(LogMercuryHttp, All, All);
@@ -17,5 +16,5 @@ protected:
 	virtual void ShutdownModule() override;
 
 public:
-	static TSharedRef<IHttpRequest> CreateRequest();
+	static FHttpModule* const& GetHttpModule() { return HttpModule; }
 };

@@ -64,6 +64,8 @@ public:
 	FromHostAndPort(const FString& HostAndPortString, UMercuryWebEndpoint*& OutEndpoint);
 
 	virtual TSharedPtr<FInternetAddr> ToInternetAddrIPv4() const;
+	
+	static ISocketSubsystem* const& CachedSocketSubsystem();
 
 protected:
 	UFUNCTION(BlueprintPure, DisplayName = "Get Port", Category = "Web|IPv4Endpoint", meta = (

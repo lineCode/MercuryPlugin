@@ -22,11 +22,6 @@ void FMercuryHttpModule::ShutdownModule()
 	UE_LOG(LogMercuryHttp, Warning, TEXT("MercuryHttp: Log Ended"));
 }
 
-TSharedRef<IHttpRequest> FMercuryHttpModule::CreateRequest()
-{
-	return HttpModule->CreateRequest();
-}
-
 #undef LOCTEXT_NAMESPACE
 	
 IMPLEMENT_MODULE(FMercuryHttpModule, MercuryHttp);
