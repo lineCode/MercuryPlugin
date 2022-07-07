@@ -2,6 +2,8 @@
 
 #include "MercuryNetwork.h"
 
+ISocketSubsystem* const FMercuryNetworkModule::SocketSubsystem = ISocketSubsystem::Get(PLATFORM_SOCKETSUBSYSTEM);
+
 
 DEFINE_LOG_CATEGORY(LogMercuryNetwork);
 

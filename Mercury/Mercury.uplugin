@@ -50,11 +50,12 @@
 			]
 		},
 		{
-			"Name": "MercurySockets",
+			"Name": "MercurySocket",
 			"Type": "Runtime",
 			"LoadingPhase": "Default",
 			"AdditionalDependencies": [
-				"MercuryCommon"
+				"MercuryCommon",
+				"MercuryNetwork"
 			]
 		}
 	]

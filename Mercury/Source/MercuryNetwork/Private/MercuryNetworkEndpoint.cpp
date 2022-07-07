@@ -3,6 +3,7 @@
 #include "MercuryNetworkEndpoint.h"
 
 #include "Interfaces/IPv4/IPv4Endpoint.h"
+#include "MercuryInternetAddr.h"
 #include "MercuryNetworkAddress.h"
 
 
@@ -54,9 +55,14 @@ FText UMercuryNetworkEndpoint::ToText() const
 	return Resource ? Resource->ToText() : FText::GetEmpty();
 }
 
-TSharedPtr<FInternetAddr> UMercuryNetworkEndpoint::ToInternetAddr() const
+UMercuryInternetAddr* UMercuryNetworkEndpoint::ToInternetAddr() const
 {
-	return Resource ? MakeShareable(&Resource->ToInternetAddr().Get()) : nullptr;
+	if (!Resource)
+		return nullptr;
+
+	UMercuryInternetAddr* const&& InternetAddr = NewObject<UMercuryInternetAddr>();
+	InternetAddr->GetResource() = Resource->ToInternetAddr();
+	return InternetAddr;
 }
 
 bool UMercuryNetworkEndpoint::FromHostAndPort(const FString& HostAndPortString, UMercuryNetworkEndpoint*& OutEndpoint)
@@ -65,9 +71,14 @@ bool UMercuryNetworkEndpoint::FromHostAndPort(const FString& HostAndPortString, 
 	return FIPv4Endpoint::FromHostAndPort(HostAndPortString, *OutEndpoint->GetResource());
 }
 
-TSharedPtr<FInternetAddr> UMercuryNetworkEndpoint::ToInternetAddrIPv4() const
+UMercuryInternetAddr* UMercuryNetworkEndpoint::ToInternetAddrIPv4() const
 {
-	return Resource ? MakeShareable(&Resource->ToInternetAddrIPV4().Get()) : nullptr;
+	if (!Resource)
+		return nullptr;
+
+	UMercuryInternetAddr* const&& InternetAddr = NewObject<UMercuryInternetAddr>();
+	InternetAddr->GetResource() = Resource->ToInternetAddrIPV4();
+	return InternetAddr;
 }
 
 int32 UMercuryNetworkEndpoint::K2_GetPort() const

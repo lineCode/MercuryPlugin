@@ -10,16 +10,12 @@ public class MercuryHttp : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 		
-		PublicDependencyModuleNames.AddRange(new[]
+		PrivateDependencyModuleNames.AddRange(new[]
 		{
 			"Core",
 			"CoreUObject",
 			"Engine",
-			"HTTP"
-		});
-		
-		PrivateDependencyModuleNames.AddRange(new[]
-		{
+			"HTTP",
 			"MercuryCommon"
 		});
 	}

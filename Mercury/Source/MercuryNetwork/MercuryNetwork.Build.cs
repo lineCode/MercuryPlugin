@@ -10,17 +10,14 @@ public class MercuryNetwork : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 		
-		PublicDependencyModuleNames.AddRange(new[]
+		PrivateDependencyModuleNames.AddRange(new[]
 		{
 			"Core",
 			"CoreUObject",
 			"Engine",
-			"Networking"
-		});
-		
-		PrivateDependencyModuleNames.AddRange(new[]
-		{
-			"MercuryCommon"
+			"MercuryCommon",
+			"Networking",
+			"Sockets"
 		});
 	}
 }

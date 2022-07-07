@@ -4,23 +4,21 @@ using UnrealBuildTool;
 
 
 // ReSharper disable once InconsistentNaming
-public class MercurySockets : ModuleRules
+public class MercurySocket : ModuleRules
 {
-	public MercurySockets(ReadOnlyTargetRules Target) : base(Target)
+	public MercurySocket(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 		
-		PublicDependencyModuleNames.AddRange(new[]
+		PrivateDependencyModuleNames.AddRange(new[]
 		{
 			"Core",
 			"CoreUObject",
 			"Engine",
+			"MercuryCommon",
+			"MercuryNetwork",
+			"Networking",
 			"Sockets"
-		});
-		
-		PrivateDependencyModuleNames.AddRange(new[]
-		{
-			"MercuryCommon"
 		});
 	}
 }

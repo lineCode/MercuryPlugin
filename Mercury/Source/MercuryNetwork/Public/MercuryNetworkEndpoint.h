@@ -8,6 +8,7 @@
 
 struct FIPv4Endpoint;
 
+class UMercuryInternetAddr;
 class UMercuryNetworkAddress;
 
 
@@ -56,7 +57,11 @@ public:
 	))
 	virtual FText ToText() const;
 
-	virtual TSharedPtr<FInternetAddr> ToInternetAddr() const;
+	UFUNCTION(BlueprintPure, DisplayName = "To Internet Addr", Category = "Network|IPv4Endpoint", meta = (
+		CompactNodeTitle = "Cast",
+		Keywords = "Network IPv4Endpoint Cast To Internet Addr Address"
+	))
+	virtual UMercuryInternetAddr* ToInternetAddr() const;
 
 	UFUNCTION(BlueprintPure, DisplayName = "From Host And Port", Category = "Network|IPv4Endpoint", meta = (
 		Keywords = "Static Network IPv4Endpoint From Host And Port String Endpoint"
@@ -64,7 +69,10 @@ public:
 	static UPARAM(DisplayName = "Success") bool
 	FromHostAndPort(const FString& HostAndPortString, UMercuryNetworkEndpoint*& OutEndpoint);
 
-	virtual TSharedPtr<FInternetAddr> ToInternetAddrIPv4() const;
+	UFUNCTION(BlueprintPure, DisplayName = "To Internet Addr IPv4", Category = "Network|IPv4Endpoint", meta = (
+		Keywords = "Network IPv4Endpoint Cast To Internet Addr Address IPv4"
+	))
+	virtual UMercuryInternetAddr* ToInternetAddrIPv4() const;
 
 protected:
 	UFUNCTION(BlueprintPure, DisplayName = "Get Port", Category = "Network|IPv4Endpoint", meta = (
