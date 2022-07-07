@@ -2,8 +2,6 @@
 
 #include "MercuryHttpRequest.h"
 
-#include "Interfaces/IHttpRequest.h"
-#include "MercuryHttp.h"
 #include "MercuryHttpResponse.h"
 
 
@@ -197,32 +195,11 @@ UMercuryHttpRequest* UMercuryHttpRequest::CancelRequest()
 	return this;
 }
 
-EMercuryHttpRequestStatus UMercuryHttpRequest::GetMercuryHttpStatus() const
+EMercuryHttpRequestStatus UMercuryHttpRequest::GetStatus() const
 {
-	if (!Resource)
-		return EMercuryHttpRequestStatus::Unknown;
-	
-	switch (const EHttpRequestStatus::Type&& Status = Resource->GetStatus())
-	{
-	case EHttpRequestStatus::NotStarted:
-		return EMercuryHttpRequestStatus::NotStarted;
-
-	case EHttpRequestStatus::Processing:
-		return EMercuryHttpRequestStatus::Processing;
-
-	case EHttpRequestStatus::Failed:
-		return EMercuryHttpRequestStatus::Failed;
-
-	case EHttpRequestStatus::Failed_ConnectionError:
-		return EMercuryHttpRequestStatus::Failed_ConnectionError;
-
-	case EHttpRequestStatus::Succeeded:
-		return EMercuryHttpRequestStatus::Succeeded;
-
-	default:
-		UE_LOG(LogMercuryHttp, Error, TEXT("Unknown request status: %d"), Status);
-		return EMercuryHttpRequestStatus::Unknown;
-	}
+	return MercuryEnums::HttpRequest::Convert(
+		Resource ? Resource->GetStatus() : EHttpRequestStatus::Failed_ConnectionError
+	);
 }
 
 UMercuryHttpRequest* UMercuryHttpRequest::Tick(const float DeltaSeconds)

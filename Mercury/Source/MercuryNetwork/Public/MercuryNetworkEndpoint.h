@@ -2,11 +2,10 @@
 
 #pragma once
 
-#include "MercuryCommon/Public/ResourceOwner.h"
+#include "Interfaces/IPv4/IPv4Endpoint.h"
+#include "ResourceOwner.h"
 
 #include "MercuryNetworkEndpoint.generated.h"
-
-struct FIPv4Endpoint;
 
 class UMercuryInternetAddr;
 class UMercuryNetworkAddress;

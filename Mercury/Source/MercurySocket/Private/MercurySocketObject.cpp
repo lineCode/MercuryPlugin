@@ -3,8 +3,6 @@
 #include "MercurySocketObject.h"
 
 #include "MercuryInternetAddr.h"
-#include "MercurySocket.h"
-#include "Sockets.h"
 
 
 UMercurySocketObject::UMercurySocketObject(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
@@ -61,27 +59,8 @@ bool UMercurySocketObject::Recv(
 	const EMercurySocketReceiveFlags& Flags
 )
 {
-	ESocketReceiveFlags::Type&& ReceiveFlags = ESocketReceiveFlags::None;
-	switch (Flags)
-	{
-	case EMercurySocketReceiveFlags::None:
-		ReceiveFlags = ESocketReceiveFlags::None;
-		break;
-
-	case EMercurySocketReceiveFlags::Peek:
-		ReceiveFlags = ESocketReceiveFlags::Peek;
-		break;
-
-	case EMercurySocketReceiveFlags::WaitAll:
-		ReceiveFlags = ESocketReceiveFlags::WaitAll;
-		break;
-
-	default:
-		UE_LOG(LogMercurySocket, Fatal, TEXT("Unknown socket receive flags: %d"), Flags);
-	}
-
 	BytesRead = 0;
-	return Resource && Resource->Recv(Data, BufferSize, BytesRead, ReceiveFlags);
+	return Resource && Resource->Recv(Data, BufferSize, BytesRead, MercuryEnums::SocketReceive::Convert(Flags));
 }
 
 bool UMercurySocketObject::Send(const uint8* const& Data, const int32& Count, int32& BytesSent)
@@ -92,50 +71,12 @@ bool UMercurySocketObject::Send(const uint8* const& Data, const int32& Count, in
 
 bool UMercurySocketObject::Shutdown(const EMercurySocketShutdownMode Mode)
 {
-	ESocketShutdownMode&& ShutdownMode = ESocketShutdownMode::Read;
-	switch (Mode)
-	{
-	case EMercurySocketShutdownMode::Read:
-		ShutdownMode = ESocketShutdownMode::Read;
-		break;
-
-	case EMercurySocketShutdownMode::Write:
-		ShutdownMode = ESocketShutdownMode::Write;
-		break;
-
-	case EMercurySocketShutdownMode::ReadWrite:
-		ShutdownMode = ESocketShutdownMode::ReadWrite;
-		break;
-
-	default:
-		UE_LOG(LogMercurySocket, Fatal, TEXT("Unknown socket shutdown mode: %d"), Mode);
-	}
-	
-	return Resource && Resource->Shutdown(ShutdownMode);
+	return Resource && Resource->Shutdown(MercuryEnums::SocketShutdown::Convert(Mode));
 }
 
 bool UMercurySocketObject::Wait(const EMercurySocketWaitCondition Condition, const FTimespan WaitTime)
 {
-	ESocketWaitConditions::Type&& WaitConditions = ESocketWaitConditions::WaitForRead;
-	switch (Condition)
-	{
-	case EMercurySocketWaitCondition::WaitForRead:
-		WaitConditions = ESocketWaitConditions::WaitForRead;
-		break;
-
-	case EMercurySocketWaitCondition::WaitForWrite:
-		WaitConditions = ESocketWaitConditions::WaitForWrite;
-		break;
-
-	case EMercurySocketWaitCondition::WaitForReadOrWrite:
-		WaitConditions = ESocketWaitConditions::WaitForReadOrWrite;
-		break;
-
-	default:
-		UE_LOG(LogMercurySocket, Fatal, TEXT("Unknown socket wait condition: %d"), Condition);
-	}
-	
-	return Resource && Resource->Wait(WaitConditions, WaitTime);
+	return Resource && Resource->Wait(MercuryEnums::SocketWait::Convert(Condition), WaitTime);
 }
 
 void UMercurySocketObject::GetAddress(UMercuryInternetAddr*& OutAddr) const
@@ -166,51 +107,19 @@ bool UMercurySocketObject::RecvFrom(
 	const EMercurySocketReceiveFlags& Flags
 )
 {
-	ESocketReceiveFlags::Type&& ReceiveFlags = ESocketReceiveFlags::None;
-	switch (Flags)
-	{
-	case EMercurySocketReceiveFlags::None:
-		ReceiveFlags = ESocketReceiveFlags::None;
-		break;
-
-	case EMercurySocketReceiveFlags::Peek:
-		ReceiveFlags = ESocketReceiveFlags::Peek;
-		break;
-
-	case EMercurySocketReceiveFlags::WaitAll:
-		ReceiveFlags = ESocketReceiveFlags::WaitAll;
-		break;
-
-	default:
-		UE_LOG(LogMercurySocket, Fatal, TEXT("Unknown socket receive flags: %d"), Flags);
-	}
-	
 	BytesRead = 0;
-	return Resource && Resource->RecvFrom(Data, BufferSize, BytesRead, *Source->GetResource(), ReceiveFlags);
+	return Resource && Resource->RecvFrom(
+		Data,
+		BufferSize,
+		BytesRead,
+		*Source->GetResource(),
+		MercuryEnums::SocketReceive::Convert(Flags)
+	);
 }
 
 bool UMercurySocketObject::RecvMulti(FRecvMulti& MultiData, const EMercurySocketReceiveFlags& Flags)
 {
-	ESocketReceiveFlags::Type&& ReceiveFlags = ESocketReceiveFlags::None;
-	switch (Flags)
-	{
-	case EMercurySocketReceiveFlags::None:
-		ReceiveFlags = ESocketReceiveFlags::None;
-		break;
-
-	case EMercurySocketReceiveFlags::Peek:
-		ReceiveFlags = ESocketReceiveFlags::Peek;
-		break;
-
-	case EMercurySocketReceiveFlags::WaitAll:
-		ReceiveFlags = ESocketReceiveFlags::WaitAll;
-		break;
-
-	default:
-		UE_LOG(LogMercurySocket, Fatal, TEXT("Unknown socket receive flags: %d"), Flags);
-	}
-	
-	return Resource && Resource->RecvMulti(MultiData, ReceiveFlags);
+	return Resource && Resource->RecvMulti(MultiData, MercuryEnums::SocketReceive::Convert(Flags));
 }
 
 bool UMercurySocketObject::SendTo(
@@ -236,21 +145,7 @@ bool UMercurySocketObject::SetLinger(const bool bShouldLinger, const int32 Timeo
 
 EMercurySocketConnectionState UMercurySocketObject::GetConnectionState() const
 {
-	switch (const ESocketConnectionState&& State = Resource ? Resource->GetConnectionState() : SCS_NotConnected)
-	{
-	case SCS_Connected:
-		return EMercurySocketConnectionState::Connected;
-	
-	case SCS_ConnectionError:
-		return EMercurySocketConnectionState::ConnectionError;
-
-	case SCS_NotConnected:
-		return EMercurySocketConnectionState::NotConnected;
-
-	default:
-		UE_LOG(LogMercurySocket, Error, TEXT("Unknown socket connection state: %d"), State);
-		return EMercurySocketConnectionState::NotConnected;
-	}
+	return MercuryEnums::SocketConnection::Convert(Resource ? Resource->GetConnectionState() : SCS_NotConnected);
 }
 
 bool UMercurySocketObject::GetPeerAddress(UMercuryInternetAddr*& OutAddr) const
@@ -265,21 +160,7 @@ int32 UMercurySocketObject::GetPortNo() const
 
 EMercurySocketType UMercurySocketObject::GetSocketType() const
 {
-	switch (const ESocketType&& Type = Resource ? Resource->GetSocketType() : SOCKTYPE_Unknown)
-	{
-	case SOCKTYPE_Datagram:
-		return EMercurySocketType::Datagram;
-	
-	case SOCKTYPE_Streaming:
-		return EMercurySocketType::Streaming;
-
-	case SOCKTYPE_Unknown:
-		return EMercurySocketType::Unknown;
-
-	default:
-		UE_LOG(LogMercurySocket, Error, TEXT("Unknown socket type: %d"), Type);
-		return EMercurySocketType::Unknown;
-	}
+	return MercuryEnums::SocketType::Convert(Resource ? Resource->GetSocketType() : SOCKTYPE_Unknown);
 }
 
 bool UMercurySocketObject::HasPendingConnection(bool& bHasPendingConnection) const
@@ -398,25 +279,6 @@ bool UMercurySocketObject::RecvFromWithPktInfo(
 	const EMercurySocketReceiveFlags& Flags
 )
 {
-	ESocketReceiveFlags::Type&& ReceiveFlags = ESocketReceiveFlags::None;
-	switch (Flags)
-	{
-	case EMercurySocketReceiveFlags::None:
-		ReceiveFlags = ESocketReceiveFlags::None;
-		break;
-
-	case EMercurySocketReceiveFlags::Peek:
-		ReceiveFlags = ESocketReceiveFlags::Peek;
-		break;
-
-	case EMercurySocketReceiveFlags::WaitAll:
-		ReceiveFlags = ESocketReceiveFlags::WaitAll;
-		break;
-
-	default:
-		UE_LOG(LogMercurySocket, Fatal, TEXT("Unknown socket receive flags: %d"), Flags);
-	}
-	
 	BytesRead = 0;
 	return Resource && Resource->RecvFromWithPktInfo(
 		Data,
@@ -424,7 +286,7 @@ bool UMercurySocketObject::RecvFromWithPktInfo(
 		BytesRead,
 		*Source->GetResource(),
 		*Destination->GetResource(),
-		ReceiveFlags
+		MercuryEnums::SocketReceive::Convert(Flags)
 	);
 }
 

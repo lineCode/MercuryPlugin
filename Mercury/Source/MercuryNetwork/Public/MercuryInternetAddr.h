@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "MercuryCommon/Public/ResourceOwner.h"
+#include "ResourceOwner.h"
 
 #include "MercuryInternetAddr.generated.h"
 

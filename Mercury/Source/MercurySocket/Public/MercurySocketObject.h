@@ -2,52 +2,17 @@
 
 #pragma once
 
-#include "MercuryCommon/Public/ResourceOwner.h"
+#include "MercurySocketConnectionState.h"
+#include "MercurySocketReceiveFlags.h"
+#include "MercurySocketShutdownMode.h"
+#include "MercurySocketType.h"
+#include "MercurySocketWaitCondition.h"
+#include "ResourceOwner.h"
+#include "Sockets.h"
 
 #include "MercurySocketObject.generated.h"
 
 class UMercuryInternetAddr;
-
-
-UENUM(BlueprintType, meta = (Keywords = "Socket Object Shutdown Mode Read Write"))
-enum class EMercurySocketShutdownMode : uint8
-{
-	Read UMETA(DisplayName = "Read"),
-	Write UMETA(DisplayName = "Write"),
-	ReadWrite UMETA(DisplayName = "Read/Write")
-};
-
-UENUM(BlueprintType, meta = (Keywords = "Socket Object Wait Condition For Read Or Write"))
-enum class EMercurySocketWaitCondition : uint8
-{
-	WaitForRead UMETA(DisplayName = "Wait For Read"),
-	WaitForWrite UMETA(DisplayName = "Wait For Write"),
-	WaitForReadOrWrite UMETA(DisplayName = "Wait For Read Or Write")
-};
-
-UENUM(BlueprintType, meta = (Keywords = "Socket Object Receive Flags None Peek Wait All"))
-enum class EMercurySocketReceiveFlags : uint8
-{
-	None UMETA(DisplayName = "None"),
-	Peek UMETA(DisplayName = "Peek"),
-	WaitAll UMETA(DisplayName = "Wait All")
-};
-
-UENUM(BlueprintType, meta = (Keywords = "Socket Object Connection State Connected Error Not"))
-enum class EMercurySocketConnectionState : uint8
-{
-	Connected UMETA(DisplayName = "Connected"),
-	ConnectionError UMETA(DisplayName = "Connection Error"),
-	NotConnected UMETA(DisplayName = "Not Connected")
-};
-
-UENUM(BlueprintType, meta = (Keywords = "Socket Object Type Datagram Streaming Unknown TCP UDP"))
-enum class EMercurySocketType : uint8
-{
-	Datagram UMETA(DisplayName = "Datagram"),
-	Streaming UMETA(DisplayName = "Streaming"),
-	Unknown UMETA(DisplayName = "Unknown")
-};
 
 
 UCLASS(Blueprintable, BlueprintType, DisplayName = "Mercury Socket Object")
@@ -95,7 +60,7 @@ public:
 		uint8* const& Data,
 		const int32& BufferSize,
 		int32& BytesRead,
-		const EMercurySocketReceiveFlags& Flags
+		const EMercurySocketReceiveFlags& Flags = EMercurySocketReceiveFlags::None
 	);
 	
 	virtual bool Send(const uint8* const& Data, const int32& Count, int32& BytesSent);
@@ -135,7 +100,7 @@ public:
 		const int32& BufferSize,
 		int32& BytesRead,
 		const UMercuryInternetAddr* const& Source,
-		const EMercurySocketReceiveFlags& Flags
+		const EMercurySocketReceiveFlags& Flags = EMercurySocketReceiveFlags::None
 	);
 	
 	virtual bool RecvMulti(
@@ -295,7 +260,7 @@ public:
 		int32& BytesRead,
 		const UMercuryInternetAddr* const& Source,
 		const UMercuryInternetAddr* const& Destination,
-		const EMercurySocketReceiveFlags& Flags
+		const EMercurySocketReceiveFlags& Flags = EMercurySocketReceiveFlags::None
 	);
 
 protected:
@@ -308,7 +273,12 @@ protected:
 		Keywords = "Socket Object Receive Data Buffer Size Bytes Read Flags"
 	))
 	virtual UPARAM(DisplayName = "Success") bool
-	K2_Recv(TArray<uint8>& Data, int32 BufferSize, int32& BytesRead, EMercurySocketReceiveFlags Flags);
+	K2_Recv(
+		TArray<uint8>& Data,
+		int32 BufferSize,
+		int32& BytesRead,
+		EMercurySocketReceiveFlags Flags = EMercurySocketReceiveFlags::None
+	);
 	
 	UFUNCTION(BlueprintCallable, DisplayName = "Send", Category = "Socket|Object", meta = (
 		Keywords = "Socket Object Send Data Count Bytes Sent"
@@ -325,7 +295,7 @@ protected:
 		int32 BufferSize,
 		int32& BytesRead,
 		const UMercuryInternetAddr* const& Source,
-		EMercurySocketReceiveFlags Flags
+		EMercurySocketReceiveFlags Flags = EMercurySocketReceiveFlags::None
 	);
 
 	UFUNCTION(BlueprintCallable, DisplayName = "Send To", Category = "Socket|Object", meta = (
@@ -372,6 +342,6 @@ protected:
 		int32& BytesRead,
 		const UMercuryInternetAddr* const& Source,
 		const UMercuryInternetAddr* const& Destination,
-		EMercurySocketReceiveFlags Flags
+		EMercurySocketReceiveFlags Flags = EMercurySocketReceiveFlags::None
 	);
 };

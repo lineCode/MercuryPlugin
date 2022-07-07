@@ -3,26 +3,10 @@
 #pragma once
 
 #include "MercuryHttpDelegates.h"
+#include "MercuryHttpRequestStatus.h"
 #include "ResourceOwner.h"
 
 #include "MercuryHttpRequest.generated.h"
-
-class IHttpRequest;
-class IHttpResponse;
-
-
-UENUM(BlueprintType, meta = (
-	Keywords = "HTTP Request Status Not Started Processing Failed Connection Error Succeeded Unknown"
-))
-enum class EMercuryHttpRequestStatus : uint8
-{
-	NotStarted UMETA(DisplayName = "Not Started"),
-	Processing UMETA(DisplayName = "Processing"),
-	Failed UMETA(DisplayName = "Failed"),
-	Failed_ConnectionError UMETA(DisplayName = "Connection Error"),
-	Succeeded UMETA(DisplayName = "Succeeded"),
-	Unknown UMETA(DisplayName = "Unknown")
-};
 
 
 UCLASS(Blueprintable, BlueprintType, DisplayName = "Mercury HTTP Request")
@@ -199,7 +183,7 @@ public:
 		CompactNodeTitle = "HTTP Status",
 		Keywords = "Get HTTP Status"
 	))
-	virtual EMercuryHttpRequestStatus GetMercuryHttpStatus() const;
+	virtual EMercuryHttpRequestStatus GetStatus() const;
 
 	UFUNCTION(BlueprintCallable, DisplayName = "Tick", Category = "HTTP|Request", meta = (
 		Keywords = "Tick Update"

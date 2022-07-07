@@ -2,36 +2,25 @@
 
 #pragma once
 
-#include "MercuryCommon/Public/ResourceOwner.h"
+#include "MercuryNetworkSubnetClass.h"
+#include "ResourceOwner.h"
 
-#include "MercuryNetworkSubnetMask.generated.h"
-
-struct FIPv4SubnetMask;
-
-
-UENUM(BlueprintType, meta = (Keywords = "Network Subnet Mask Class Invalid A B C"))
-enum class EMercuryNetworkSubnetMaskClass : uint8
-{
-	Invalid UMETA(DisplayName = "Invalid"),
-	ClassA UMETA(DisplayName = "Class A"),
-	ClassB UMETA(DisplayName = "Class B"),
-	ClassC UMETA(DisplayName = "Class C")
-};
+#include "MercuryNetworkMask.generated.h"
 
 
-UCLASS(Blueprintable, BlueprintType, DisplayName = "Mercury Network Subnet Mask")
-class MERCURYNETWORK_API UMercuryNetworkSubnetMask : public UObject, public TResourceOwner<FIPv4SubnetMask>
+UCLASS(Blueprintable, BlueprintType, DisplayName = "Mercury Network Mask")
+class MERCURYNETWORK_API UMercuryNetworkMask : public UObject, public TResourceOwner<FIPv4SubnetMask>
 {
 	GENERATED_BODY()
 
 public:
-	explicit UMercuryNetworkSubnetMask(const FObjectInitializer& ObjectInitializer);
+	explicit UMercuryNetworkMask(const FObjectInitializer& ObjectInitializer);
 
 	UFUNCTION(BlueprintPure, DisplayName = "Get Subnet Class", Category = "Network|IPv4SubnetMask", meta = (
 		CompactNodeTitle = "Subnet Class",
 		Keywords = "Network IPv4SubnetMask Get Subnet Class"
 	))
-	virtual EMercuryNetworkSubnetMaskClass GetSubnetClass() const;
+	virtual EMercuryNetworkSubnetClass GetSubnetClass() const;
 
 	UFUNCTION(BlueprintPure, DisplayName = "To String", Category = "Network|IPv4SubnetMask", meta = (
 		CompactNodeTitle = "Cast",
@@ -79,5 +68,5 @@ public:
 		CompactNodeTitle = "Parse",
 		Keywords = "Static Network IPv4SubnetMask Parse Mask String"
 	))
-	static void Parse(const FString& MaskString, UMercuryNetworkSubnetMask*& OutMask);
+	static void Parse(const FString& MaskString, UMercuryNetworkMask*& OutMask);
 };

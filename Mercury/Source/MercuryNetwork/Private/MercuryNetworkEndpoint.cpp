@@ -2,7 +2,6 @@
 
 #include "MercuryNetworkEndpoint.h"
 
-#include "Interfaces/IPv4/IPv4Endpoint.h"
 #include "MercuryInternetAddr.h"
 #include "MercuryNetworkAddress.h"
 

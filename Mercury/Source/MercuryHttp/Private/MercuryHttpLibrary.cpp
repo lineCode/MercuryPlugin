@@ -2,9 +2,6 @@
 
 #include "MercuryHttpLibrary.h"
 
-#include "MercuryHttp.h"
-#include "MercuryHttpRequest.h"
-
 
 void UMercuryHttpLibrary::RequestDataWithPayload(
 	const FString& URL,

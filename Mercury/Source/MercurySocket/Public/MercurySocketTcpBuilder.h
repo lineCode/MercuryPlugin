@@ -2,11 +2,11 @@
 
 #pragma once
 
-#include "MercuryCommon/Public/ResourceOwner.h"
+#include "Common/TcpSocketBuilder.h"
+#include "ResourceOwner.h"
 
 #include "MercurySocketTcpBuilder.generated.h"
 
-class FTcpSocketBuilder;
 class UMercuryNetworkAddress;
 class UMercuryNetworkEndpoint;
 class UMercurySocketObject;

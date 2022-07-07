@@ -2,14 +2,13 @@
 
 #pragma once
 
-#include "MercuryCommon/Public/ResourceOwner.h"
+#include "Interfaces/IPv4/IPv4Subnet.h"
+#include "ResourceOwner.h"
 
 #include "MercuryNetworkSubnet.generated.h"
 
-struct FIPv4Subnet;
-
 class UMercuryNetworkAddress;
-class UMercuryNetworkSubnetMask;
+class UMercuryNetworkMask;
 
 
 UCLASS(Blueprintable, BlueprintType, DisplayName = "Mercury Network Subnet")
@@ -30,7 +29,7 @@ public:
 		CompactNodeTitle = "Mask",
 		Keywords = "Network IPv4Subnet Get Mask"
 	))
-	virtual UMercuryNetworkSubnetMask* GetMask() const;
+	virtual UMercuryNetworkMask* GetMask() const;
 
 	UFUNCTION(BlueprintPure, DisplayName = "Broadcast Address", Category = "Network|IPv4Subnet", meta = (
 		Keywords = "Network IPv4Subnet Broadcast Address"

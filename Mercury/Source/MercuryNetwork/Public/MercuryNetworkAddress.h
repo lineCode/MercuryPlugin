@@ -2,11 +2,10 @@
 
 #pragma once
 
-#include "MercuryCommon/Public/ResourceOwner.h"
+#include "Interfaces/IPv4/IPv4Address.h"
+#include "ResourceOwner.h"
 
 #include "MercuryNetworkAddress.generated.h"
-
-struct FIPv4Address;
 
 
 UCLASS(Blueprintable, BlueprintType, DisplayName = "Mercury Network Address")

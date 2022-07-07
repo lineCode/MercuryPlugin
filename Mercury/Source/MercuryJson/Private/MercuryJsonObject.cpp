@@ -2,7 +2,6 @@
 
 #include "MercuryJsonObject.h"
 
-#include "MercuryJson.h"
 #include "MercuryJsonValue.h"
 
 
@@ -70,7 +69,8 @@ UMercuryJsonValue* UMercuryJsonObject::GetField(const FString& FieldName, const 
 		break;
 
 	default:
-		UE_LOG(LogMercuryJson, Fatal, TEXT("Invalid Mercury JSON Value Type enum passed in!"));
+		UE_LOG(LogMercuryJson, Error, TEXT("Unknown value type: %d"), ValueType);
+		JsonValue = Resource->GetField<EJson::None>(FieldName);
 	}
 	
 	UMercuryJsonValue* const&& MercuryJsonValue = NewObject<UMercuryJsonValue>();
@@ -147,45 +147,36 @@ FString UMercuryJsonObject::GetStringField(const FString& FieldName) const
 
 bool UMercuryJsonObject::HasTypedField(const FString& FieldName, const EMercuryJsonValueType ValueType) const
 {
-	bool&& bHasTypedField = false;
 	if (!Resource)
-		return bHasTypedField;
-	
+		return false;
+
 	switch (ValueType)
 	{
 	case EMercuryJsonValueType::None:
-		bHasTypedField = Resource->HasTypedField<EJson::None>(FieldName);
-		break;
+		return Resource->HasTypedField<EJson::None>(FieldName);
 
 	case EMercuryJsonValueType::Null:
-		bHasTypedField = Resource->HasTypedField<EJson::Null>(FieldName);
-		break;
+		return Resource->HasTypedField<EJson::Null>(FieldName);
 
 	case EMercuryJsonValueType::Number:
-		bHasTypedField = Resource->HasTypedField<EJson::Number>(FieldName);
-		break;
+		return Resource->HasTypedField<EJson::Number>(FieldName);
 
 	case EMercuryJsonValueType::Boolean:
-		bHasTypedField = Resource->HasTypedField<EJson::Boolean>(FieldName);
-		break;
+		return Resource->HasTypedField<EJson::Boolean>(FieldName);
 
 	case EMercuryJsonValueType::String:
-		bHasTypedField = Resource->HasTypedField<EJson::String>(FieldName);
-		break;
+		return Resource->HasTypedField<EJson::String>(FieldName);
 
 	case EMercuryJsonValueType::Array:
-		bHasTypedField = Resource->HasTypedField<EJson::Array>(FieldName);
-		break;
+		return Resource->HasTypedField<EJson::Array>(FieldName);
 
 	case EMercuryJsonValueType::Object:
-		bHasTypedField = Resource->HasTypedField<EJson::Object>(FieldName);
-		break;
+		return Resource->HasTypedField<EJson::Object>(FieldName);
 
 	default:
-		UE_LOG(LogMercuryJson, Fatal, TEXT("Invalid Mercury JSON Value Type enum passed in!"));
+		UE_LOG(LogMercuryJson, Error, TEXT("Unknown value type: %d"), ValueType);
+		return Resource->HasTypedField<EJson::None>(FieldName);
 	}
-	
-	return bHasTypedField;
 }
 
 void UMercuryJsonObject::SetArrayField(const FString& FieldName, const TArray<UMercuryJsonValue*>& Array)

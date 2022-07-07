@@ -2,8 +2,6 @@
 
 #include "MercuryHttpResponse.h"
 
-#include "Interfaces/IHttpResponse.h"
-
 
 UMercuryHttpResponse::UMercuryHttpResponse(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {

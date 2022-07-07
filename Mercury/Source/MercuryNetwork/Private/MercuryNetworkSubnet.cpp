@@ -2,9 +2,8 @@
 
 #include "MercuryNetworkSubnet.h"
 
-#include "Interfaces/IPv4/IPv4Subnet.h"
 #include "MercuryNetworkAddress.h"
-#include "MercuryNetworkSubnetMask.h"
+#include "MercuryNetworkMask.h"
 
 
 UMercuryNetworkSubnet::UMercuryNetworkSubnet(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
@@ -22,12 +21,12 @@ UMercuryNetworkAddress* UMercuryNetworkSubnet::GetAddress() const
 	return Address;
 }
 
-UMercuryNetworkSubnetMask* UMercuryNetworkSubnet::GetMask() const
+UMercuryNetworkMask* UMercuryNetworkSubnet::GetMask() const
 {
 	if (!Resource)
 		return nullptr;
 
-	UMercuryNetworkSubnetMask* const&& Mask = NewObject<UMercuryNetworkSubnetMask>();
+	UMercuryNetworkMask* const&& Mask = NewObject<UMercuryNetworkMask>();
 	*Mask->GetResource() = Resource->Mask;
 	return Mask;
 }

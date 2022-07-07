@@ -2,7 +2,6 @@
 
 #include "MercuryJsonValue.h"
 
-#include "MercuryJson.h"
 #include "MercuryJsonObject.h"
 
 
@@ -13,37 +12,7 @@ UMercuryJsonValue::UMercuryJsonValue(const FObjectInitializer& ObjectInitializer
 
 EMercuryJsonValueType UMercuryJsonValue::GetType() const
 {
-	if (!Resource)
-		return EMercuryJsonValueType::Null;
-	
-	switch (Resource->Type)
-	{
-	case EJson::None:
-		return EMercuryJsonValueType::None;
-
-	case EJson::Null:
-		return EMercuryJsonValueType::Null;
-
-	case EJson::Number:
-		return EMercuryJsonValueType::Number;
-
-	case EJson::Boolean:
-		return EMercuryJsonValueType::Boolean;
-
-	case EJson::String:
-		return EMercuryJsonValueType::String;
-
-	case EJson::Array:
-		return EMercuryJsonValueType::Array;
-
-	case EJson::Object:
-		return EMercuryJsonValueType::Object;
-
-	default:
-		UE_LOG(LogMercuryJson, Fatal, TEXT("Unknown JSON Value Type passed in!"));
-	}
-
-	return EMercuryJsonValueType::None;
+	return MercuryEnums::JsonValue::Convert(Resource ? Resource->Type : EJson::None);
 }
 
 TArray<UMercuryJsonValue*> UMercuryJsonValue::AsArray() const

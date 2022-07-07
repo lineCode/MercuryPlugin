@@ -4,6 +4,7 @@
 
 #include "ResourceOwner.h"
 
+#include "Interfaces/IHttpResponse.h"
 #include "MercuryHttpResponse.generated.h"
 
 class IHttpResponse;

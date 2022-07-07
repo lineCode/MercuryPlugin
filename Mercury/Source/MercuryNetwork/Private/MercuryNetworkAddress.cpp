@@ -2,8 +2,6 @@
 
 #include "MercuryNetworkAddress.h"
 
-#include "Interfaces/IPv4/IPv4Address.h"
-
 
 UMercuryNetworkAddress::UMercuryNetworkAddress(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
