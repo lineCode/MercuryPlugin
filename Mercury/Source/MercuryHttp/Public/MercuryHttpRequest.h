@@ -60,6 +60,7 @@ class MERCURYHTTP_API UMercuryHttpRequest : public UObject, public TResourceOwne
 	uint8 bHeaderReceivedDone : 1;
 
 public:
+	virtual TSharedPtr<IHttpRequest> CreateResource() override;
 	explicit UMercuryHttpRequest(const FObjectInitializer& ObjectInitializer);
 
 	UFUNCTION(BlueprintPure, DisplayName = "Get URL", Category = "HTTP|Request", meta = (

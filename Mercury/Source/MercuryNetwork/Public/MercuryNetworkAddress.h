@@ -14,7 +14,7 @@ class MERCURYNETWORK_API UMercuryNetworkAddress : public UObject, public TResour
 	GENERATED_BODY()
 
 public:
-	explicit UMercuryNetworkAddress(const FObjectInitializer& ObjectInitializer);
+	virtual TSharedPtr<FIPv4Address> CreateResource() override;
 
 	UFUNCTION(BlueprintPure, DisplayName = "Get A", Category = "Network|IPv4Address", meta = (
 		CompactNodeTitle = "A",

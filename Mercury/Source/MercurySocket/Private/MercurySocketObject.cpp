@@ -3,33 +3,24 @@
 #include "MercurySocketObject.h"
 
 #include "MercuryInternetAddr.h"
+#include "MercuryNetworkLibrary.h"
+#include "MercurySocketLibrary.h"
 
-
-UMercurySocketObject::UMercurySocketObject(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
-{
-	Resource = nullptr;
-}
 
 UMercurySocketObject* UMercurySocketObject::Accept(const FString& InSocketDescription)
 {
-	if (!Resource)
-		return nullptr;
-	
-	UMercurySocketObject* const&& Socket = NewObject<UMercurySocketObject>();
-	Socket->GetResource() = MakeShareable(Resource->Accept(InSocketDescription));
-	return Socket;
+	return Resource ? UMercurySocketLibrary::CreateSocketObject(
+		MakeShareable(Resource->Accept(InSocketDescription))
+	) : nullptr;
 }
 UMercurySocketObject* UMercurySocketObject::Accept(
 	UMercuryInternetAddr* const& OutAddr,
 	const FString& InSocketDescription
 )
 {
-	if (!Resource)
-		return nullptr;
-	
-	UMercurySocketObject* const&& Socket = NewObject<UMercurySocketObject>();
-	Socket->GetResource() = MakeShareable(Resource->Accept(*OutAddr->GetResource(), InSocketDescription));
-	return Socket;
+	return Resource ? UMercurySocketLibrary::CreateSocketObject(
+		MakeShareable(Resource->Accept(*OutAddr->GetResource(), InSocketDescription))
+	) : nullptr;
 }
 
 bool UMercurySocketObject::Bind(const UMercuryInternetAddr* const& Addr)
@@ -85,7 +76,7 @@ void UMercurySocketObject::GetAddress(UMercuryInternetAddr*& OutAddr) const
 	if (!Resource)
 		return;
 
-	OutAddr = NewObject<UMercuryInternetAddr>();
+	OutAddr = UMercuryNetworkLibrary::CreateInternetAddr();
 	Resource->GetAddress(*OutAddr->GetResource());
 }
 

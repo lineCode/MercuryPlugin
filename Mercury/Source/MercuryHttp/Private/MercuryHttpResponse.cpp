@@ -3,11 +3,6 @@
 #include "MercuryHttpResponse.h"
 
 
-UMercuryHttpResponse::UMercuryHttpResponse(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
-{
-	Resource = nullptr;
-}
-
 FString UMercuryHttpResponse::GetURL() const
 {
 	return Resource ? Resource->GetURL() : TEXT("");

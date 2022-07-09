@@ -3,6 +3,40 @@
 #include "MercuryHttpLibrary.h"
 
 
+UMercuryHttpRequest* UMercuryHttpLibrary::CreateHttpRequest()
+{
+	return CreateHttpRequest(nullptr);
+}
+UMercuryHttpRequest* UMercuryHttpLibrary::CreateHttpRequest(const IHttpRequest& Resource)
+{
+	UMercuryHttpRequest* const&& HttpRequest = NewObject<UMercuryHttpRequest>();
+	*HttpRequest->GetResource() = Resource;
+	return HttpRequest;
+}
+UMercuryHttpRequest* UMercuryHttpLibrary::CreateHttpRequest(const TSharedPtr<IHttpRequest>& Resource)
+{
+	UMercuryHttpRequest* const&& HttpRequest = NewObject<UMercuryHttpRequest>();
+	HttpRequest->GetResource() = Resource ? Resource : HttpRequest->CreateResource();
+	return HttpRequest;
+}
+
+UMercuryHttpResponse* UMercuryHttpLibrary::CreateHttpResponse()
+{
+	return CreateHttpResponse(nullptr);
+}
+UMercuryHttpResponse* UMercuryHttpLibrary::CreateHttpResponse(const IHttpResponse& Resource)
+{
+	UMercuryHttpResponse* const&& HttpResponse = NewObject<UMercuryHttpResponse>();
+	*HttpResponse->GetResource() = Resource;
+	return HttpResponse;
+}
+UMercuryHttpResponse* UMercuryHttpLibrary::CreateHttpResponse(const TSharedPtr<IHttpResponse>& Resource)
+{
+	UMercuryHttpResponse* const&& HttpResponse = NewObject<UMercuryHttpResponse>();
+	HttpResponse->GetResource() = Resource ? Resource : HttpResponse->CreateResource();
+	return HttpResponse;
+}
+
 void UMercuryHttpLibrary::RequestDataWithPayload(
 	const FString& URL,
 	const FString& Verb,
@@ -14,7 +48,7 @@ void UMercuryHttpLibrary::RequestDataWithPayload(
 	const FMercuryHttpHeaderReceivedDelegate* const& HeaderReceived
 )
 {
-	UMercuryHttpRequest* const& Request = NewObject<UMercuryHttpRequest>();
+	UMercuryHttpRequest* const&& Request = CreateHttpRequest();
 	Request->SetContent(ContentPayload);
 	RequestData(
 		Request,
@@ -39,7 +73,7 @@ void UMercuryHttpLibrary::RequestDataWithStringContent(
 	const FMercuryHttpHeaderReceivedDelegate* const& HeaderReceived
 )
 {
-	UMercuryHttpRequest* const& Request = NewObject<UMercuryHttpRequest>();
+	UMercuryHttpRequest* const&& Request = CreateHttpRequest();
 	Request->SetContentAsString(Content);
 	RequestData(
 		Request,
@@ -64,7 +98,7 @@ void UMercuryHttpLibrary::RequestDataFromStream(
 	const FMercuryHttpHeaderReceivedDelegate* const& HeaderReceived
 )
 {
-	UMercuryHttpRequest* const& Request = NewObject<UMercuryHttpRequest>();
+	UMercuryHttpRequest* const&& Request = CreateHttpRequest();
 	Request->SetContentFromStream(Stream);
 	RequestData(
 		Request,
@@ -89,7 +123,7 @@ void UMercuryHttpLibrary::RequestDataWithStreamedFile(
 	const FMercuryHttpHeaderReceivedDelegate* const& HeaderReceived
 )
 {
-	UMercuryHttpRequest* const& Request = NewObject<UMercuryHttpRequest>();
+	UMercuryHttpRequest* const&& Request = CreateHttpRequest();
 	Request->SetContentAsStreamedFile(Filename);
 	RequestData(
 		Request,
@@ -104,7 +138,7 @@ void UMercuryHttpLibrary::RequestDataWithStreamedFile(
 }
 
 void UMercuryHttpLibrary::RequestData(
-	UMercuryHttpRequest* const Request,
+	UMercuryHttpRequest* const& Request,
 	const FString& URL,
 	const FString& Verb,
 	const TMap<FString, FString>& Headers,

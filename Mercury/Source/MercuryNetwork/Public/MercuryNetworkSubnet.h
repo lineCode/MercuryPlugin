@@ -17,7 +17,7 @@ class MERCURYNETWORK_API UMercuryNetworkSubnet : public UObject, public TResourc
 	GENERATED_BODY()
 
 public:
-	explicit UMercuryNetworkSubnet(const FObjectInitializer& ObjectInitializer);
+	virtual TSharedPtr<FIPv4Subnet> CreateResource() override;
 
 	UFUNCTION(BlueprintPure, DisplayName = "Get Address", Category = "Network|IPv4Subnet", meta = (
 		CompactNodeTitle = "Address",

@@ -3,21 +3,22 @@
 #include "MercuryInternetAddr.h"
 
 #include "MercuryNetwork.h"
+#include "MercuryNetworkLibrary.h"
 
 
-UMercuryInternetAddr::UMercuryInternetAddr(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
+TSharedPtr<FInternetAddr> UMercuryInternetAddr::CreateResource()
 {
-	Resource = FMercuryNetworkModule::GetSocketSubsystem()->CreateInternetAddr();
+	return FMercuryNetworkModule::GetSocketSubsystem()->CreateInternetAddr();
+}
+
+TSharedPtr<FInternetAddr> UMercuryInternetAddr::CreateResource(const std::tuple<FName>&& Arguments)
+{
+	return FMercuryNetworkModule::GetSocketSubsystem()->CreateInternetAddr(std::get<0>(Arguments));
 }
 
 UMercuryInternetAddr* UMercuryInternetAddr::Clone() const
 {
-	if (!Resource)
-		return nullptr;
-
-	UMercuryInternetAddr* const&& InternetAddr = NewObject<UMercuryInternetAddr>();
-	InternetAddr->GetResource() = Resource->Clone();
-	return InternetAddr;
+	return Resource ? UMercuryNetworkLibrary::CreateInternetAddr(Resource->Clone()) : nullptr;
 }
 
 bool UMercuryInternetAddr::CompareEndpoints(const UMercuryInternetAddr* const& InAddr) const

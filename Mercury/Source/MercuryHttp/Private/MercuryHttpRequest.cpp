@@ -2,18 +2,23 @@
 
 #include "MercuryHttpRequest.h"
 
+#include "MercuryHttpLibrary.h"
 #include "MercuryHttpResponse.h"
 
 
+TSharedPtr<IHttpRequest> UMercuryHttpRequest::CreateResource()
+{
+	const TSharedPtr<IHttpRequest>&& Request = FMercuryHttpModule::GetHttpModule()->CreateRequest();
+	Request->OnProcessRequestComplete().BindUObject(this, &UMercuryHttpRequest::BindProcessRequestComplete);
+	Request->OnRequestProgress().BindUObject(this, &UMercuryHttpRequest::BindRequestProgress);
+	Request->OnRequestWillRetry().BindUObject(this, &UMercuryHttpRequest::BindRequestWillRetry);
+	Request->OnHeaderReceived().BindUObject(this, &UMercuryHttpRequest::BindHeaderReceived);
+	return Request;
+}
+
 UMercuryHttpRequest::UMercuryHttpRequest(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
-	Resource = FMercuryHttpModule::GetHttpModule()->CreateRequest();
-	MercuryHttpResponse = CreateDefaultSubobject<UMercuryHttpResponse>(TEXT("Mercury HTTP Response"));
-	
-	Resource->OnProcessRequestComplete().BindUObject(this, &UMercuryHttpRequest::BindProcessRequestComplete);
-	Resource->OnRequestProgress().BindUObject(this, &UMercuryHttpRequest::BindRequestProgress);
-	Resource->OnRequestWillRetry().BindUObject(this, &UMercuryHttpRequest::BindRequestWillRetry);
-	Resource->OnHeaderReceived().BindUObject(this, &UMercuryHttpRequest::BindHeaderReceived);
+	MercuryHttpResponse = UMercuryHttpLibrary::CreateHttpResponse();
 
 	bProcessRequestCompleteDone = false;
 	bRequestProgressDone = false;
@@ -229,11 +234,8 @@ void UMercuryHttpRequest::BindProcessRequestComplete(
 		return;
 	}
 	
-	UMercuryHttpRequest* const&& MercuryRequest = NewObject<UMercuryHttpRequest>();
-	MercuryRequest->GetResource() = Request;
-
-	UMercuryHttpResponse* const&& MercuryResponse = NewObject<UMercuryHttpResponse>();
-	MercuryResponse->GetResource() = Response;
+	UMercuryHttpRequest* const&& MercuryRequest = UMercuryHttpLibrary::CreateHttpRequest(Request);
+	UMercuryHttpResponse* const&& MercuryResponse = UMercuryHttpLibrary::CreateHttpResponse(Response);
 	MercuryRequest->GetMercuryHttpResponse() = MercuryResponse;
 	
 	OnMercuryHttpProcessRequestCompleteDelegate.Execute(MercuryRequest, MercuryResponse, bConnectedSuccessfully);
@@ -253,10 +255,11 @@ void UMercuryHttpRequest::BindRequestProgress(
 		return;
 	}
 	
-	UMercuryHttpRequest* const&& MercuryRequest = NewObject<UMercuryHttpRequest>();
-	MercuryRequest->GetResource() = Request;
-	
-	OnMercuryHttpRequestProgressDelegate.Execute(MercuryRequest, BytesSent, BytesReceived);
+	OnMercuryHttpRequestProgressDelegate.Execute(
+		UMercuryHttpLibrary::CreateHttpRequest(Request),
+		BytesSent,
+		BytesReceived
+	);
 	bRequestProgressDone = true;
 }
 
@@ -273,11 +276,8 @@ void UMercuryHttpRequest::BindRequestWillRetry(
 		return;
 	}
 	
-	UMercuryHttpRequest* const&& MercuryRequest = NewObject<UMercuryHttpRequest>();
-	MercuryRequest->GetResource() = Request;
-
-	UMercuryHttpResponse* const&& MercuryResponse = NewObject<UMercuryHttpResponse>();
-	MercuryResponse->GetResource() = Response;
+	UMercuryHttpRequest* const&& MercuryRequest = UMercuryHttpLibrary::CreateHttpRequest(Request);
+	UMercuryHttpResponse* const&& MercuryResponse = UMercuryHttpLibrary::CreateHttpResponse(Response);
 	MercuryRequest->GetMercuryHttpResponse() = MercuryResponse;
 	
 	OnMercuryHttpRequestWillRetryDelegate.Execute(MercuryRequest, MercuryResponse, SecondsToRetry);
@@ -297,10 +297,11 @@ void UMercuryHttpRequest::BindHeaderReceived(
 		return;
 	}
 	
-	UMercuryHttpRequest* const&& MercuryRequest = NewObject<UMercuryHttpRequest>();
-	MercuryRequest->GetResource() = Request;
-	
-	OnMercuryHttpHeaderReceivedDelegate.Execute(MercuryRequest, HeaderName, NewHeaderValue);
+	OnMercuryHttpHeaderReceivedDelegate.Execute(
+		UMercuryHttpLibrary::CreateHttpRequest(Request),
+		HeaderName,
+		NewHeaderValue
+	);
 	bHeaderReceivedDone = true;
 }
 

@@ -2,10 +2,12 @@
 
 #include "MercuryNetworkAddress.h"
 
+#include "MercuryNetworkLibrary.h"
 
-UMercuryNetworkAddress::UMercuryNetworkAddress(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
+
+TSharedPtr<FIPv4Address> UMercuryNetworkAddress::CreateResource()
 {
-	Resource = MakeShareable(new FIPv4Address());
+	return MakeShareable(new FIPv4Address());
 }
 
 uint8 UMercuryNetworkAddress::GetA() const
@@ -90,28 +92,31 @@ bool UMercuryNetworkAddress::IsSiteLocalMulticast() const
 
 const UMercuryNetworkAddress* const& UMercuryNetworkAddress::GetAny()
 {
-	static const UMercuryNetworkAddress* const& Address = NewObject<const UMercuryNetworkAddress>();
-	*Address->GetResource() = FIPv4Address::Any;
+	static const UMercuryNetworkAddress* const&& Address = UMercuryNetworkLibrary::CreateNetworkAddress(
+		FIPv4Address::Any
+	);
 	return Address;
 }
 
 void UMercuryNetworkAddress::Parse(const FString& AddressString, UMercuryNetworkAddress*& OutAddress)
 {
-	OutAddress = NewObject<UMercuryNetworkAddress>();
+	OutAddress = UMercuryNetworkLibrary::CreateNetworkAddress();
 	FIPv4Address::Parse(AddressString, *OutAddress->GetResource());
 }
 
 const UMercuryNetworkAddress* const& UMercuryNetworkAddress::GetInternalLoopback()
 {
-	static const UMercuryNetworkAddress* const& Address = NewObject<const UMercuryNetworkAddress>();
-	*Address->GetResource() = FIPv4Address::InternalLoopback;
+	static const UMercuryNetworkAddress* const&& Address = UMercuryNetworkLibrary::CreateNetworkAddress(
+		FIPv4Address::InternalLoopback
+	);
 	return Address;
 }
 
 const UMercuryNetworkAddress* const& UMercuryNetworkAddress::GetLanBroadcast()
 {
-	static const UMercuryNetworkAddress* const& Address = NewObject<const UMercuryNetworkAddress>();
-	*Address->GetResource() = FIPv4Address::LanBroadcast;
+	static const UMercuryNetworkAddress* const&& Address = UMercuryNetworkLibrary::CreateNetworkAddress(
+		FIPv4Address::LanBroadcast
+	);
 	return Address;
 }
 

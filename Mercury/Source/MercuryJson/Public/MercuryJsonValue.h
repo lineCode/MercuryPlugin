@@ -16,7 +16,7 @@ class MERCURYJSON_API UMercuryJsonValue : public UObject, public TResourceOwner<
 	GENERATED_BODY()
 
 public:
-	explicit UMercuryJsonValue(const FObjectInitializer& ObjectInitializer);
+	virtual TSharedPtr<FJsonValue> CreateResource() override;
 	
 	UFUNCTION(BlueprintPure, DisplayName = "Get Type", Category = "JSON|Value", meta = (
 		CompactNodeTitle = "Type",

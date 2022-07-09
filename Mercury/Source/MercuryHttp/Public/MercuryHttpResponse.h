@@ -16,8 +16,6 @@ class MERCURYHTTP_API UMercuryHttpResponse : public UObject, public TResourceOwn
 	GENERATED_BODY()
 
 public:
-	explicit UMercuryHttpResponse(const FObjectInitializer& ObjectInitializer);
-	
 	UFUNCTION(BlueprintPure, DisplayName = "Get URL", Category = "HTTP|Response", meta = (
 		CompactNodeTitle = "URL",
 		Keywords = "Get URL Link Host Server"

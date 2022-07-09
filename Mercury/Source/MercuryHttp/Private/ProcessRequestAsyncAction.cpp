@@ -50,7 +50,7 @@ void UProcessRequestAsyncAction::Activate()
 
 	if (!Request->ProcessRequest())
 	{
-		FFrame::KismetExecutionMessage(TEXT("Unable to execute HTTP request: Request failed"), ELogVerbosity::Warning);
+		FFrame::KismetExecutionMessage(TEXT("Unable to execute HTTP request: Request failed"), ELogVerbosity::Error);
 		return;
 	}
 	

@@ -3,42 +3,28 @@
 #include "MercuryNetworkSubnet.h"
 
 #include "MercuryNetworkAddress.h"
+#include "MercuryNetworkLibrary.h"
 #include "MercuryNetworkMask.h"
 
 
-UMercuryNetworkSubnet::UMercuryNetworkSubnet(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
+TSharedPtr<FIPv4Subnet> UMercuryNetworkSubnet::CreateResource()
 {
-	Resource = MakeShareable(new FIPv4Subnet());
+	return MakeShareable(new FIPv4Subnet());
 }
 
 UMercuryNetworkAddress* UMercuryNetworkSubnet::GetAddress() const
 {
-	if (!Resource)
-		return nullptr;
-	
-	UMercuryNetworkAddress* const&& Address = NewObject<UMercuryNetworkAddress>();
-	*Address->GetResource() = Resource->Address;
-	return Address;
+	return Resource ? UMercuryNetworkLibrary::CreateNetworkAddress(Resource->Address) : nullptr;
 }
 
 UMercuryNetworkMask* UMercuryNetworkSubnet::GetMask() const
 {
-	if (!Resource)
-		return nullptr;
-
-	UMercuryNetworkMask* const&& Mask = NewObject<UMercuryNetworkMask>();
-	*Mask->GetResource() = Resource->Mask;
-	return Mask;
+	return Resource ? UMercuryNetworkLibrary::CreateNetworkMask(Resource->Mask) : nullptr;
 }
 
 UMercuryNetworkAddress* UMercuryNetworkSubnet::BroadcastAddress() const
 {
-	if (!Resource)
-		return nullptr;
-
-	UMercuryNetworkAddress* const&& Address = NewObject<UMercuryNetworkAddress>();
-	*Address->GetResource() = Resource->BroadcastAddress();
-	return Address;
+	return Resource ? UMercuryNetworkLibrary::CreateNetworkAddress(Resource->BroadcastAddress()) : nullptr;
 }
 
 bool UMercuryNetworkSubnet::ContainsAddress(const UMercuryNetworkAddress* const& TestAddress) const
@@ -58,6 +44,6 @@ FText UMercuryNetworkSubnet::ToText() const
 
 void UMercuryNetworkSubnet::Parse(const FString& SubnetString, UMercuryNetworkSubnet*& OutSubnet)
 {
-	OutSubnet = NewObject<UMercuryNetworkSubnet>();
+	OutSubnet = UMercuryNetworkLibrary::CreateNetworkSubnet();
 	FIPv4Subnet::Parse(SubnetString, *OutSubnet->GetResource());
 }

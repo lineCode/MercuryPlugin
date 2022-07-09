@@ -2,12 +2,13 @@
 
 #include "MercuryJsonObject.h"
 
+#include "MercuryJsonLibrary.h"
 #include "MercuryJsonValue.h"
 
 
-UMercuryJsonObject::UMercuryJsonObject(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
+TSharedPtr<FJsonObject> UMercuryJsonObject::CreateResource()
 {
-	Resource = MakeShareable(new FJsonObject());
+	return MakeShareable(new FJsonObject());
 }
 
 void UMercuryJsonObject::Duplicate(const UMercuryJsonObject* const& Source, UMercuryJsonObject* const& Destination)
@@ -26,8 +27,7 @@ TMap<FString, UMercuryJsonValue*> UMercuryJsonObject::GetValues() const
 	
 	for (const TTuple<FString, TSharedPtr<FJsonValue>>& JsonValues : Resource->Values)
 	{
-		MercuryJsonValues[JsonValues.Key] = NewObject<UMercuryJsonValue>();
-		MercuryJsonValues[JsonValues.Key]->GetResource() = JsonValues.Value;
+		MercuryJsonValues[JsonValues.Key] = UMercuryJsonLibrary::CreateJsonValue(JsonValues.Value);
 	}
 	return MercuryJsonValues;
 }
@@ -73,9 +73,7 @@ UMercuryJsonValue* UMercuryJsonObject::GetField(const FString& FieldName, const 
 		JsonValue = Resource->GetField<EJson::None>(FieldName);
 	}
 	
-	UMercuryJsonValue* const&& MercuryJsonValue = NewObject<UMercuryJsonValue>();
-	MercuryJsonValue->GetResource() = JsonValue;
-	return MercuryJsonValue;
+	return UMercuryJsonLibrary::CreateJsonValue(JsonValue);
 }
 
 bool UMercuryJsonObject::HasField(const FString& FieldName) const
@@ -107,9 +105,7 @@ TArray<UMercuryJsonValue*> UMercuryJsonObject::GetArrayField(const FString& Fiel
 	TArray<UMercuryJsonValue*>&& MercuryArrayField = TArray<UMercuryJsonValue*>();
 	for (const TSharedPtr<FJsonValue>& JsonValue : ArrayField)
 	{
-		UMercuryJsonValue* const&& MercuryJsonValue = NewObject<UMercuryJsonValue>();
-		MercuryJsonValue->GetResource() = JsonValue;
-		MercuryArrayField.Add(MercuryJsonValue);
+		MercuryArrayField.Add(UMercuryJsonLibrary::CreateJsonValue(JsonValue));
 	}
 
 	return MercuryArrayField;
@@ -132,12 +128,7 @@ double UMercuryJsonObject::GetNumberField(const FString& FieldName) const
 
 UMercuryJsonObject* UMercuryJsonObject::GetObjectField(const FString& FieldName) const
 {
-	if (!Resource)
-		return nullptr;
-	
-	UMercuryJsonObject* const&& JsonObject = NewObject<UMercuryJsonObject>();
-	JsonObject->GetResource() = Resource->GetObjectField(FieldName);
-	return JsonObject;
+	return Resource ? UMercuryJsonLibrary::CreateJsonObject(Resource->GetObjectField(FieldName)) : nullptr;
 }
 
 FString UMercuryJsonObject::GetStringField(const FString& FieldName) const
@@ -234,9 +225,7 @@ bool UMercuryJsonObject::TryGetArrayField(const FString& FieldName, TArray<UMerc
 
 	for (const TSharedPtr<FJsonValue>& JsonValue : ArrayField ? *ArrayField: TArray<TSharedPtr<FJsonValue>>())
 	{
-		UMercuryJsonValue* const&& MercuryJsonValue = NewObject<UMercuryJsonValue>();
-		MercuryJsonValue->GetResource() = JsonValue;
-		OutArray.Add(MercuryJsonValue);
+		OutArray.Add(UMercuryJsonLibrary::CreateJsonValue(JsonValue));
 	}
 	return bGotArray;
 }

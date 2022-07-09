@@ -17,7 +17,7 @@ class MERCURYNETWORK_API UMercuryNetworkEndpoint : public UObject, public TResou
 	GENERATED_BODY()
 
 public:
-	explicit UMercuryNetworkEndpoint(const FObjectInitializer& ObjectInitializer);
+	virtual TSharedPtr<FIPv4Endpoint> CreateResource() override;
 
 	UFUNCTION(BlueprintPure, DisplayName = "Get Address", Category = "Network|IPv4Endpoint", meta = (
 		CompactNodeTitle = "Address",

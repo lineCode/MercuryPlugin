@@ -2,10 +2,12 @@
 
 #include "MercuryNetworkMask.h"
 
+#include "MercuryNetworkLibrary.h"
 
-UMercuryNetworkMask::UMercuryNetworkMask(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
+
+TSharedPtr<FIPv4SubnetMask> UMercuryNetworkMask::CreateResource()
 {
-	Resource = MakeShareable(new FIPv4SubnetMask());
+	return MakeShareable(new FIPv4SubnetMask());
 }
 
 EMercuryNetworkSubnetClass UMercuryNetworkMask::GetSubnetClass() const
@@ -50,6 +52,6 @@ int32 UMercuryNetworkMask::GetValue() const
 
 void UMercuryNetworkMask::Parse(const FString& MaskString, UMercuryNetworkMask*& OutMask)
 {
-	OutMask = NewObject<UMercuryNetworkMask>();
+	OutMask = UMercuryNetworkLibrary::CreateNetworkMask();
 	FIPv4SubnetMask::Parse(MaskString, *OutMask->GetResource());
 }

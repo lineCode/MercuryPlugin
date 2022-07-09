@@ -4,23 +4,19 @@
 
 #include "MercuryNetworkAddress.h"
 #include "MercuryNetworkEndpoint.h"
+#include "MercurySocketLibrary.h"
 #include "MercurySocketObject.h"
 
 
-UMercurySocketTcpBuilder::UMercurySocketTcpBuilder(const FObjectInitializer& ObjectInitializer)
-: Super(ObjectInitializer)
+TSharedPtr<FTcpSocketBuilder> UMercurySocketTcpBuilder::CreateResource(const std::tuple<FString>&& Arguments)
 {
-	Resource = MakeShareable(new FTcpSocketBuilder(TEXT("TCP Socket")));
+	return MakeShareable(new FTcpSocketBuilder(std::get<0>(Arguments)));
 }
 
 UMercurySocketObject* UMercurySocketTcpBuilder::Build() const
 {
-	if (!Resource)
-		return nullptr;
-
-	UMercurySocketObject* const&& Socket = NewObject<UMercurySocketObject>();
-	Socket->GetResource() = MakeShareable(Resource->Build());
-	return Socket;
+	return Resource ?
+		UMercurySocketLibrary::CreateSocketObject(MakeShareable(Resource->Build())) : nullptr;
 }
 
 UMercurySocketTcpBuilder* UMercurySocketTcpBuilder::Lingering(const int32 Timeout)

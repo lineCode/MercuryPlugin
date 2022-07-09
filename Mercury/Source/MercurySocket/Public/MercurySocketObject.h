@@ -21,8 +21,6 @@ class MERCURYSOCKET_API UMercurySocketObject : public UObject, public TResourceO
 	GENERATED_BODY()
 
 public:
-	explicit UMercurySocketObject(const FObjectInitializer& ObjectInitializer);
-
 	UFUNCTION(BlueprintCallable, DisplayName = "Accept", Category = "Socket|Object", meta = (
 		Keywords = "Socket Object Accept Out Addr Address In Description"
 	))

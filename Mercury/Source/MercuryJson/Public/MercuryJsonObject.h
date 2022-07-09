@@ -16,7 +16,7 @@ class MERCURYJSON_API UMercuryJsonObject : public UObject, public TResourceOwner
 	GENERATED_BODY()
 
 public:
-	explicit UMercuryJsonObject(const FObjectInitializer& ObjectInitializer);
+	virtual TSharedPtr<FJsonObject> CreateResource() override;
 
 	UFUNCTION(BlueprintCallable, DisplayName = "Duplicate", Category = "JSON|Object", meta = (
 		Keywords = "JSON Object Duplicate Copy Source Destination"

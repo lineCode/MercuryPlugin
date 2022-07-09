@@ -4,27 +4,24 @@
 
 #include "MercuryInternetAddr.h"
 #include "MercuryNetworkAddress.h"
+#include "MercuryNetworkLibrary.h"
 
 
-UMercuryNetworkEndpoint::UMercuryNetworkEndpoint(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
+TSharedPtr<FIPv4Endpoint> UMercuryNetworkEndpoint::CreateResource()
 {
-	Resource = MakeShareable(new FIPv4Endpoint());
+	return MakeShareable(new FIPv4Endpoint());
 }
 
 UMercuryNetworkAddress* UMercuryNetworkEndpoint::GetAddress() const
 {
-	if (!Resource)
-		return nullptr;
-	
-	UMercuryNetworkAddress* const&& Address = NewObject<UMercuryNetworkAddress>();
-	*Address->GetResource() = Resource->Address;
-	return Address;
+	return Resource ? UMercuryNetworkLibrary::CreateNetworkAddress(Resource->Address) : nullptr;
 }
 
 const UMercuryNetworkEndpoint* const& UMercuryNetworkEndpoint::GetAny()
 {
-	static const UMercuryNetworkEndpoint* const& WebEndpoint = NewObject<const UMercuryNetworkEndpoint>();
-	*WebEndpoint->GetResource() = FIPv4Endpoint::Any;
+	static const UMercuryNetworkEndpoint* const&& WebEndpoint = UMercuryNetworkLibrary::CreateNetworkEndpoint(
+		FIPv4Endpoint::Any
+	);
 	return WebEndpoint;
 }
 
@@ -35,7 +32,7 @@ void UMercuryNetworkEndpoint::Initialize()
 
 void UMercuryNetworkEndpoint::Parse(const FString& EndpointString, UMercuryNetworkEndpoint*& OutEndpoint)
 {
-	OutEndpoint = NewObject<UMercuryNetworkEndpoint>();
+	OutEndpoint = UMercuryNetworkLibrary::CreateNetworkEndpoint();
 	FIPv4Endpoint::Parse(EndpointString, *OutEndpoint->GetResource());
 }
 
@@ -56,28 +53,18 @@ FText UMercuryNetworkEndpoint::ToText() const
 
 UMercuryInternetAddr* UMercuryNetworkEndpoint::ToInternetAddr() const
 {
-	if (!Resource)
-		return nullptr;
-
-	UMercuryInternetAddr* const&& InternetAddr = NewObject<UMercuryInternetAddr>();
-	InternetAddr->GetResource() = Resource->ToInternetAddr();
-	return InternetAddr;
+	return Resource ? UMercuryNetworkLibrary::CreateInternetAddr(Resource->ToInternetAddr()) : nullptr;
 }
 
 bool UMercuryNetworkEndpoint::FromHostAndPort(const FString& HostAndPortString, UMercuryNetworkEndpoint*& OutEndpoint)
 {
-	OutEndpoint = NewObject<UMercuryNetworkEndpoint>();
+	OutEndpoint = UMercuryNetworkLibrary::CreateNetworkEndpoint();
 	return FIPv4Endpoint::FromHostAndPort(HostAndPortString, *OutEndpoint->GetResource());
 }
 
 UMercuryInternetAddr* UMercuryNetworkEndpoint::ToInternetAddrIPv4() const
 {
-	if (!Resource)
-		return nullptr;
-
-	UMercuryInternetAddr* const&& InternetAddr = NewObject<UMercuryInternetAddr>();
-	InternetAddr->GetResource() = Resource->ToInternetAddrIPV4();
-	return InternetAddr;
+	return Resource ? UMercuryNetworkLibrary::CreateInternetAddr(Resource->ToInternetAddrIPV4()) : nullptr;
 }
 
 int32 UMercuryNetworkEndpoint::K2_GetPort() const

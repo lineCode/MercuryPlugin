@@ -3,6 +3,7 @@
 #pragma once
 
 #include "MercuryHttpRequest.h"
+#include "MercuryHttpResponse.h"
 
 #include "MercuryHttpLibrary.generated.h"
 
@@ -13,6 +14,20 @@ class MERCURYHTTP_API UMercuryHttpLibrary : public UBlueprintFunctionLibrary
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(BlueprintCallable, DisplayName = "Create HTTP Request", Category = "Mercury|HTTP", meta = (
+		Keywords = "Create HTTP Request"
+	))
+	static UMercuryHttpRequest* CreateHttpRequest();
+	static UMercuryHttpRequest* CreateHttpRequest(const IHttpRequest& Resource);
+	static UMercuryHttpRequest* CreateHttpRequest(const TSharedPtr<IHttpRequest>& Resource);
+
+	UFUNCTION(BlueprintCallable, DisplayName = "Create HTTP Response", Category = "Mercury|HTTP", meta = (
+		Keywords = "Create HTTP Response"
+	))
+	static UMercuryHttpResponse* CreateHttpResponse();
+	static UMercuryHttpResponse* CreateHttpResponse(const IHttpResponse& Resource);
+	static UMercuryHttpResponse* CreateHttpResponse(const TSharedPtr<IHttpResponse>& Resource);
+	
 	static void RequestDataWithPayload(
 		const FString& URL,
 		const FString& Verb,
@@ -57,9 +72,9 @@ public:
 		const FMercuryHttpHeaderReceivedDelegate* const& HeaderReceived = nullptr
 	);
 
-private:
+protected:
 	static void RequestData(
-		UMercuryHttpRequest* const Request,
+		UMercuryHttpRequest* const& Request,
 		const FString& URL,
 		const FString& Verb,
 		const TMap<FString, FString>& Headers,

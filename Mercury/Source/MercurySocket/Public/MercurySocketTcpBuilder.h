@@ -13,12 +13,12 @@ class UMercurySocketObject;
 
 
 UCLASS(Blueprintable, BlueprintType, DisplayName = "Mercury Socket TCP Builder")
-class MERCURYSOCKET_API UMercurySocketTcpBuilder : public UObject, public TResourceOwner<FTcpSocketBuilder>
+class MERCURYSOCKET_API UMercurySocketTcpBuilder : public UObject, public TResourceOwner<FTcpSocketBuilder, FString>
 {
 	GENERATED_BODY()
 
 public:
-	explicit UMercurySocketTcpBuilder(const FObjectInitializer& ObjectInitializer);
+	virtual TSharedPtr<FTcpSocketBuilder> CreateResource(const std::tuple<FString>&& Arguments) override;
 
 	UFUNCTION(BlueprintPure, DisplayName = "Build", Category = "Socket|TCP Builder", meta = (
 		Keywords = "Socket TCP Builder Build"

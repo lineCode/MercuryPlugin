@@ -14,7 +14,7 @@ class MERCURYNETWORK_API UMercuryNetworkMask : public UObject, public TResourceO
 	GENERATED_BODY()
 
 public:
-	explicit UMercuryNetworkMask(const FObjectInitializer& ObjectInitializer);
+	virtual TSharedPtr<FIPv4SubnetMask> CreateResource() override;
 
 	UFUNCTION(BlueprintPure, DisplayName = "Get Subnet Class", Category = "Network|IPv4SubnetMask", meta = (
 		CompactNodeTitle = "Subnet Class",

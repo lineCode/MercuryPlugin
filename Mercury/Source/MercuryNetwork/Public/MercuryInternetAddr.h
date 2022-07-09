@@ -8,13 +8,14 @@
 
 
 UCLASS(Blueprintable, BlueprintType, DisplayName = "Mercury Internet Addr")
-class MERCURYNETWORK_API UMercuryInternetAddr : public UObject, public TResourceOwner<FInternetAddr>
+class MERCURYNETWORK_API UMercuryInternetAddr : public UObject, public TResourceOwner<FInternetAddr, FName>
 {
 	GENERATED_BODY()
 
 public:
-	explicit UMercuryInternetAddr(const FObjectInitializer& ObjectInitializer);
-
+	virtual TSharedPtr<FInternetAddr> CreateResource() override;
+	virtual TSharedPtr<FInternetAddr> CreateResource(const std::tuple<FName>&& Arguments) override;
+	
 	UFUNCTION(BlueprintCallable, DisplayName = "Clone", Category = "Network|Internet Addr", meta = (
 		Keywords = "Network Internet Addr Address Clone"
 	))
