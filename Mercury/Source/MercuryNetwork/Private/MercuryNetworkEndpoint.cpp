@@ -16,6 +16,15 @@ UMercuryNetworkAddress* UMercuryNetworkEndpoint::GetAddress() const
 {
 	return Resource ? UMercuryNetworkLibrary::CreateNetworkAddress(Resource->Address) : nullptr;
 }
+UMercuryNetworkEndpoint* UMercuryNetworkEndpoint::SetAddress(const UMercuryNetworkAddress* const& Value)
+{
+	const TSharedPtr<FIPv4Address>& ValueResource = Value->GetResource();
+	if (!Resource || !Value || !ValueResource)
+		return nullptr;
+
+	Resource->Address = *ValueResource;
+	return this;
+}
 
 const UMercuryNetworkEndpoint* const& UMercuryNetworkEndpoint::GetAny()
 {
@@ -39,6 +48,14 @@ void UMercuryNetworkEndpoint::Parse(const FString& EndpointString, UMercuryNetwo
 uint16 UMercuryNetworkEndpoint::GetPort() const
 {
 	return Resource ? Resource->Port : 0u;
+}
+UMercuryNetworkEndpoint* UMercuryNetworkEndpoint::SetPort(const uint16& Value)
+{
+	if (!Resource)
+		return nullptr;
+
+	Resource->Port = Value;
+	return this;
 }
 
 FString UMercuryNetworkEndpoint::ToString() const
@@ -70,4 +87,8 @@ UMercuryInternetAddr* UMercuryNetworkEndpoint::ToInternetAddrIPv4() const
 int32 UMercuryNetworkEndpoint::K2_GetPort() const
 {
 	return GetPort();
+}
+UMercuryNetworkEndpoint* UMercuryNetworkEndpoint::K2_SetPort(const int32 Value)
+{
+	return SetPort(Value);
 }

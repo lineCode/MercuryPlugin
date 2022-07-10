@@ -21,26 +21,43 @@ public:
 		Keywords = "Network IPv4Address Get A"
 	))
 	virtual uint8 GetA() const;
+	UFUNCTION(BlueprintCallable, DisplayName = "Set A", Category = "Network|IPv4Address", meta = (
+		Keywords = "Network IPv4Address Set A"
+	))
+	virtual UMercuryNetworkAddress* SetA(uint8 Value);
 
 	UFUNCTION(BlueprintPure, DisplayName = "Get B", Category = "Network|IPv4Address", meta = (
 		CompactNodeTitle = "B",
 		Keywords = "Network IPv4Address Get B"
 	))
 	virtual uint8 GetB() const;
+	UFUNCTION(BlueprintCallable, DisplayName = "Set B", Category = "Network|IPv4Address", meta = (
+		Keywords = "Network IPv4Address Set B"
+	))
+	virtual UMercuryNetworkAddress* SetB(uint8 Value);
 
 	UFUNCTION(BlueprintPure, DisplayName = "Get C", Category = "Network|IPv4Address", meta = (
 		CompactNodeTitle = "C",
 		Keywords = "Network IPv4Address Get C"
 	))
 	virtual uint8 GetC() const;
+	UFUNCTION(BlueprintCallable, DisplayName = "Set C", Category = "Network|IPv4Address", meta = (
+		Keywords = "Network IPv4Address Set C"
+	))
+	virtual UMercuryNetworkAddress* SetC(uint8 Value);
 
 	UFUNCTION(BlueprintPure, DisplayName = "Get D", Category = "Network|IPv4Address", meta = (
 		CompactNodeTitle = "D",
 		Keywords = "Network IPv4Address Get D"
 	))
 	virtual uint8 GetD() const;
+	UFUNCTION(BlueprintCallable, DisplayName = "Set D", Category = "Network|IPv4Address", meta = (
+		Keywords = "Network IPv4Address Set D"
+	))
+	virtual UMercuryNetworkAddress* SetD(uint8 Value);
 	
 	virtual uint32 GetValue() const;
+	virtual UMercuryNetworkAddress* SetValue(const uint32& Value);
 
 	UFUNCTION(BlueprintPure, DisplayName = "To String", Category = "Network|IPv4Address", meta = (
 		CompactNodeTitle = "Cast",
@@ -129,4 +146,8 @@ protected:
 		Keywords = "Network IPv4Address Get Value"
 	))
 	virtual int32 K2_GetValue() const;
+	UFUNCTION(BlueprintCallable, DisplayName = "Set Value", Category = "Network|IPv4Address", meta = (
+		Keywords = "Network IPv4Address Set Value"
+	))
+	virtual UMercuryNetworkAddress* K2_SetValue(int32 Value);
 };

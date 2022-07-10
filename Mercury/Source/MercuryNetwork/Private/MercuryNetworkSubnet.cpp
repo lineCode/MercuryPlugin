@@ -16,10 +16,28 @@ UMercuryNetworkAddress* UMercuryNetworkSubnet::GetAddress() const
 {
 	return Resource ? UMercuryNetworkLibrary::CreateNetworkAddress(Resource->Address) : nullptr;
 }
+UMercuryNetworkSubnet* UMercuryNetworkSubnet::SetAddress(const UMercuryNetworkAddress* const& Value)
+{
+	const TSharedPtr<FIPv4Address>& ValueResource = Value->GetResource();
+	if (!Resource || !Value || !ValueResource)
+		return nullptr;
+
+	Resource->Address = *ValueResource;
+	return this;
+}
 
 UMercuryNetworkMask* UMercuryNetworkSubnet::GetMask() const
 {
 	return Resource ? UMercuryNetworkLibrary::CreateNetworkMask(Resource->Mask) : nullptr;
+}
+UMercuryNetworkSubnet* UMercuryNetworkSubnet::SetMask(const UMercuryNetworkMask* const& Value)
+{
+	const TSharedPtr<FIPv4SubnetMask>& ValueResource = Value->GetResource();
+	if (!Resource || !Value || !ValueResource)
+		return nullptr;
+
+	Resource->Mask = *ValueResource;
+	return this;
 }
 
 UMercuryNetworkAddress* UMercuryNetworkSubnet::BroadcastAddress() const

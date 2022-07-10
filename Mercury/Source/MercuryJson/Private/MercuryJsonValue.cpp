@@ -15,6 +15,14 @@ EMercuryJsonValueType UMercuryJsonValue::GetType() const
 {
 	return MercuryEnums::JsonValue::Convert(Resource ? Resource->Type : EJson::None);
 }
+UMercuryJsonValue* UMercuryJsonValue::SetType(const EMercuryJsonValueType Value)
+{
+	if (!Resource)
+		return nullptr;
+
+	Resource->Type = MercuryEnums::JsonValue::Convert(Value);
+	return this;
+}
 
 TArray<UMercuryJsonValue*> UMercuryJsonValue::AsArray() const
 {

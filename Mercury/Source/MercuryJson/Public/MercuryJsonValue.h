@@ -20,9 +20,13 @@ public:
 	
 	UFUNCTION(BlueprintPure, DisplayName = "Get Type", Category = "JSON|Value", meta = (
 		CompactNodeTitle = "Type",
-		Keywords = "JSON Value Get Type Mercury"
+		Keywords = "JSON Value Get Type"
 	))
 	virtual EMercuryJsonValueType GetType() const;
+	UFUNCTION(BlueprintCallable, DisplayName = "Set Type", Category = "JSON|Value", meta = (
+		Keywords = "JSON Value Set Type"
+	))
+	virtual UMercuryJsonValue* SetType(EMercuryJsonValueType Value);
 	
 	UFUNCTION(BlueprintPure, DisplayName = "As Array", Category = "JSON|Value", meta = (
 		CompactNodeTitle = "Cast",

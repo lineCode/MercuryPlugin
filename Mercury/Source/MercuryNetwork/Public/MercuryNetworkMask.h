@@ -39,30 +39,50 @@ public:
 		Keywords = "Network IPv4SubnetMask Get A"
 	))
 	virtual uint8 GetA() const;
+	UFUNCTION(BlueprintCallable, DisplayName = "Set A", Category = "Network|IPv4SubnetMask", meta = (
+		Keywords = "Network IPv4SubnetMask Set A"
+	))
+	virtual UMercuryNetworkMask* SetA(uint8 Value);
 
 	UFUNCTION(BlueprintPure, DisplayName = "Get B", Category = "Network|IPv4SubnetMask", meta = (
 		CompactNodeTitle = "B",
 		Keywords = "Network IPv4SubnetMask Get B"
 	))
 	virtual uint8 GetB() const;
+	UFUNCTION(BlueprintCallable, DisplayName = "Set B", Category = "Network|IPv4SubnetMask", meta = (
+		Keywords = "Network IPv4SubnetMask Set B"
+	))
+	virtual UMercuryNetworkMask* SetB(uint8 Value);
 
 	UFUNCTION(BlueprintPure, DisplayName = "Get C", Category = "Network|IPv4SubnetMask", meta = (
 		CompactNodeTitle = "C",
 		Keywords = "Network IPv4SubnetMask Get C"
 	))
 	virtual uint8 GetC() const;
+	UFUNCTION(BlueprintCallable, DisplayName = "Set C", Category = "Network|IPv4SubnetMask", meta = (
+		Keywords = "Network IPv4SubnetMask Set C"
+	))
+	virtual UMercuryNetworkMask* SetC(uint8 Value);
 
 	UFUNCTION(BlueprintPure, DisplayName = "Get D", Category = "Network|IPv4SubnetMask", meta = (
 		CompactNodeTitle = "D",
 		Keywords = "Network IPv4SubnetMask Get D"
 	))
 	virtual uint8 GetD() const;
+	UFUNCTION(BlueprintCallable, DisplayName = "Set D", Category = "Network|IPv4SubnetMask", meta = (
+		Keywords = "Network IPv4SubnetMask Set D"
+	))
+	virtual UMercuryNetworkMask* SetD(uint8 Value);
 
 	UFUNCTION(BlueprintPure, DisplayName = "Get Value", Category = "Network|IPv4SubnetMask", meta = (
 		CompactNodeTitle = "Value",
 		Keywords = "Network IPv4SubnetMask Get Value"
 	))
 	virtual int32 GetValue() const;
+	UFUNCTION(BlueprintCallable, DisplayName = "Set Value", Category = "Network|IPv4SubnetMask", meta = (
+		Keywords = "Network IPv4SubnetMask Set Value"
+	))
+	virtual UMercuryNetworkMask* SetValue(int32 Value);
 
 	UFUNCTION(BlueprintPure, DisplayName = "Parse Mask", Category = "Network|IPv4SubnetMask", meta = (
 		CompactNodeTitle = "Parse",

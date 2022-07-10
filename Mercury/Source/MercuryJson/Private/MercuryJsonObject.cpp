@@ -31,6 +31,18 @@ TMap<FString, UMercuryJsonValue*> UMercuryJsonObject::GetValues() const
 	}
 	return MercuryJsonValues;
 }
+UMercuryJsonObject* UMercuryJsonObject::SetValues(const TMap<FString, UMercuryJsonValue*>& Value)
+{
+	if (!Resource)
+		return nullptr;
+	
+	Resource->Values.Empty();
+	for (const TTuple<FString, UMercuryJsonValue*>& MercuryValues : Value)
+	{
+		Resource->Values[MercuryValues.Key] = MercuryValues.Value->GetResource();
+	}
+	return this;
+}
 
 UMercuryJsonValue* UMercuryJsonObject::GetField(const FString& FieldName, const EMercuryJsonValueType ValueType) const
 {

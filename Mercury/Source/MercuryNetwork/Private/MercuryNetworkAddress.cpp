@@ -14,25 +14,65 @@ uint8 UMercuryNetworkAddress::GetA() const
 {
 	return Resource ? Resource->A : 0u;
 }
+UMercuryNetworkAddress* UMercuryNetworkAddress::SetA(const uint8 Value)
+{
+	if (!Resource)
+		return nullptr;
+
+	Resource->A = Value;
+	return this;
+}
 
 uint8 UMercuryNetworkAddress::GetB() const
 {
 	return Resource ? Resource->B : 0u;
+}
+UMercuryNetworkAddress* UMercuryNetworkAddress::SetB(const uint8 Value)
+{
+	if (!Resource)
+		return nullptr;
+
+	Resource->B = Value;
+	return this;
 }
 
 uint8 UMercuryNetworkAddress::GetC() const
 {
 	return Resource ? Resource->C : 0u;
 }
+UMercuryNetworkAddress* UMercuryNetworkAddress::SetC(const uint8 Value)
+{
+	if (!Resource)
+		return nullptr;
+
+	Resource->C = Value;
+	return this;
+}
 
 uint8 UMercuryNetworkAddress::GetD() const
 {
 	return Resource ? Resource->D : 0u;
 }
+UMercuryNetworkAddress* UMercuryNetworkAddress::SetD(const uint8 Value)
+{
+	if (!Resource)
+		return nullptr;
+
+	Resource->D = Value;
+	return this;
+}
 
 uint32 UMercuryNetworkAddress::GetValue() const
 {
 	return Resource ? Resource->Value : 0u;
+}
+UMercuryNetworkAddress* UMercuryNetworkAddress::SetValue(const uint32& Value)
+{
+	if (!Resource)
+		return nullptr;
+
+	Resource->Value = Value;
+	return this;
 }
 
 FString UMercuryNetworkAddress::ToString() const
@@ -123,4 +163,8 @@ const UMercuryNetworkAddress* const& UMercuryNetworkAddress::GetLanBroadcast()
 int32 UMercuryNetworkAddress::K2_GetValue() const
 {
 	return GetValue();
+}
+UMercuryNetworkAddress* UMercuryNetworkAddress::K2_SetValue(const int32 Value)
+{
+	return SetValue(Value);
 }

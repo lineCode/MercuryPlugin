@@ -28,6 +28,10 @@ public:
 		Keywords = "JSON Object Get Values Map Name Value"
 	))
 	virtual TMap<FString, UMercuryJsonValue*> GetValues() const;
+	UFUNCTION(BlueprintCallable, DisplayName = "Set Values", Category = "JSON|Object", meta = (
+		Keywords = "JSON Object Set Values Map Name Value"
+	))
+	virtual UMercuryJsonObject* SetValues(const TMap<FString, UMercuryJsonValue*>& Value);
 
 	UFUNCTION(BlueprintPure, DisplayName = "Get Field", Category = "JSON|Object", meta = (
 		CompactNodeTitle = "Field",

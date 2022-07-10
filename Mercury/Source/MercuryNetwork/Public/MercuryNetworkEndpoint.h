@@ -24,6 +24,10 @@ public:
 		Keywords = "Network IPv4Endpoint Get Address"
 	))
 	virtual UMercuryNetworkAddress* GetAddress() const;
+	UFUNCTION(BlueprintCallable, DisplayName = "Set Address", Category = "Network|IPv4Endpoint", meta = (
+		Keywords = "Network IPv4Endpoint Set Address"
+	))
+	virtual UMercuryNetworkEndpoint* SetAddress(const UMercuryNetworkAddress* const& Value);
 
 	UFUNCTION(BlueprintPure, DisplayName = "Get Any", Category = "Network|IPv4Endpoint", meta = (
 		CompactNodeTitle = "Any",
@@ -43,6 +47,7 @@ public:
 	static void Parse(const FString& EndpointString, UMercuryNetworkEndpoint*& OutEndpoint);
 
 	virtual uint16 GetPort() const;
+	virtual UMercuryNetworkEndpoint* SetPort(const uint16& Value);
 	
 	UFUNCTION(BlueprintPure, DisplayName = "To String", Category = "Network|IPv4Endpoint", meta = (
 		CompactNodeTitle = "Cast",
@@ -79,4 +84,8 @@ protected:
 		Keywords = "Network IPv4Endpoint Get Port"
 	))
 	virtual int32 K2_GetPort() const;
+	UFUNCTION(BlueprintCallable, DisplayName = "Set Port", Category = "Network|IPv4Endpoint", meta = (
+		Keywords = "Network IPv4Endpoint Set Port"
+	))
+	virtual UMercuryNetworkEndpoint* K2_SetPort(int32 Value);
 };

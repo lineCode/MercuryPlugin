@@ -24,12 +24,20 @@ public:
 		Keywords = "Network IPv4Subnet Get Address"
 	))
 	virtual UMercuryNetworkAddress* GetAddress() const;
+	UFUNCTION(BlueprintCallable, DisplayName = "Set Address", Category = "Network|IPv4Subnet", meta = (
+		Keywords = "Network IPv4Subnet Set Address"
+	))
+	virtual UMercuryNetworkSubnet* SetAddress(const UMercuryNetworkAddress* const& Value);
 
 	UFUNCTION(BlueprintPure, DisplayName = "Get Mask", Category = "Network|IPv4Subnet", meta = (
 		CompactNodeTitle = "Mask",
 		Keywords = "Network IPv4Subnet Get Mask"
 	))
 	virtual UMercuryNetworkMask* GetMask() const;
+	UFUNCTION(BlueprintCallable, DisplayName = "Set Mask", Category = "Network|IPv4Subnet", meta = (
+		Keywords = "Network IPv4Subnet Set Mask"
+	))
+	virtual UMercuryNetworkSubnet* SetMask(const UMercuryNetworkMask* const& Value);
 
 	UFUNCTION(BlueprintPure, DisplayName = "Broadcast Address", Category = "Network|IPv4Subnet", meta = (
 		Keywords = "Network IPv4Subnet Broadcast Address"
