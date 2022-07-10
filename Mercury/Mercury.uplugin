@@ -16,21 +16,19 @@
 	"Installed": true,
 	"Modules": [
 		{
-			"Name": "MercuryCommon",
-			"Type": "Runtime",
-			"LoadingPhase": "PreDefault"
-		},
-		{
 			"Name": "MercuryCore",
 			"Type": "Runtime",
-			"LoadingPhase": "PostDefault"
+			"LoadingPhase": "PostDefault",
+			"AdditionalDependencies": [
+				"MercuryUtilities"
+			]
 		},
 		{
 			"Name": "MercuryHttp",
 			"Type": "Runtime",
 			"LoadingPhase": "Default",
 			"AdditionalDependencies": [
-				"MercuryCommon"
+				"MercuryUtilities"
 			]
 		},
 		{
@@ -38,7 +36,7 @@
 			"Type": "Runtime",
 			"LoadingPhase": "Default",
 			"AdditionalDependencies": [
-				"MercuryCommon"
+				"MercuryUtilities"
 			]
 		},
 		{
@@ -46,7 +44,7 @@
 			"Type": "Runtime",
 			"LoadingPhase": "Default",
 			"AdditionalDependencies": [
-				"MercuryCommon"
+				"MercuryUtilities"
 			]
 		},
 		{
@@ -54,9 +52,14 @@
 			"Type": "Runtime",
 			"LoadingPhase": "Default",
 			"AdditionalDependencies": [
-				"MercuryCommon",
-				"MercuryNetwork"
+				"MercuryNetwork",
+				"MercuryUtilities"
 			]
+		},
+		{
+			"Name": "MercuryUtilities",
+			"Type": "Runtime",
+			"LoadingPhase": "PreDefault"
 		}
 	]
 }

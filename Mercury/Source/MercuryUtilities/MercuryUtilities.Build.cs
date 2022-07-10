@@ -4,15 +4,17 @@ using UnrealBuildTool;
 
 
 // ReSharper disable once InconsistentNaming
-public class MercuryCommon : ModuleRules
+public class MercuryUtilities : ModuleRules
 {
-	public MercuryCommon(ReadOnlyTargetRules Target) : base(Target)
+	public MercuryUtilities(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 		
 		PrivateDependencyModuleNames.AddRange(new[]
 		{
-			"Core"
+			"Core",
+			"CoreUObject",
+			"Engine"
 		});
 	}
 }

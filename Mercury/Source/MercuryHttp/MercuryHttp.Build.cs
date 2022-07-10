@@ -16,7 +16,7 @@ public class MercuryHttp : ModuleRules
 			"CoreUObject",
 			"Engine",
 			"HTTP",
-			"MercuryCommon"
+			"MercuryUtilities"
 		});
 	}
 }

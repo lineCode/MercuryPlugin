@@ -15,7 +15,7 @@ public class MercuryNetwork : ModuleRules
 			"Core",
 			"CoreUObject",
 			"Engine",
-			"MercuryCommon",
+			"MercuryUtilities",
 			"Networking",
 			"Sockets"
 		});

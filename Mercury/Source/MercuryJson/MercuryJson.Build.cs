@@ -17,7 +17,7 @@ public class MercuryJson : ModuleRules
 			"Engine",
 			"Json",
 			"JsonUtilities",
-			"MercuryCommon"
+			"MercuryUtilities"
 		});
 	}
 }
