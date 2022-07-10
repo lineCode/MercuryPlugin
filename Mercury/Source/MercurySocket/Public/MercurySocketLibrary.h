@@ -14,8 +14,8 @@ class MERCURYSOCKET_API UMercurySocketLibrary : public UBlueprintFunctionLibrary
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintPure, DisplayName = "Create Socket Object", Category = "Mercury|Socket", meta = (
-		Keywords = "Create Socket Object"
+	UFUNCTION(BlueprintPure, DisplayName = "Create Socket Object (Default)", Category = "Mercury|Socket", meta = (
+		Keywords = "Create Socket Object Default Empty"
 	))
 	static UMercurySocketObject* CreateSocketObject();
 	static UMercurySocketObject* CreateSocketObject(const FSocket& Resource) = delete;

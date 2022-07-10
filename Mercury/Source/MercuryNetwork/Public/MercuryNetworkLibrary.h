@@ -17,8 +17,8 @@ class MERCURYNETWORK_API UMercuryNetworkLibrary : public UBlueprintFunctionLibra
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintPure, DisplayName = "Create Internet Addr (Empty)", Category = "Mercury|Network", meta = (
-		Keywords = "Create Internet Addr Empty"
+	UFUNCTION(BlueprintPure, DisplayName = "Create Internet Addr (Default)", Category = "Mercury|Network", meta = (
+		Keywords = "Create Internet Addr Default Empty"
 	))
 	static UMercuryInternetAddr* CreateInternetAddr();
 	static UMercuryInternetAddr* CreateInternetAddr(const FInternetAddr& Resource);
