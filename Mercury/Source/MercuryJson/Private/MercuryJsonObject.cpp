@@ -11,12 +11,19 @@ TSharedPtr<FJsonObject> UMercuryJsonObject::CreateResource()
 	return MakeShareable(new FJsonObject());
 }
 
+bool UMercuryJsonObject::HasResource() const
+{
+	return Resource != nullptr;
+}
+
 void UMercuryJsonObject::Duplicate(const UMercuryJsonObject* const& Source, UMercuryJsonObject* const& Destination)
 {
 	if (!Resource)
 		return;
 
-	Resource->Duplicate(Source->GetResource(), Destination->GetResource());
+	TSharedPtr<FJsonObject>&& ResourceDestination = nullptr;
+	Resource->Duplicate(Source->GetResource(), ResourceDestination);
+	Destination->SetResource(ResourceDestination);
 }
 
 TMap<FString, UMercuryJsonValue*> UMercuryJsonObject::GetValues() const
@@ -259,7 +266,7 @@ bool UMercuryJsonObject::TryGetObjectField(const FString& FieldName, UMercuryJso
 	const TSharedPtr<FJsonObject>*&& ObjectField = nullptr;
 	const bool&& bGotObject = Resource ? Resource->TryGetObjectField(FieldName, ObjectField) : false;
 
-	OutObject->GetResource() = ObjectField ? *ObjectField : nullptr;
+	OutObject->SetResource(ObjectField ? *ObjectField : nullptr);
 	return bGotObject;
 }
 

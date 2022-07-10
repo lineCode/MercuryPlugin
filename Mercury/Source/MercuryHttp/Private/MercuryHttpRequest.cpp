@@ -15,7 +15,6 @@ TSharedPtr<IHttpRequest> UMercuryHttpRequest::CreateResource()
 	Request->OnHeaderReceived().BindUObject(this, &UMercuryHttpRequest::BindHeaderReceived);
 	return Request;
 }
-
 UMercuryHttpRequest::UMercuryHttpRequest(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
 	MercuryHttpResponse = UMercuryHttpLibrary::CreateHttpResponse();
@@ -24,6 +23,11 @@ UMercuryHttpRequest::UMercuryHttpRequest(const FObjectInitializer& ObjectInitial
 	bRequestProgressDone = false;
 	bRequestWillRetryDone = false;
 	bHeaderReceivedDone = false;
+}
+
+bool UMercuryHttpRequest::HasResource() const
+{
+	return Resource != nullptr;
 }
 
 FString UMercuryHttpRequest::GetURL() const

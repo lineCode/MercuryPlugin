@@ -7,10 +7,14 @@ UMercurySocketObject* UMercurySocketLibrary::CreateSocketObject()
 {
 	return CreateSocketObject(nullptr);
 }
+UMercurySocketObject* UMercurySocketLibrary::CreateSocketObject(FSocket* const& Resource)
+{
+	return CreateSocketObject(MakeShareable(Resource));
+}
 UMercurySocketObject* UMercurySocketLibrary::CreateSocketObject(const TSharedPtr<FSocket>& Resource)
 {
 	UMercurySocketObject* const&& SocketObject = NewObject<UMercurySocketObject>();
-	SocketObject->GetResource() = Resource ? Resource : SocketObject->CreateResource();
+	SocketObject->SetResource(Resource ? Resource : SocketObject->CreateResource());
 	return SocketObject;
 }
 
@@ -18,11 +22,9 @@ UMercurySocketTcpBuilder* UMercurySocketLibrary::CreateSocketTcpBuilder(const FS
 {
 	return CreateSocketTcpBuilder(nullptr, InDescription);
 }
-UMercurySocketTcpBuilder* UMercurySocketLibrary::CreateSocketTcpBuilder(const FTcpSocketBuilder& Resource)
+UMercurySocketTcpBuilder* UMercurySocketLibrary::CreateSocketTcpBuilder(FTcpSocketBuilder* const& Resource)
 {
-	UMercurySocketTcpBuilder* const&& TcpBuilder = NewObject<UMercurySocketTcpBuilder>();
-	*TcpBuilder->GetResource() = Resource;
-	return TcpBuilder;
+	return CreateSocketTcpBuilder(MakeShareable(Resource));
 }
 UMercurySocketTcpBuilder* UMercurySocketLibrary::CreateSocketTcpBuilder(
 	const TSharedPtr<FTcpSocketBuilder>& Resource,
@@ -30,6 +32,6 @@ UMercurySocketTcpBuilder* UMercurySocketLibrary::CreateSocketTcpBuilder(
 )
 {
 	UMercurySocketTcpBuilder* const&& TcpBuilder = NewObject<UMercurySocketTcpBuilder>();
-	TcpBuilder->GetResource() = Resource ? Resource : TcpBuilder->CreateResource(InDescription);
+	TcpBuilder->SetResource(Resource ? Resource : TcpBuilder->CreateResource(InDescription));
 	return TcpBuilder;
 }

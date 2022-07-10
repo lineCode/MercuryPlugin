@@ -10,6 +10,11 @@ TSharedPtr<FIPv4Address> UMercuryNetworkAddress::CreateResource()
 	return MakeShareable(new FIPv4Address());
 }
 
+bool UMercuryNetworkAddress::HasResource() const
+{
+	return Resource != nullptr;
+}
+
 uint8 UMercuryNetworkAddress::GetA() const
 {
 	return Resource ? Resource->A : 0u;
@@ -133,7 +138,7 @@ bool UMercuryNetworkAddress::IsSiteLocalMulticast() const
 const UMercuryNetworkAddress* const& UMercuryNetworkAddress::GetAny()
 {
 	static const UMercuryNetworkAddress* const&& Address = UMercuryNetworkLibrary::CreateNetworkAddress(
-		FIPv4Address::Any
+		new FIPv4Address(FIPv4Address::Any)
 	);
 	return Address;
 }
@@ -147,7 +152,7 @@ void UMercuryNetworkAddress::Parse(const FString& AddressString, UMercuryNetwork
 const UMercuryNetworkAddress* const& UMercuryNetworkAddress::GetInternalLoopback()
 {
 	static const UMercuryNetworkAddress* const&& Address = UMercuryNetworkLibrary::CreateNetworkAddress(
-		FIPv4Address::InternalLoopback
+		new FIPv4Address(FIPv4Address::InternalLoopback)
 	);
 	return Address;
 }
@@ -155,7 +160,7 @@ const UMercuryNetworkAddress* const& UMercuryNetworkAddress::GetInternalLoopback
 const UMercuryNetworkAddress* const& UMercuryNetworkAddress::GetLanBroadcast()
 {
 	static const UMercuryNetworkAddress* const&& Address = UMercuryNetworkLibrary::CreateNetworkAddress(
-		FIPv4Address::LanBroadcast
+		new FIPv4Address(FIPv4Address::LanBroadcast)
 	);
 	return Address;
 }

@@ -16,6 +16,11 @@ class MERCURYHTTP_API UMercuryHttpResponse : public UObject, public TResourceOwn
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(BlueprintPure, DisplayName = "Has Resource", Category = "HTTP|Response", meta = (
+		Keywords = "Has Mercury Resource"
+	))
+	virtual bool HasResource() const override;
+	
 	UFUNCTION(BlueprintPure, DisplayName = "Get URL", Category = "HTTP|Response", meta = (
 		CompactNodeTitle = "URL",
 		Keywords = "Get URL Link Host Server"

@@ -9,16 +9,14 @@ UMercuryJsonObject* UMercuryJsonLibrary::CreateJsonObject()
 {
 	return CreateJsonObject(nullptr);
 }
-UMercuryJsonObject* UMercuryJsonLibrary::CreateJsonObject(const FJsonObject& Resource)
+UMercuryJsonObject* UMercuryJsonLibrary::CreateJsonObject(FJsonObject* const& Resource)
 {
-	UMercuryJsonObject* const&& JsonObject = NewObject<UMercuryJsonObject>();
-	*JsonObject->GetResource() = Resource;
-	return JsonObject;
+	return CreateJsonObject(MakeShareable(Resource));
 }
 UMercuryJsonObject* UMercuryJsonLibrary::CreateJsonObject(const TSharedPtr<FJsonObject>& Resource)
 {
 	UMercuryJsonObject* const&& JsonObject = NewObject<UMercuryJsonObject>();
-	JsonObject->GetResource() = Resource ? Resource : JsonObject->CreateResource();
+	JsonObject->SetResource(Resource ? Resource : JsonObject->CreateResource());
 	return JsonObject;
 }
 
@@ -26,15 +24,9 @@ UMercuryJsonValue* UMercuryJsonLibrary::CreateJsonValue()
 {
 	return CreateJsonValue(nullptr);
 }
-UMercuryJsonValue* UMercuryJsonLibrary::CreateJsonValue(const FJsonValue& Resource)
-{
-	UMercuryJsonValue* const&& JsonValue = NewObject<UMercuryJsonValue>();
-	*JsonValue->GetResource() = Resource;
-	return JsonValue;
-}
 UMercuryJsonValue* UMercuryJsonLibrary::CreateJsonValue(const TSharedPtr<FJsonValue>& Resource)
 {
 	UMercuryJsonValue* const&& JsonValue = NewObject<UMercuryJsonValue>();
-	JsonValue->GetResource() = Resource ? Resource : JsonValue->CreateResource();
+	JsonValue->SetResource(Resource ? Resource : JsonValue->CreateResource());
 	return JsonValue;
 }

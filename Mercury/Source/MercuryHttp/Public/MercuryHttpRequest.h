@@ -63,6 +63,11 @@ public:
 	virtual TSharedPtr<IHttpRequest> CreateResource() override;
 	explicit UMercuryHttpRequest(const FObjectInitializer& ObjectInitializer);
 
+	UFUNCTION(BlueprintPure, DisplayName = "Has Resource", Category = "HTTP|Request", meta = (
+		Keywords = "Has Mercury Resource"
+	))
+	virtual bool HasResource() const override;
+
 	UFUNCTION(BlueprintPure, DisplayName = "Get URL", Category = "HTTP|Request", meta = (
 		CompactNodeTitle = "URL",
 		Keywords = "Get URL Link Host Server"

@@ -12,9 +12,14 @@ TSharedPtr<FIPv4Endpoint> UMercuryNetworkEndpoint::CreateResource()
 	return MakeShareable(new FIPv4Endpoint());
 }
 
+bool UMercuryNetworkEndpoint::HasResource() const
+{
+	return Resource != nullptr;
+}
+
 UMercuryNetworkAddress* UMercuryNetworkEndpoint::GetAddress() const
 {
-	return Resource ? UMercuryNetworkLibrary::CreateNetworkAddress(Resource->Address) : nullptr;
+	return Resource ? UMercuryNetworkLibrary::CreateNetworkAddress(new FIPv4Address(Resource->Address)) : nullptr;
 }
 UMercuryNetworkEndpoint* UMercuryNetworkEndpoint::SetAddress(const UMercuryNetworkAddress* const& Value)
 {
@@ -29,7 +34,7 @@ UMercuryNetworkEndpoint* UMercuryNetworkEndpoint::SetAddress(const UMercuryNetwo
 const UMercuryNetworkEndpoint* const& UMercuryNetworkEndpoint::GetAny()
 {
 	static const UMercuryNetworkEndpoint* const&& WebEndpoint = UMercuryNetworkLibrary::CreateNetworkEndpoint(
-		FIPv4Endpoint::Any
+		new FIPv4Endpoint(FIPv4Endpoint::Any)
 	);
 	return WebEndpoint;
 }

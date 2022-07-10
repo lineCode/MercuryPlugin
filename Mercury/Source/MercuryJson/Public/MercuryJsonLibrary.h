@@ -17,13 +17,12 @@ public:
 		Keywords = "Create JSON Object"
 	))
 	static UMercuryJsonObject* CreateJsonObject();
-	static UMercuryJsonObject* CreateJsonObject(const FJsonObject& Resource);
+	static UMercuryJsonObject* CreateJsonObject(FJsonObject* const& Resource);
 	static UMercuryJsonObject* CreateJsonObject(const TSharedPtr<FJsonObject>& Resource);
 
 	UFUNCTION(BlueprintPure, DisplayName = "Create JSON Value", Category = "Mercury|JSON", meta = (
 		Keywords = "Create JSON Value"
 	))
 	static UMercuryJsonValue* CreateJsonValue();
-	static UMercuryJsonValue* CreateJsonValue(const FJsonValue& Resource);
 	static UMercuryJsonValue* CreateJsonValue(const TSharedPtr<FJsonValue>& Resource);
 };

@@ -10,10 +10,14 @@ TSharedPtr<FInternetAddr> UMercuryInternetAddr::CreateResource()
 {
 	return FMercuryNetworkModule::GetSocketSubsystem()->CreateInternetAddr();
 }
-
 TSharedPtr<FInternetAddr> UMercuryInternetAddr::CreateResource(const std::tuple<FName>&& Arguments)
 {
 	return FMercuryNetworkModule::GetSocketSubsystem()->CreateInternetAddr(std::get<0>(Arguments));
+}
+
+bool UMercuryInternetAddr::HasResource() const
+{
+	return Resource != nullptr;
 }
 
 UMercuryInternetAddr* UMercuryInternetAddr::Clone() const

@@ -18,14 +18,14 @@ public:
 		Keywords = "Create HTTP Request"
 	))
 	static UMercuryHttpRequest* CreateHttpRequest();
-	static UMercuryHttpRequest* CreateHttpRequest(const IHttpRequest& Resource);
+	static UMercuryHttpRequest* CreateHttpRequest(IHttpRequest* const& Resource);
 	static UMercuryHttpRequest* CreateHttpRequest(const TSharedPtr<IHttpRequest>& Resource);
 
 	UFUNCTION(BlueprintPure, DisplayName = "Create HTTP Response", Category = "Mercury|HTTP", meta = (
 		Keywords = "Create HTTP Response"
 	))
 	static UMercuryHttpResponse* CreateHttpResponse();
-	static UMercuryHttpResponse* CreateHttpResponse(const IHttpResponse& Resource);
+	static UMercuryHttpResponse* CreateHttpResponse(IHttpResponse* const& Resource);
 	static UMercuryHttpResponse* CreateHttpResponse(const TSharedPtr<IHttpResponse>& Resource);
 	
 	static void RequestDataWithPayload(

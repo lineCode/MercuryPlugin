@@ -11,6 +11,11 @@ TSharedPtr<FJsonValue> UMercuryJsonValue::CreateResource()
 	return MakeShareable(new FJsonValueNull());
 }
 
+bool UMercuryJsonValue::HasResource() const
+{
+	return Resource != nullptr;
+}
+
 EMercuryJsonValueType UMercuryJsonValue::GetType() const
 {
 	return MercuryEnums::JsonValue::Convert(Resource ? Resource->Type : EJson::None);
@@ -98,11 +103,13 @@ void UMercuryJsonValue::AsArgumentType(double& Value) const
 
 void UMercuryJsonValue::AsArgumentType(UMercuryJsonObject*& Value) const
 {
-	Value->GetResource() = nullptr;
+	Value->SetResource(nullptr);
 	if (!Resource)
 		return;
-	
-	Resource->AsArgumentType(Value->GetResource());
+
+	TSharedPtr<FJsonObject>&& ResourceObject = nullptr;
+	Resource->AsArgumentType(ResourceObject);
+	Value->SetResource(ResourceObject);
 }
 
 void UMercuryJsonValue::AsArgumentType(FString& Value) const
@@ -145,7 +152,7 @@ bool UMercuryJsonValue::TryGetObject(UMercuryJsonObject*& OutObject) const
 	const TSharedPtr<FJsonObject>*&& ObjectField = nullptr;
 	const bool&& bGotObject = Resource ? Resource->TryGetObject(ObjectField) : false;
 
-	OutObject->GetResource() = ObjectField ? *ObjectField : nullptr;
+	OutObject->SetResource(ObjectField ? *ObjectField : nullptr);
 	return bGotObject;
 }
 

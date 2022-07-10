@@ -19,6 +19,11 @@ class MERCURYNETWORK_API UMercuryNetworkSubnet : public UObject, public TResourc
 public:
 	virtual TSharedPtr<FIPv4Subnet> CreateResource() override;
 
+	UFUNCTION(BlueprintPure, DisplayName = "Has Resource", Category = "Network|IPv4Subnet", meta = (
+		Keywords = "Has Mercury Resource"
+	))
+	virtual bool HasResource() const override;
+
 	UFUNCTION(BlueprintPure, DisplayName = "Get Address", Category = "Network|IPv4Subnet", meta = (
 		CompactNodeTitle = "Address",
 		Keywords = "Network IPv4Subnet Get Address"

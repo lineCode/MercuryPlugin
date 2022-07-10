@@ -10,6 +10,11 @@ TSharedPtr<FIPv4SubnetMask> UMercuryNetworkMask::CreateResource()
 	return MakeShareable(new FIPv4SubnetMask());
 }
 
+bool UMercuryNetworkMask::HasResource() const
+{
+	return Resource != nullptr;
+}
+
 EMercuryNetworkSubnetClass UMercuryNetworkMask::GetSubnetClass() const
 {
 	return MercuryEnums::SubnetMask::Convert(Resource ? Resource->GetClass() : EIPv4SubnetClasses::Invalid);

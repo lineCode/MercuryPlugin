@@ -17,6 +17,11 @@ class MERCURYJSON_API UMercuryJsonValue : public UObject, public TResourceOwner<
 
 public:
 	virtual TSharedPtr<FJsonValue> CreateResource() override;
+
+	UFUNCTION(BlueprintPure, DisplayName = "Has Resource", Category = "JSON|Value", meta = (
+		Keywords = "Has Mercury Resource"
+	))
+	virtual bool HasResource() const override;
 	
 	UFUNCTION(BlueprintPure, DisplayName = "Get Type", Category = "JSON|Value", meta = (
 		CompactNodeTitle = "Type",

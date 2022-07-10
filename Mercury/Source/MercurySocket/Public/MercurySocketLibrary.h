@@ -18,14 +18,14 @@ public:
 		Keywords = "Create Socket Object Default Empty"
 	))
 	static UMercurySocketObject* CreateSocketObject();
-	static UMercurySocketObject* CreateSocketObject(const FSocket& Resource) = delete;
+	static UMercurySocketObject* CreateSocketObject(FSocket* const& Resource);
 	static UMercurySocketObject* CreateSocketObject(const TSharedPtr<FSocket>& Resource);
 
 	UFUNCTION(BlueprintPure, DisplayName = "Create Socket TCP Builder", Category = "Mercury|Socket", meta = (
 		Keywords = "Create Socket TCP Builder In Description"
 	))
 	static UMercurySocketTcpBuilder* CreateSocketTcpBuilder(const FString& InDescription = TEXT("TCP Socket"));
-	static UMercurySocketTcpBuilder* CreateSocketTcpBuilder(const FTcpSocketBuilder& Resource);
+	static UMercurySocketTcpBuilder* CreateSocketTcpBuilder(FTcpSocketBuilder* const& Resource);
 	static UMercurySocketTcpBuilder* CreateSocketTcpBuilder(
 		const TSharedPtr<FTcpSocketBuilder>& Resource,
 		const FString& InDescription = TEXT("TCP Socket")

@@ -7,16 +7,14 @@ UMercuryHttpRequest* UMercuryHttpLibrary::CreateHttpRequest()
 {
 	return CreateHttpRequest(nullptr);
 }
-UMercuryHttpRequest* UMercuryHttpLibrary::CreateHttpRequest(const IHttpRequest& Resource)
+UMercuryHttpRequest* UMercuryHttpLibrary::CreateHttpRequest(IHttpRequest* const& Resource)
 {
-	UMercuryHttpRequest* const&& HttpRequest = NewObject<UMercuryHttpRequest>();
-	*HttpRequest->GetResource() = Resource;
-	return HttpRequest;
+	return CreateHttpRequest(MakeShareable(Resource));
 }
 UMercuryHttpRequest* UMercuryHttpLibrary::CreateHttpRequest(const TSharedPtr<IHttpRequest>& Resource)
 {
 	UMercuryHttpRequest* const&& HttpRequest = NewObject<UMercuryHttpRequest>();
-	HttpRequest->GetResource() = Resource ? Resource : HttpRequest->CreateResource();
+	HttpRequest->SetResource(Resource ? Resource : HttpRequest->CreateResource());
 	return HttpRequest;
 }
 
@@ -24,16 +22,14 @@ UMercuryHttpResponse* UMercuryHttpLibrary::CreateHttpResponse()
 {
 	return CreateHttpResponse(nullptr);
 }
-UMercuryHttpResponse* UMercuryHttpLibrary::CreateHttpResponse(const IHttpResponse& Resource)
+UMercuryHttpResponse* UMercuryHttpLibrary::CreateHttpResponse(IHttpResponse* const& Resource)
 {
-	UMercuryHttpResponse* const&& HttpResponse = NewObject<UMercuryHttpResponse>();
-	*HttpResponse->GetResource() = Resource;
-	return HttpResponse;
+	return CreateHttpResponse(MakeShareable(Resource));
 }
 UMercuryHttpResponse* UMercuryHttpLibrary::CreateHttpResponse(const TSharedPtr<IHttpResponse>& Resource)
 {
 	UMercuryHttpResponse* const&& HttpResponse = NewObject<UMercuryHttpResponse>();
-	HttpResponse->GetResource() = Resource ? Resource : HttpResponse->CreateResource();
+	HttpResponse->SetResource(Resource ? Resource : HttpResponse->CreateResource());
 	return HttpResponse;
 }
 

@@ -7,20 +7,29 @@
 #include "MercurySocketLibrary.h"
 
 
+bool UMercurySocketObject::HasResource() const
+{
+	return Resource != nullptr;
+}
+
 UMercurySocketObject* UMercurySocketObject::Accept(const FString& InSocketDescription)
 {
-	return Resource ? UMercurySocketLibrary::CreateSocketObject(
-		MakeShareable(Resource->Accept(InSocketDescription))
-	) : nullptr;
+	if (!Resource)
+		return nullptr;
+
+	FSocket* const&& ClientSocket = Resource->Accept(InSocketDescription);
+	return ClientSocket ? UMercurySocketLibrary::CreateSocketObject(ClientSocket) : nullptr;
 }
 UMercurySocketObject* UMercurySocketObject::Accept(
 	UMercuryInternetAddr* const& OutAddr,
 	const FString& InSocketDescription
 )
 {
-	return Resource ? UMercurySocketLibrary::CreateSocketObject(
-		MakeShareable(Resource->Accept(*OutAddr->GetResource(), InSocketDescription))
-	) : nullptr;
+	if (!Resource)
+		return nullptr;
+
+	FSocket* const&& ClientSocket = Resource->Accept(*OutAddr->GetResource(), InSocketDescription);
+	return ClientSocket ? UMercurySocketLibrary::CreateSocketObject(ClientSocket) : nullptr;
 }
 
 bool UMercurySocketObject::Bind(const UMercuryInternetAddr* const& Addr)
@@ -44,7 +53,7 @@ bool UMercurySocketObject::Listen(const int32 MaxBacklog)
 }
 
 bool UMercurySocketObject::Recv(
-	uint8* const& Data,
+	uint8*& Data,
 	const int32& BufferSize,
 	int32& BytesRead,
 	const EMercurySocketReceiveFlags& Flags
@@ -91,7 +100,7 @@ FName UMercurySocketObject::GetProtocol() const
 }
 
 bool UMercurySocketObject::RecvFrom(
-	uint8* const& Data,
+	uint8*& Data,
 	const int32& BufferSize,
 	int32& BytesRead,
 	const UMercuryInternetAddr* const& Source,
@@ -262,7 +271,7 @@ bool UMercurySocketObject::WaitForPendingConnection(bool& bHasPendingConnection,
 }
 
 bool UMercurySocketObject::RecvFromWithPktInfo(
-	uint8* const& Data,
+	uint8*& Data,
 	const int32& BufferSize,
 	int32& BytesRead,
 	const UMercuryInternetAddr* const& Source,
@@ -296,7 +305,17 @@ bool UMercurySocketObject::K2_Recv(
 	const EMercurySocketReceiveFlags Flags
 )
 {
-	return Recv(Data.GetData(), BufferSize, BytesRead, Flags);
+	uint8*&& ReceivedData = new uint8[BufferSize];
+	Data.SetNumUninitialized(BufferSize, false);
+	
+	const bool&& bSuccess = Recv(ReceivedData, BufferSize, BytesRead, Flags);
+	for (int32&& Index = 0; Index < BufferSize; ++Index)
+	{
+		Data[Index] = ReceivedData[Index];
+	}
+	
+	delete[] ReceivedData;
+	return bSuccess;
 }
 
 bool UMercurySocketObject::K2_Send(const TArray<uint8>& Data, const int32 Count, int32& BytesSent)
@@ -312,7 +331,17 @@ bool UMercurySocketObject::K2_RecvFrom(
 	const EMercurySocketReceiveFlags Flags
 )
 {
-	return RecvFrom(Data.GetData(), BufferSize, BytesRead, Source, Flags);
+	uint8*&& ReceivedData = new uint8[BufferSize];
+	Data.SetNumUninitialized(BufferSize, false);
+	
+	const bool&& bSuccess = RecvFrom(ReceivedData, BufferSize, BytesRead, Source, Flags);
+	for (int32&& Index = 0; Index < BufferSize; ++Index)
+	{
+		Data[Index] = ReceivedData[Index];
+	}
+	
+	delete[] ReceivedData;
+	return bSuccess;
 }
 
 bool UMercurySocketObject::K2_SendTo(
@@ -355,5 +384,15 @@ bool UMercurySocketObject::K2_RecvFromWithPktInfo(
 	const EMercurySocketReceiveFlags Flags
 )
 {
-	return RecvFromWithPktInfo(Data.GetData(), BufferSize, BytesRead, Source, Destination, Flags);
+	uint8*&& ReceivedData = new uint8[BufferSize];
+	Data.SetNumUninitialized(BufferSize, false);
+	
+	const bool&& bSuccess = RecvFromWithPktInfo(ReceivedData, BufferSize, BytesRead, Source, Destination, Flags);
+	for (int32&& Index = 0; Index < BufferSize; ++Index)
+	{
+		Data[Index] = ReceivedData[Index];
+	}
+	
+	delete[] ReceivedData;
+	return bSuccess;
 }

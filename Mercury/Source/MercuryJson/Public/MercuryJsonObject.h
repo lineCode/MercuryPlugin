@@ -18,6 +18,11 @@ class MERCURYJSON_API UMercuryJsonObject : public UObject, public TResourceOwner
 public:
 	virtual TSharedPtr<FJsonObject> CreateResource() override;
 
+	UFUNCTION(BlueprintPure, DisplayName = "Has Resource", Category = "JSON|Object", meta = (
+		Keywords = "Has Mercury Resource"
+	))
+	virtual bool HasResource() const override;
+
 	UFUNCTION(BlueprintCallable, DisplayName = "Duplicate", Category = "JSON|Object", meta = (
 		Keywords = "JSON Object Duplicate Copy Source Destination"
 	))

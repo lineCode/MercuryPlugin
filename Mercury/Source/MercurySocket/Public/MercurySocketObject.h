@@ -21,6 +21,11 @@ class MERCURYSOCKET_API UMercurySocketObject : public UObject, public TResourceO
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(BlueprintPure, DisplayName = "Has Resource", Category = "HTTP|Request", meta = (
+		Keywords = "Has Mercury Resource"
+	))
+	virtual bool HasResource() const override;
+	
 	UFUNCTION(BlueprintCallable, DisplayName = "Accept", Category = "Socket|Object", meta = (
 		Keywords = "Socket Object Accept Out Addr Address In Description"
 	))
@@ -55,7 +60,7 @@ public:
 	Listen(int32 MaxBacklog);
 
 	virtual bool Recv(
-		uint8* const& Data,
+		uint8*& Data,
 		const int32& BufferSize,
 		int32& BytesRead,
 		const EMercurySocketReceiveFlags& Flags = EMercurySocketReceiveFlags::None
@@ -94,7 +99,7 @@ public:
 	virtual FName GetProtocol() const;
 
 	virtual bool RecvFrom(
-		uint8* const& Data,
+		uint8*& Data,
 		const int32& BufferSize,
 		int32& BytesRead,
 		const UMercuryInternetAddr* const& Source,
@@ -253,7 +258,7 @@ public:
 	WaitForPendingConnection(bool& bHasPendingConnection, const FTimespan& WaitTime) const;
 
 	virtual bool RecvFromWithPktInfo(
-		uint8* const& Data,
+		uint8*& Data,
 		const int32& BufferSize,
 		int32& BytesRead,
 		const UMercuryInternetAddr* const& Source,

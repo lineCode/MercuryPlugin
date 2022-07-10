@@ -5,7 +5,6 @@
 #include "MercuryNetworkAddress.h"
 #include "MercuryNetworkEndpoint.h"
 #include "MercurySocketLibrary.h"
-#include "MercurySocketObject.h"
 
 
 TSharedPtr<FTcpSocketBuilder> UMercurySocketTcpBuilder::CreateResource(const std::tuple<FString>&& Arguments)
@@ -13,10 +12,15 @@ TSharedPtr<FTcpSocketBuilder> UMercurySocketTcpBuilder::CreateResource(const std
 	return MakeShareable(new FTcpSocketBuilder(std::get<0>(Arguments)));
 }
 
-UMercurySocketObject* UMercurySocketTcpBuilder::Build() const
+bool UMercurySocketTcpBuilder::HasResource() const
+{
+	return Resource != nullptr;
+}
+
+UMercurySocketObject* UMercurySocketTcpBuilder::Build()
 {
 	return Resource ?
-		UMercurySocketLibrary::CreateSocketObject(MakeShareable(Resource->Build())) : nullptr;
+		UMercurySocketLibrary::CreateSocketObject(Resource->Build()) : nullptr;
 }
 
 UMercurySocketTcpBuilder* UMercurySocketTcpBuilder::Lingering(const int32 Timeout)

@@ -7,22 +7,20 @@ UMercuryInternetAddr* UMercuryNetworkLibrary::CreateInternetAddr()
 {
 	return CreateInternetAddr(nullptr);
 }
-UMercuryInternetAddr* UMercuryNetworkLibrary::CreateInternetAddr(const FInternetAddr& Resource)
+UMercuryInternetAddr* UMercuryNetworkLibrary::CreateInternetAddr(FInternetAddr* const& Resource)
 {
-	UMercuryInternetAddr* const&& InternetAddr = NewObject<UMercuryInternetAddr>();
-	*InternetAddr->GetResource() = Resource;
-	return InternetAddr;
+	return CreateInternetAddr(MakeShareable(Resource));
 }
 UMercuryInternetAddr* UMercuryNetworkLibrary::CreateInternetAddr(const TSharedPtr<FInternetAddr>& Resource)
 {
 	UMercuryInternetAddr* const&& InternetAddr = NewObject<UMercuryInternetAddr>();
-	InternetAddr->GetResource() = Resource ? Resource : InternetAddr->CreateResource();
+	InternetAddr->SetResource(Resource ? Resource : InternetAddr->CreateResource());
 	return InternetAddr;
 }
 UMercuryInternetAddr* UMercuryNetworkLibrary::CreateInternetAddr(const uint32& Address, const uint32& Port)
 {
 	UMercuryInternetAddr* const&& InternetAddr = NewObject<UMercuryInternetAddr>();
-	InternetAddr->GetResource() = InternetAddr->CreateResource();
+	InternetAddr->SetResource(InternetAddr->CreateResource());
 	InternetAddr->SetIp(Address);
 	InternetAddr->SetPort(Port);
 	return InternetAddr;
@@ -30,7 +28,7 @@ UMercuryInternetAddr* UMercuryNetworkLibrary::CreateInternetAddr(const uint32& A
 UMercuryInternetAddr* UMercuryNetworkLibrary::CreateInternetAddr(const FName& ProtocolType)
 {
 	UMercuryInternetAddr* const&& InternetAddr = NewObject<UMercuryInternetAddr>();
-	InternetAddr->GetResource() = InternetAddr->CreateResource(ProtocolType);
+	InternetAddr->SetResource(InternetAddr->CreateResource(ProtocolType));
 	return NewObject<UMercuryInternetAddr>();
 }
 
@@ -38,16 +36,14 @@ UMercuryNetworkAddress* UMercuryNetworkLibrary::CreateNetworkAddress()
 {
 	return CreateNetworkAddress(nullptr);
 }
-UMercuryNetworkAddress* UMercuryNetworkLibrary::CreateNetworkAddress(const FIPv4Address& Resource)
+UMercuryNetworkAddress* UMercuryNetworkLibrary::CreateNetworkAddress(FIPv4Address* const& Resource)
 {
-	UMercuryNetworkAddress* const&& NetworkAddress = NewObject<UMercuryNetworkAddress>();
-	*NetworkAddress->GetResource() = Resource;
-	return NetworkAddress;
+	return CreateNetworkAddress(MakeShareable(Resource));
 }
 UMercuryNetworkAddress* UMercuryNetworkLibrary::CreateNetworkAddress(const TSharedPtr<FIPv4Address>& Resource)
 {
 	UMercuryNetworkAddress* const&& NetworkAddress = NewObject<UMercuryNetworkAddress>();
-	NetworkAddress->GetResource() = Resource ? Resource : NetworkAddress->CreateResource();
+	NetworkAddress->SetResource(Resource ? Resource : NetworkAddress->CreateResource());
 	return NetworkAddress;
 }
 
@@ -55,16 +51,14 @@ UMercuryNetworkEndpoint* UMercuryNetworkLibrary::CreateNetworkEndpoint()
 {
 	return CreateNetworkEndpoint(nullptr);
 }
-UMercuryNetworkEndpoint* UMercuryNetworkLibrary::CreateNetworkEndpoint(const FIPv4Endpoint& Resource)
+UMercuryNetworkEndpoint* UMercuryNetworkLibrary::CreateNetworkEndpoint(FIPv4Endpoint* const& Resource)
 {
-	UMercuryNetworkEndpoint* const&& NetworkEndpoint = NewObject<UMercuryNetworkEndpoint>();
-	*NetworkEndpoint->GetResource() = Resource;
-	return NetworkEndpoint;
+	return CreateNetworkEndpoint(MakeShareable(Resource));
 }
 UMercuryNetworkEndpoint* UMercuryNetworkLibrary::CreateNetworkEndpoint(const TSharedPtr<FIPv4Endpoint>& Resource)
 {
 	UMercuryNetworkEndpoint* const&& NetworkEndpoint = NewObject<UMercuryNetworkEndpoint>();
-	NetworkEndpoint->GetResource() = Resource ? Resource : NetworkEndpoint->CreateResource();
+	NetworkEndpoint->SetResource(Resource ? Resource : NetworkEndpoint->CreateResource());
 	return NetworkEndpoint;
 }
 
@@ -72,16 +66,14 @@ UMercuryNetworkMask* UMercuryNetworkLibrary::CreateNetworkMask()
 {
 	return CreateNetworkMask(nullptr);
 }
-UMercuryNetworkMask* UMercuryNetworkLibrary::CreateNetworkMask(const FIPv4SubnetMask& Resource)
+UMercuryNetworkMask* UMercuryNetworkLibrary::CreateNetworkMask(FIPv4SubnetMask* const& Resource)
 {
-	UMercuryNetworkMask* const&& NetworkMask = NewObject<UMercuryNetworkMask>();
-	*NetworkMask->GetResource() = Resource;
-	return NetworkMask;
+	return CreateNetworkMask(MakeShareable(Resource));
 }
 UMercuryNetworkMask* UMercuryNetworkLibrary::CreateNetworkMask(const TSharedPtr<FIPv4SubnetMask>& Resource)
 {
 	UMercuryNetworkMask* const&& NetworkMask = NewObject<UMercuryNetworkMask>();
-	NetworkMask->GetResource() = Resource ? Resource : NetworkMask->CreateResource();
+	NetworkMask->SetResource(Resource ? Resource : NetworkMask->CreateResource());
 	return NetworkMask;
 }
 
@@ -89,16 +81,14 @@ UMercuryNetworkSubnet* UMercuryNetworkLibrary::CreateNetworkSubnet()
 {
 	return CreateNetworkSubnet(nullptr);
 }
-UMercuryNetworkSubnet* UMercuryNetworkLibrary::CreateNetworkSubnet(const FIPv4Subnet& Resource)
+UMercuryNetworkSubnet* UMercuryNetworkLibrary::CreateNetworkSubnet(FIPv4Subnet* const& Resource)
 {
-	UMercuryNetworkSubnet* const&& NetworkSubnet = NewObject<UMercuryNetworkSubnet>();
-	*NetworkSubnet->GetResource() = Resource;
-	return NetworkSubnet;
+	return CreateNetworkSubnet(MakeShareable(Resource));
 }
 UMercuryNetworkSubnet* UMercuryNetworkLibrary::CreateNetworkSubnet(const TSharedPtr<FIPv4Subnet>& Resource)
 {
 	UMercuryNetworkSubnet* const&& NetworkSubnet = NewObject<UMercuryNetworkSubnet>();
-	NetworkSubnet->GetResource() = Resource ? Resource : NetworkSubnet->CreateResource();
+	NetworkSubnet->SetResource(Resource ? Resource : NetworkSubnet->CreateResource());
 	return NetworkSubnet;
 }
 
