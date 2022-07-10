@@ -14,14 +14,14 @@ class MERCURYSOCKET_API UMercurySocketLibrary : public UBlueprintFunctionLibrary
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintCallable, DisplayName = "Create Socket Object", Category = "Mercury|Socket", meta = (
+	UFUNCTION(BlueprintPure, DisplayName = "Create Socket Object", Category = "Mercury|Socket", meta = (
 		Keywords = "Create Socket Object"
 	))
 	static UMercurySocketObject* CreateSocketObject();
 	static UMercurySocketObject* CreateSocketObject(const FSocket& Resource) = delete;
 	static UMercurySocketObject* CreateSocketObject(const TSharedPtr<FSocket>& Resource);
 
-	UFUNCTION(BlueprintCallable, DisplayName = "Create Socket TCP Builder", Category = "Mercury|Socket", meta = (
+	UFUNCTION(BlueprintPure, DisplayName = "Create Socket TCP Builder", Category = "Mercury|Socket", meta = (
 		Keywords = "Create Socket TCP Builder In Description"
 	))
 	static UMercurySocketTcpBuilder* CreateSocketTcpBuilder(const FString& InDescription = TEXT("TCP Socket"));

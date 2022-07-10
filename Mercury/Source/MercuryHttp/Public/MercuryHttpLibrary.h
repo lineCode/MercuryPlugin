@@ -14,14 +14,14 @@ class MERCURYHTTP_API UMercuryHttpLibrary : public UBlueprintFunctionLibrary
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintCallable, DisplayName = "Create HTTP Request", Category = "Mercury|HTTP", meta = (
+	UFUNCTION(BlueprintPure, DisplayName = "Create HTTP Request", Category = "Mercury|HTTP", meta = (
 		Keywords = "Create HTTP Request"
 	))
 	static UMercuryHttpRequest* CreateHttpRequest();
 	static UMercuryHttpRequest* CreateHttpRequest(const IHttpRequest& Resource);
 	static UMercuryHttpRequest* CreateHttpRequest(const TSharedPtr<IHttpRequest>& Resource);
 
-	UFUNCTION(BlueprintCallable, DisplayName = "Create HTTP Response", Category = "Mercury|HTTP", meta = (
+	UFUNCTION(BlueprintPure, DisplayName = "Create HTTP Response", Category = "Mercury|HTTP", meta = (
 		Keywords = "Create HTTP Response"
 	))
 	static UMercuryHttpResponse* CreateHttpResponse();

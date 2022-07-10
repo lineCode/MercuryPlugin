@@ -13,14 +13,14 @@ class MERCURYJSON_API UMercuryJsonLibrary : public UBlueprintFunctionLibrary
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintCallable, DisplayName = "Create JSON Object", Category = "Mercury|JSON", meta = (
+	UFUNCTION(BlueprintPure, DisplayName = "Create JSON Object", Category = "Mercury|JSON", meta = (
 		Keywords = "Create JSON Object"
 	))
 	static UMercuryJsonObject* CreateJsonObject();
 	static UMercuryJsonObject* CreateJsonObject(const FJsonObject& Resource);
 	static UMercuryJsonObject* CreateJsonObject(const TSharedPtr<FJsonObject>& Resource);
 
-	UFUNCTION(BlueprintCallable, DisplayName = "Create JSON Value", Category = "Mercury|JSON", meta = (
+	UFUNCTION(BlueprintPure, DisplayName = "Create JSON Value", Category = "Mercury|JSON", meta = (
 		Keywords = "Create JSON Value"
 	))
 	static UMercuryJsonValue* CreateJsonValue();
