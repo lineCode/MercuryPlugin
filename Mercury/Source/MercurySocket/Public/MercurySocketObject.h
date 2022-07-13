@@ -21,7 +21,7 @@ class MERCURYSOCKET_API UMercurySocketObject : public UObject, public TResourceO
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintPure, DisplayName = "Has Resource", Category = "HTTP|Request", meta = (
+	UFUNCTION(BlueprintPure, DisplayName = "Has Resource", Category = "Socket|Object", meta = (
 		Keywords = "Has Mercury Resource"
 	))
 	virtual bool HasResource() const override;
