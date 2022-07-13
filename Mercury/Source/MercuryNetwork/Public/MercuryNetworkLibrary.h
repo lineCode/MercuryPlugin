@@ -2,11 +2,11 @@
 
 #pragma once
 
-#include "MercuryInternetAddr.h"
-#include "MercuryNetworkAddress.h"
-#include "MercuryNetworkEndpoint.h"
-#include "MercuryNetworkMask.h"
-#include "MercuryNetworkSubnet.h"
+#include "MercuryObjects/InternetAddr.h"
+#include "MercuryObjects/NetworkAddress.h"
+#include "MercuryObjects/NetworkEndpoint.h"
+#include "MercuryObjects/NetworkMask.h"
+#include "MercuryObjects/NetworkSubnet.h"
 
 #include "MercuryNetworkLibrary.generated.h"
 

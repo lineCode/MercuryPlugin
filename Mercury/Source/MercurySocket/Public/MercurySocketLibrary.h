@@ -2,9 +2,9 @@
 
 #pragma once
 
-#include "MercurySocketObject.h"
-#include "MercuryTcpListener.h"
-#include "MercuryTcpSocketBuilder.h"
+#include "MercuryObjects/SocketObject.h"
+#include "MercuryObjects/TcpListener.h"
+#include "MercuryObjects/TcpSocketBuilder.h"
 
 #include "MercurySocketLibrary.generated.h"
 

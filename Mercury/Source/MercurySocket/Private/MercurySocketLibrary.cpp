@@ -2,7 +2,7 @@
 
 #include "MercurySocketLibrary.h"
 
-#include "MercuryNetworkEndpoint.h"
+#include "MercuryObjects/NetworkEndpoint.h"
 
 
 UMercurySocketObject* UMercurySocketLibrary::CreateSocketObject()

@@ -2,8 +2,8 @@
 
 #pragma once
 
-#include "MercuryHttpRequest.h"
-#include "MercuryHttpResponse.h"
+#include "MercuryObjects/HttpRequest.h"
+#include "MercuryObjects/HttpResponse.h"
 
 #include "MercuryHttpLibrary.generated.h"
 

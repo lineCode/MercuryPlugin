@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "MercuryJsonObject.h"
+#include "JsonObject.h"
 
 #include "MercuryJsonLibrary.generated.h"
 

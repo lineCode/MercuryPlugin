@@ -20,15 +20,12 @@ public class MercuryHttp : ModuleRules
 			"MercuryUtilities"
 		});
 		
-		PublicIncludePaths.AddRange(new[]
-		{
-			Path.Combine(ModuleDirectory, "Public/Delegates"),
-			Path.Combine(ModuleDirectory, "Public/Enums"),
-			Path.Combine(ModuleDirectory, "Public/Objects")
-		});
 		PrivateIncludePaths.AddRange(new[]
 		{
-			Path.Combine(ModuleDirectory, "Private/Objects")
+			Path.Combine(ModuleDirectory, "Public/MercuryDelegates"),
+			Path.Combine(ModuleDirectory, "Public/MercuryEnums"),
+			Path.Combine(ModuleDirectory, "Public/MercuryNodes"),
+			Path.Combine(ModuleDirectory, "Public/MercuryObjects")
 		});
 	}
 }
