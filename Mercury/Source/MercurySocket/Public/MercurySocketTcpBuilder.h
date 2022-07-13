@@ -18,7 +18,7 @@ class MERCURYSOCKET_API UMercurySocketTcpBuilder : public UObject, public TResou
 	GENERATED_BODY()
 
 public:
-	virtual TSharedPtr<FTcpSocketBuilder> CreateResource(const std::tuple<FString>&& Arguments) override;
+	virtual TSharedPtr<FTcpSocketBuilder> CreateResource(const std::tuple<FString>& Arguments) override;
 
 	UFUNCTION(BlueprintPure, DisplayName = "Has Resource", Category = "HTTP|Request", meta = (
 		Keywords = "Has Mercury Resource"

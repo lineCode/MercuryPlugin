@@ -7,7 +7,7 @@
 #include "MercurySocketLibrary.h"
 
 
-TSharedPtr<FTcpSocketBuilder> UMercurySocketTcpBuilder::CreateResource(const std::tuple<FString>&& Arguments)
+TSharedPtr<FTcpSocketBuilder> UMercurySocketTcpBuilder::CreateResource(const std::tuple<FString>& Arguments)
 {
 	return MakeShareable(new FTcpSocketBuilder(std::get<0>(Arguments)));
 }

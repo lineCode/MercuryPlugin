@@ -13,7 +13,7 @@ public:
 	virtual ~TResourceOwner();
 
 	virtual TSharedPtr<T> CreateResource();
-	virtual TSharedPtr<T> CreateResource(const std::tuple<Args...>&& Arguments);
+	virtual TSharedPtr<T> CreateResource(const std::tuple<Args...>& Arguments);
 
 	virtual bool HasResource() const = 0;
 
@@ -34,9 +34,8 @@ TSharedPtr<T> TResourceOwner<T, Args...>::CreateResource()
 {
 	return nullptr;
 }
-
 template<typename T, typename ... Args>
-TSharedPtr<T> TResourceOwner<T, Args...>::CreateResource(const std::tuple<Args...>&& Arguments)
+TSharedPtr<T> TResourceOwner<T, Args...>::CreateResource(const std::tuple<Args...>& Arguments)
 {
 	return nullptr;
 }

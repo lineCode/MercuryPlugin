@@ -272,8 +272,8 @@ protected:
 	))
 	virtual UMercurySocketObject* K2_Accept(UMercuryInternetAddr* const& OutAddr, const FString& InSocketDescription);
 	
-	UFUNCTION(BlueprintCallable, DisplayName = "Receive", Category = "Socket|Object", meta = (
-		Keywords = "Socket Object Receive Data Buffer Size Bytes Read Flags"
+	UFUNCTION(BlueprintCallable, DisplayName = "Recv", Category = "Socket|Object", meta = (
+		Keywords = "Socket Object Recv Data Buffer Size Bytes Read Flags"
 	))
 	virtual UPARAM(DisplayName = "Success") bool
 	K2_Recv(
@@ -289,8 +289,8 @@ protected:
 	virtual UPARAM(DisplayName = "Success") bool
 	K2_Send(const TArray<uint8>& Data, int32 Count, int32& BytesSent);
 
-	UFUNCTION(BlueprintCallable, DisplayName = "Receive From", Category = "Socket|Object", meta = (
-		Keywords = "Socket Object Receive From Data Buffer Size Bytes Read Source Flags"
+	UFUNCTION(BlueprintCallable, DisplayName = "Recv From", Category = "Socket|Object", meta = (
+		Keywords = "Socket Object Recv From Data Buffer Size Bytes Read Source Flags"
 	))
 	virtual UPARAM(DisplayName = "Success") bool
 	K2_RecvFrom(
@@ -335,8 +335,8 @@ protected:
 		const UMercuryInternetAddr* const& InterfaceAddress
 	);
 
-	UFUNCTION(BlueprintCallable, DisplayName = "Receive From With Packet Info", Category = "Socket|Object", meta = (
-		Keywords = "Socket Object Receive From With Packet Info Data Buffer Size Bytes Read Source Destination Flags"
+	UFUNCTION(BlueprintCallable, DisplayName = "Recv From With Packet Info", Category = "Socket|Object", meta = (
+		Keywords = "Socket Object Recv From With Packet Info Data Buffer Size Bytes Read Source Destination Flags"
 	))
 	virtual UPARAM(DisplayName = "Success") bool
 	K2_RecvFromWithPktInfo(

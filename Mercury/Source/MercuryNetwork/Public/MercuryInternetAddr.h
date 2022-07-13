@@ -14,7 +14,7 @@ class MERCURYNETWORK_API UMercuryInternetAddr : public UObject, public TResource
 
 public:
 	virtual TSharedPtr<FInternetAddr> CreateResource() override;
-	virtual TSharedPtr<FInternetAddr> CreateResource(const std::tuple<FName>&& Arguments) override;
+	virtual TSharedPtr<FInternetAddr> CreateResource(const std::tuple<FName>& Arguments) override;
 
 	UFUNCTION(BlueprintPure, DisplayName = "Has Resource", Category = "Network|Internet Addr", meta = (
 		Keywords = "Has Mercury Resource"
