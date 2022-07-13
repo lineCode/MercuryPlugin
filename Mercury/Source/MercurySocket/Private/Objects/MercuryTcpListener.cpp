@@ -1,12 +1,12 @@
 ﻿// Copyright (c) 2022 Kaya Adrian
 
-#include "MercurySocketTcpListener.h"
+#include "MercuryTcpListener.h"
 
 #include "MercuryNetworkLibrary.h"
 #include "MercurySocketLibrary.h"
 
 
-TSharedPtr<FTcpListener> UMercurySocketTcpListener::CreateResource(
+TSharedPtr<FTcpListener> UMercuryTcpListener::CreateResource(
 	const std::tuple<FSocket*, FTimespan, bool>& Arguments
 )
 {
@@ -19,17 +19,16 @@ TSharedPtr<FTcpListener> UMercurySocketTcpListener::CreateResource(
 		std::get<1>(Arguments),
 		std::get<2>(Arguments)
 	));
-	TcpListener->OnConnectionAccepted().BindUObject(this, &UMercurySocketTcpListener::BindConnectionAccepted);
+	TcpListener->OnConnectionAccepted().BindUObject(this, &UMercuryTcpListener::BindConnectionAccepted);
 	return TcpListener;
 }
-UMercurySocketTcpListener::UMercurySocketTcpListener(
-	const FObjectInitializer& ObjectInitializer
-) : Super(ObjectInitializer)
+UMercuryTcpListener::UMercuryTcpListener(const FObjectInitializer& ObjectInitializer)
+: Super(ObjectInitializer)
 {
 	bConnectionAcceptedDone = false;
 }
 
-TSharedPtr<FTcpListener> UMercurySocketTcpListener::CreateResourceWithEndpoint(
+TSharedPtr<FTcpListener> UMercuryTcpListener::CreateResourceWithEndpoint(
 	const std::tuple<FIPv4Endpoint, FTimespan, bool>& Arguments
 )
 {
@@ -38,16 +37,16 @@ TSharedPtr<FTcpListener> UMercurySocketTcpListener::CreateResourceWithEndpoint(
 		std::get<1>(Arguments),
 		std::get<2>(Arguments)
 	));
-	TcpListener->OnConnectionAccepted().BindUObject(this, &UMercurySocketTcpListener::BindConnectionAccepted);
+	TcpListener->OnConnectionAccepted().BindUObject(this, &UMercuryTcpListener::BindConnectionAccepted);
 	return TcpListener;
 }
 
-bool UMercurySocketTcpListener::HasResource() const
+bool UMercuryTcpListener::HasResource() const
 {
 	return Resource != nullptr;
 }
 
-void UMercurySocketTcpListener::Exit()
+void UMercuryTcpListener::Exit()
 {
 	if (!HasResource())
 		return;
@@ -55,17 +54,17 @@ void UMercurySocketTcpListener::Exit()
 	Resource->Exit();
 }
 
-bool UMercurySocketTcpListener::Init()
+bool UMercuryTcpListener::Init()
 {
 	return HasResource() && Resource->Init();
 }
 
-uint32 UMercurySocketTcpListener::Run()
+uint32 UMercuryTcpListener::Run()
 {
 	return HasResource() ? Resource->Run() : 0u;
 }
 
-void UMercurySocketTcpListener::Stop()
+void UMercuryTcpListener::Stop()
 {
 	if (!HasResource())
 		return;
@@ -73,28 +72,28 @@ void UMercurySocketTcpListener::Stop()
 	Resource->Stop();
 }
 
-UMercurySocketObject* UMercurySocketTcpListener::GetSocket() const
+UMercurySocketObject* UMercuryTcpListener::GetSocket() const
 {
 	return HasResource() ? UMercurySocketLibrary::CreateSocketObject(Resource->GetSocket()) : nullptr;
 }
 
-bool UMercurySocketTcpListener::IsActive() const
+bool UMercuryTcpListener::IsActive() const
 {
 	return HasResource() && Resource->IsActive();
 }
 
-UMercuryNetworkEndpoint* UMercurySocketTcpListener::GetLocalEndpoint() const
+UMercuryNetworkEndpoint* UMercuryTcpListener::GetLocalEndpoint() const
 {
 	return HasResource() ?
 		UMercuryNetworkLibrary::CreateNetworkEndpoint(new FIPv4Endpoint(Resource->GetLocalEndpoint())) : nullptr;
 }
 
-FSingleThreadRunnable* UMercurySocketTcpListener::GetSingleThreadInterface()
+FSingleThreadRunnable* UMercuryTcpListener::GetSingleThreadInterface()
 {
 	return HasResource() ? Resource->GetSingleThreadInterface() : nullptr;
 }
 
-bool UMercurySocketTcpListener::BindConnectionAccepted(FSocket* const Socket, const FIPv4Endpoint& Endpoint)
+bool UMercuryTcpListener::BindConnectionAccepted(FSocket* const Socket, const FIPv4Endpoint& Endpoint)
 {
 	bConnectionAcceptedDone = false;
 	if (!OnMercuryTcpListenerConnectionAcceptedDelegate.IsBound())
@@ -111,7 +110,7 @@ bool UMercurySocketTcpListener::BindConnectionAccepted(FSocket* const Socket, co
 	return true;
 }
 
-UMercurySocketTcpListener* UMercurySocketTcpListener::K2_SetConnectionAcceptedEvent(
+UMercuryTcpListener* UMercuryTcpListener::K2_SetConnectionAcceptedEvent(
 	const FMercuryTcpListenerConnectionAcceptedDelegate& Event
 )
 {
@@ -122,7 +121,7 @@ UMercurySocketTcpListener* UMercurySocketTcpListener::K2_SetConnectionAcceptedEv
 	return this;
 }
 
-int32 UMercurySocketTcpListener::K2_Run()
+int32 UMercuryTcpListener::K2_Run()
 {
 	return Run();
 }

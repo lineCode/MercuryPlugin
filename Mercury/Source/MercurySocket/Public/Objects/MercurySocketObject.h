@@ -8,7 +8,6 @@
 #include "MercurySocketType.h"
 #include "MercurySocketWaitCondition.h"
 #include "ResourceOwner.h"
-#include "Sockets.h"
 
 #include "MercurySocketObject.generated.h"
 

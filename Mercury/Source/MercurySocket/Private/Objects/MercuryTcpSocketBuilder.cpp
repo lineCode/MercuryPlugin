@@ -1,29 +1,28 @@
 ﻿// Copyright (c) 2022 Kaya Adrian
 
-#include "MercurySocketTcpBuilder.h"
+#include "MercuryTcpSocketBuilder.h"
 
 #include "MercuryNetworkAddress.h"
 #include "MercuryNetworkEndpoint.h"
 #include "MercurySocketLibrary.h"
 
 
-TSharedPtr<FTcpSocketBuilder> UMercurySocketTcpBuilder::CreateResource(const std::tuple<FString>& Arguments)
+TSharedPtr<FTcpSocketBuilder> UMercuryTcpSocketBuilder::CreateResource(const std::tuple<FString>& Arguments)
 {
 	return MakeShareable(new FTcpSocketBuilder(std::get<0>(Arguments)));
 }
 
-bool UMercurySocketTcpBuilder::HasResource() const
+bool UMercuryTcpSocketBuilder::HasResource() const
 {
 	return Resource != nullptr;
 }
 
-UMercurySocketObject* UMercurySocketTcpBuilder::Build()
+UMercurySocketObject* UMercuryTcpSocketBuilder::Build()
 {
-	return Resource ?
-		UMercurySocketLibrary::CreateSocketObject(Resource->Build()) : nullptr;
+	return Resource ? UMercurySocketLibrary::CreateSocketObject(Resource->Build()) : nullptr;
 }
 
-UMercurySocketTcpBuilder* UMercurySocketTcpBuilder::Lingering(const int32 Timeout)
+UMercuryTcpSocketBuilder* UMercuryTcpSocketBuilder::Lingering(const int32 Timeout)
 {
 	if (!Resource)
 		return nullptr;
@@ -32,7 +31,7 @@ UMercurySocketTcpBuilder* UMercurySocketTcpBuilder::Lingering(const int32 Timeou
 	return this;
 }
 
-UMercurySocketTcpBuilder* UMercurySocketTcpBuilder::Listening(const int32 MaxBacklog)
+UMercuryTcpSocketBuilder* UMercuryTcpSocketBuilder::Listening(const int32 MaxBacklog)
 {
 	if (!Resource)
 		return nullptr;
@@ -41,7 +40,7 @@ UMercurySocketTcpBuilder* UMercurySocketTcpBuilder::Listening(const int32 MaxBac
 	return this;
 }
 
-UMercurySocketTcpBuilder* UMercurySocketTcpBuilder::AsBlocking()
+UMercuryTcpSocketBuilder* UMercuryTcpSocketBuilder::AsBlocking()
 {
 	if (!Resource)
 		return nullptr;
@@ -50,7 +49,7 @@ UMercurySocketTcpBuilder* UMercurySocketTcpBuilder::AsBlocking()
 	return this;
 }
 
-UMercurySocketTcpBuilder* UMercurySocketTcpBuilder::AsReusable()
+UMercuryTcpSocketBuilder* UMercuryTcpSocketBuilder::AsReusable()
 {
 	if (!Resource)
 		return nullptr;
@@ -59,7 +58,7 @@ UMercurySocketTcpBuilder* UMercurySocketTcpBuilder::AsReusable()
 	return this;
 }
 
-UMercurySocketTcpBuilder* UMercurySocketTcpBuilder::AsReusable(const bool& bInReusable)
+UMercuryTcpSocketBuilder* UMercuryTcpSocketBuilder::AsReusable(const bool& bInReusable)
 {
 	if (!Resource)
 		return nullptr;
@@ -68,7 +67,7 @@ UMercurySocketTcpBuilder* UMercurySocketTcpBuilder::AsReusable(const bool& bInRe
 	return this;
 }
 
-UMercurySocketTcpBuilder* UMercurySocketTcpBuilder::AsNonBlocking()
+UMercuryTcpSocketBuilder* UMercuryTcpSocketBuilder::AsNonBlocking()
 {
 	if (!Resource)
 		return nullptr;
@@ -77,7 +76,7 @@ UMercurySocketTcpBuilder* UMercurySocketTcpBuilder::AsNonBlocking()
 	return this;
 }
 
-UMercurySocketTcpBuilder* UMercurySocketTcpBuilder::BoundToAddress(const UMercuryNetworkAddress* const& Address)
+UMercuryTcpSocketBuilder* UMercuryTcpSocketBuilder::BoundToAddress(const UMercuryNetworkAddress* const& Address)
 {
 	if (!Resource)
 		return nullptr;
@@ -86,7 +85,7 @@ UMercurySocketTcpBuilder* UMercurySocketTcpBuilder::BoundToAddress(const UMercur
 	return this;
 }
 
-UMercurySocketTcpBuilder* UMercurySocketTcpBuilder::BoundToEndpoint(const UMercuryNetworkEndpoint* const& Endpoint)
+UMercuryTcpSocketBuilder* UMercuryTcpSocketBuilder::BoundToEndpoint(const UMercuryNetworkEndpoint* const& Endpoint)
 {
 	if (!Resource)
 		return nullptr;
@@ -95,7 +94,7 @@ UMercurySocketTcpBuilder* UMercurySocketTcpBuilder::BoundToEndpoint(const UMercu
 	return this;
 }
 
-UMercurySocketTcpBuilder* UMercurySocketTcpBuilder::BoundToPort(const int32 Port)
+UMercuryTcpSocketBuilder* UMercuryTcpSocketBuilder::BoundToPort(const int32 Port)
 {
 	if (!Resource)
 		return nullptr;
@@ -104,7 +103,7 @@ UMercurySocketTcpBuilder* UMercurySocketTcpBuilder::BoundToPort(const int32 Port
 	return this;
 }
 
-UMercurySocketTcpBuilder* UMercurySocketTcpBuilder::WithReceiveBufferSize(const int32 SizeInBytes)
+UMercuryTcpSocketBuilder* UMercuryTcpSocketBuilder::WithReceiveBufferSize(const int32 SizeInBytes)
 {
 	if (!Resource)
 		return nullptr;
@@ -113,7 +112,7 @@ UMercurySocketTcpBuilder* UMercurySocketTcpBuilder::WithReceiveBufferSize(const 
 	return this;
 }
 
-UMercurySocketTcpBuilder* UMercurySocketTcpBuilder::WithSendBufferSize(const int32 SizeInBytes)
+UMercuryTcpSocketBuilder* UMercuryTcpSocketBuilder::WithSendBufferSize(const int32 SizeInBytes)
 {
 	if (!Resource)
 		return nullptr;
@@ -122,7 +121,7 @@ UMercurySocketTcpBuilder* UMercurySocketTcpBuilder::WithSendBufferSize(const int
 	return this;
 }
 
-UMercurySocketTcpBuilder* UMercurySocketTcpBuilder::K2_AsReusable(const bool bInReusable)
+UMercuryTcpSocketBuilder* UMercuryTcpSocketBuilder::K2_AsReusable(const bool bInReusable)
 {
 	return AsReusable(bInReusable);
 }

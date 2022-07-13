@@ -3,8 +3,8 @@
 #pragma once
 
 #include "MercurySocketObject.h"
-#include "MercurySocketTcpBuilder.h"
-#include "MercurySocketTcpListener.h"
+#include "MercuryTcpListener.h"
+#include "MercuryTcpSocketBuilder.h"
 
 #include "MercurySocketLibrary.generated.h"
 
@@ -22,44 +22,41 @@ public:
 	static UMercurySocketObject* CreateSocketObject(FSocket* const& Resource);
 	static UMercurySocketObject* CreateSocketObject(const TSharedPtr<FSocket>& Resource);
 
-	UFUNCTION(BlueprintPure, DisplayName = "Create Socket TCP Builder", Category = "Mercury|Socket", meta = (
-		Keywords = "Create Socket TCP Builder In Description"
+	UFUNCTION(BlueprintPure, DisplayName = "Create TCP Socket Builder", Category = "Mercury|Socket", meta = (
+		Keywords = "Create TCP Socket Builder In Description"
 	))
-	static UMercurySocketTcpBuilder* CreateSocketTcpBuilder(const FString& InDescription = TEXT("TCP Socket"));
-	static UMercurySocketTcpBuilder* CreateSocketTcpBuilder(FTcpSocketBuilder* const& Resource);
-	static UMercurySocketTcpBuilder* CreateSocketTcpBuilder(
+	static UMercuryTcpSocketBuilder* CreateTcpSocketBuilder(const FString& InDescription = TEXT("TCP Socket"));
+	static UMercuryTcpSocketBuilder* CreateTcpSocketBuilder(FTcpSocketBuilder* const& Resource);
+	static UMercuryTcpSocketBuilder* CreateTcpSocketBuilder(
 		const TSharedPtr<FTcpSocketBuilder>& Resource,
 		const FString& InDescription = TEXT("TCP Socket")
 	);
 
-	UFUNCTION(BlueprintPure, DisplayName = "Create Socket TCP Listener", Category = "Mercury|Socket", meta = (
-		Keywords = "Create Socket TCP Listener In Socket Sleep Time Reusable"
+	UFUNCTION(BlueprintPure, DisplayName = "Create TCP Listener", Category = "Mercury|Socket", meta = (
+		Keywords = "Create TCP Listener In Socket Sleep Time Reusable"
 	))
-	static UMercurySocketTcpListener* CreateSocketTcpListener(
+	static UMercuryTcpListener* CreateTcpListener(
 		UMercurySocketObject* const& InSocket,
 		const FTimespan& InSleepTime,
 		bool bInReusable = true
 	);
-	static UMercurySocketTcpListener* CreateSocketTcpListener(
-		FTcpListener* const& Resource,
-		UMercurySocketObject* const& InSocket
-	);
-	static UMercurySocketTcpListener* CreateSocketTcpListener(
+	static UMercuryTcpListener* CreateTcpListener(FTcpListener* const& Resource, UMercurySocketObject* const& InSocket);
+	static UMercuryTcpListener* CreateTcpListener(
 		const TSharedPtr<FTcpListener>& Resource,
 		UMercurySocketObject* const& InSocket,
 		const FTimespan& InSleepTime = FTimespan::FromSeconds(1.0),
 		const bool& bInReusable = true
 	);
-	static UMercurySocketTcpListener* CreateSocketTcpListener(
+	static UMercuryTcpListener* CreateTcpListener(
 		const UMercuryNetworkEndpoint* const& LocalEndpoint,
 		const FTimespan& InSleepTime,
 		const bool& bInReusable = true
 	);
-	static UMercurySocketTcpListener* CreateSocketTcpListener(
+	static UMercuryTcpListener* CreateTcpListener(
 		FTcpListener* const& Resource,
 		const UMercuryNetworkEndpoint* const& LocalEndpoint
 	);
-	static UMercurySocketTcpListener* CreateSocketTcpListener(
+	static UMercuryTcpListener* CreateTcpListener(
 		const TSharedPtr<FTcpListener>& Resource,
 		const UMercuryNetworkEndpoint* const& LocalEndpoint,
 		const FTimespan& InSleepTime = FTimespan::FromSeconds(1.0),
@@ -67,13 +64,10 @@ public:
 	);
 
 protected:
-	UFUNCTION(
-		BlueprintPure,
-		DisplayName = "Create Socket TCP Listener (Endpoint)",
-		Category = "Mercury|Socket",
-		meta = (Keywords = "Create Socket TCP Listener Local Endpoint In Sleep Time Reusable")
-	)
-	static UMercurySocketTcpListener* K2_CreateSocketTcpListenerWithEndpoint(
+	UFUNCTION(BlueprintPure, DisplayName = "Create TCP Listener (Endpoint)", Category = "Mercury|Socket", meta = (
+		Keywords = "Create TCP Listener Local Endpoint In Sleep Time Reusable"
+	))
+	static UMercuryTcpListener* K2_CreateTcpListenerWithEndpoint(
 		const UMercuryNetworkEndpoint* const& LocalEndpoint,
 		const FTimespan& InSleepTime,
 		bool bInReusable = true

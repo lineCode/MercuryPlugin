@@ -6,11 +6,11 @@
 #include "MercurySocketConnectionAccepted.h"
 #include "ResourceOwner.h"
 
-#include "MercurySocketTcpListener.generated.h"
+#include "MercuryTcpListener.generated.h"
 
 
-UCLASS(Blueprintable, BlueprintType, DisplayName = "Mercury Socket TCP Listener")
-class MERCURYSOCKET_API UMercurySocketTcpListener
+UCLASS(Blueprintable, BlueprintType, DisplayName = "Mercury TCP Listener")
+class MERCURYSOCKET_API UMercuryTcpListener
 : public UObject, public TResourceOwner<FTcpListener, FSocket*, FTimespan, bool>
 {
 	GENERATED_BODY()
@@ -27,7 +27,7 @@ class MERCURYSOCKET_API UMercurySocketTcpListener
 
 public:
 	virtual TSharedPtr<FTcpListener> CreateResource(const std::tuple<FSocket*, FTimespan, bool>& Arguments) override;
-	explicit UMercurySocketTcpListener(const FObjectInitializer& ObjectInitializer);
+	explicit UMercuryTcpListener(const FObjectInitializer& ObjectInitializer);
 
 	virtual TSharedPtr<FTcpListener> CreateResourceWithEndpoint(
 		const std::tuple<FIPv4Endpoint, FTimespan, bool>& Arguments
@@ -83,7 +83,7 @@ protected:
 		Category = "Socket|TCP Listener",
 		meta = (Keywords = "On Set Connection Accepted Delegate Event")
 	)
-	virtual UMercurySocketTcpListener* K2_SetConnectionAcceptedEvent(
+	virtual UMercuryTcpListener* K2_SetConnectionAcceptedEvent(
 		const FMercuryTcpListenerConnectionAcceptedDelegate& Event
 	);
 	
