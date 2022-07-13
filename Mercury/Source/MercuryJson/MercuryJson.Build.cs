@@ -1,5 +1,6 @@
 // Copyright (c) 2022 Kaya Adrian
 
+using System.IO;
 using UnrealBuildTool;
 
 
@@ -18,6 +19,16 @@ public class MercuryJson : ModuleRules
 			"Json",
 			"JsonUtilities",
 			"MercuryUtilities"
+		});
+		
+		PublicIncludePaths.AddRange(new[]
+		{
+			Path.Combine(ModuleDirectory, "Public/Enums"),
+			Path.Combine(ModuleDirectory, "Public/Objects")
+		});
+		PrivateIncludePaths.AddRange(new[]
+		{
+			Path.Combine(ModuleDirectory, "Private/Objects")
 		});
 	}
 }

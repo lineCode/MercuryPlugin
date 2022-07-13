@@ -2,8 +2,12 @@
 
 #pragma once
 
-#include "MercuryHttpDelegates.h"
+#include "MercuryHttpHeaderReceived.h"
+#include "MercuryHttpProcessRequestComplete.h"
+#include "MercuryHttpRequestProgress.h"
 #include "MercuryHttpRequestStatus.h"
+#include "MercuryHttpRequestWillRetry.h"
+
 #include "ResourceOwner.h"
 
 #include "MercuryHttpRequest.generated.h"

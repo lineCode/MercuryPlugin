@@ -1,5 +1,6 @@
 // Copyright (c) 2022 Kaya Adrian
 
+using System.IO;
 using UnrealBuildTool;
 
 
@@ -19,6 +20,17 @@ public class MercurySocket : ModuleRules
 			"MercuryUtilities",
 			"Networking",
 			"Sockets"
+		});
+		
+		PublicIncludePaths.AddRange(new[]
+		{
+			Path.Combine(ModuleDirectory, "Public/Delegates"),
+			Path.Combine(ModuleDirectory, "Public/Enums"),
+			Path.Combine(ModuleDirectory, "Public/Objects")
+		});
+		PrivateIncludePaths.AddRange(new[]
+		{
+			Path.Combine(ModuleDirectory, "Private/Objects")
 		});
 	}
 }

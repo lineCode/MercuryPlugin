@@ -3,20 +3,10 @@
 #pragma once
 
 #include "Common/TcpListener.h"
+#include "MercurySocketConnectionAccepted.h"
 #include "ResourceOwner.h"
 
 #include "MercurySocketTcpListener.generated.h"
-
-class UMercuryNetworkEndpoint;
-class UMercurySocketObject;
-
-
-UDELEGATE(BlueprintCallable, DisplayName = "Connection Accepted Event")
-DECLARE_DYNAMIC_DELEGATE_RetVal_TwoParams(
-	bool, FMercuryTcpListenerConnectionAcceptedDelegate,
-	UMercurySocketObject* const&, Socket,
-	UMercuryNetworkEndpoint* const&, Endpoint
-);
 
 
 UCLASS(Blueprintable, BlueprintType, DisplayName = "Mercury Socket TCP Listener")
