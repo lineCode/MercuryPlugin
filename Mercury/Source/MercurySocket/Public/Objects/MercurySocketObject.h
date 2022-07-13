@@ -78,7 +78,7 @@ public:
 		Keywords = "Socket Object Wait Condition Timespan Time"
 	))
 	virtual UPARAM(DisplayName = "Success") bool
-	Wait(EMercurySocketWaitCondition Condition, FTimespan WaitTime);
+	Wait(EMercurySocketWaitCondition Condition, const FTimespan& WaitTime);
 
 	UFUNCTION(BlueprintPure, DisplayName = "Get Address", Category = "Socket|Object", meta = (
 		CompactNodeTitle = "Address",

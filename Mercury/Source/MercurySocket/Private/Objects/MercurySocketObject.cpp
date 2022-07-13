@@ -74,7 +74,7 @@ bool UMercurySocketObject::Shutdown(const EMercurySocketShutdownMode Mode)
 	return Resource && Resource->Shutdown(MercuryEnums::SocketShutdown::Convert(Mode));
 }
 
-bool UMercurySocketObject::Wait(const EMercurySocketWaitCondition Condition, const FTimespan WaitTime)
+bool UMercurySocketObject::Wait(const EMercurySocketWaitCondition Condition, const FTimespan& WaitTime)
 {
 	return Resource && Resource->Wait(MercuryEnums::SocketWait::Convert(Condition), WaitTime);
 }
