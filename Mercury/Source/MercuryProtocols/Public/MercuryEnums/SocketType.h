@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "MercurySocket.h"
+#include "MercuryProtocols.h"
 
 
 UENUM(BlueprintType, meta = (Keywords = "Socket Object Type Datagram Streaming Unknown TCP UDP"))
@@ -29,7 +29,7 @@ namespace MercuryEnums::SocketType
 			return SOCKTYPE_Unknown;
 
 		default:
-			UE_LOG(LogMercurySocket, Error, TEXT("Unknown socket type: %d"), SocketType);
+			UE_LOG(LogMercuryProtocols, Error, TEXT("Unknown socket type: %d"), SocketType);
 			return SOCKTYPE_Unknown;
 		}
 	}
@@ -48,7 +48,7 @@ namespace MercuryEnums::SocketType
 			return EMercurySocketType::Unknown;
 
 		default:
-			UE_LOG(LogMercurySocket, Error, TEXT("Unknown socket type: %d"), SocketType);
+			UE_LOG(LogMercuryProtocols, Error, TEXT("Unknown socket type: %d"), SocketType);
 			return EMercurySocketType::Unknown;
 		}
 	}

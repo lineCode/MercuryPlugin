@@ -12,17 +12,17 @@ class FTcpListener;
 
 
 UCLASS(Blueprintable, BlueprintType, DisplayName = "Mercury TCP Listener")
-class MERCURYSOCKET_API UMercuryTcpListener
+class MERCURYPROTOCOLS_API UMercuryTcpListener
 : public UObject, public TResourceOwner<FTcpListener, FSocket*, FTimespan, bool>
 {
 	GENERATED_BODY()
 
-	UPROPERTY(BlueprintReadOnly, DisplayName = "Connection Accepted Event", Category = "Socket|TCP Listener", meta = (
+	UPROPERTY(BlueprintReadOnly, DisplayName = "Connection Accepted Event", Category = "TCP|Listener", meta = (
 		AllowPrivateAccess = "true"
 	))
 	FMercuryTcpListenerConnectionAcceptedDelegate OnMercuryTcpListenerConnectionAcceptedDelegate;
 
-	UPROPERTY(BlueprintReadOnly, DisplayName = "Connection Accepted", Category = "Socket|TCP Listener", meta = (
+	UPROPERTY(BlueprintReadOnly, DisplayName = "Connection Accepted", Category = "TCP|Listener", meta = (
 		AllowPrivateAccess = "true"
 	))
 	uint8 bConnectionAcceptedDone : 1;
@@ -35,42 +35,42 @@ public:
 		const std::tuple<FIPv4Endpoint, FTimespan, bool>& Arguments
 	);
 
-	UFUNCTION(BlueprintPure, DisplayName = "Has Resource", Category = "Socket|TCP Listener", meta = (
+	UFUNCTION(BlueprintPure, DisplayName = "Has Resource", Category = "TCP|Listener", meta = (
 		Keywords = "Has Mercury Resource"
 	))
 	virtual bool HasResource() const override;
 
-	UFUNCTION(BlueprintCallable, DisplayName = "Exit", Category = "Socket|TCP Listener", meta = (
-		Keywords = "Socket TCP Listener Exit"
+	UFUNCTION(BlueprintCallable, DisplayName = "Exit", Category = "TCP|Listener", meta = (
+		Keywords = "Protocols TCP Listener Exit Thread"
 	))
 	virtual void Exit();
 
-	UFUNCTION(BlueprintCallable, DisplayName = "Init", Category = "Socket|TCP Listener", meta = (
-		Keywords = "Socket TCP Listener Init Initialise Initialize Begin Start"
+	UFUNCTION(BlueprintCallable, DisplayName = "Init", Category = "TCP|Listener", meta = (
+		Keywords = "Protocols TCP Listener Init Initialise Initialize Begin Start Thread"
 	))
 	virtual UPARAM(DisplayName = "Success") bool Init();
 	
 	virtual uint32 Run();
 
-	UFUNCTION(BlueprintCallable, DisplayName = "Stop", Category = "Socket|TCP Listener", meta = (
-		Keywords = "Socket TCP Listener Stop"
+	UFUNCTION(BlueprintCallable, DisplayName = "Stop", Category = "TCP|Listener", meta = (
+		Keywords = "Protocols TCP Listener Stop Thread"
 	))
 	virtual void Stop();
 
-	UFUNCTION(BlueprintPure, DisplayName = "Get Socket", Category = "Socket|TCP Listener", meta = (
+	UFUNCTION(BlueprintPure, DisplayName = "Get Socket", Category = "TCP|Listener", meta = (
 		CompactNodeTitle = "Socket",
-		Keywords = "Socket TCP Listener Get Socket"
+		Keywords = "Protocols TCP Listener Get Socket"
 	))
 	virtual UMercurySocketObject* GetSocket() const;
 
-	UFUNCTION(BlueprintPure, DisplayName = "Is Active", Category = "Socket|TCP Listener", meta = (
-		Keywords = "Socket TCP Listener Is Active Activated"
+	UFUNCTION(BlueprintPure, DisplayName = "Is Active", Category = "TCP|Listener", meta = (
+		Keywords = "Protocols TCP Listener Is Active Activated"
 	))
 	virtual bool IsActive() const;
 
-	UFUNCTION(BlueprintPure, DisplayName = "Get Local Endpoint", Category = "Socket|TCP Listener", meta = (
+	UFUNCTION(BlueprintPure, DisplayName = "Get Local Endpoint", Category = "TCP|Listener", meta = (
 		CompactNodeTitle = "Local Endpoint",
-		Keywords = "Socket TCP Listener Get Local Endpoint"
+		Keywords = "Protocols TCP Listener Get Local Endpoint"
 	))
 	virtual UMercuryNetworkEndpoint* GetLocalEndpoint() const;
 
@@ -79,18 +79,15 @@ public:
 protected:
 	virtual bool BindConnectionAccepted(FSocket* Socket, const FIPv4Endpoint& Endpoint);
 
-	UFUNCTION(
-		BlueprintCallable,
-		DisplayName = "Set Connection Accepted Event",
-		Category = "Socket|TCP Listener",
-		meta = (Keywords = "On Set Connection Accepted Delegate Event")
-	)
+	UFUNCTION(BlueprintCallable, DisplayName = "Set Connection Accepted Event", Category = "TCP|Listener", meta = (
+		Keywords = "On Set Connection Accepted Delegate Event"
+	))
 	virtual UMercuryTcpListener* K2_SetConnectionAcceptedEvent(
 		const FMercuryTcpListenerConnectionAcceptedDelegate& Event
 	);
 	
-	UFUNCTION(BlueprintCallable, DisplayName = "Run", Category = "Socket|TCP Listener", meta = (
-		Keywords = "Socket TCP Listener Run Activate Execute"
+	UFUNCTION(BlueprintCallable, DisplayName = "Run", Category = "TCP|Listener", meta = (
+		Keywords = "Protocols TCP Listener Run Activate Execute Thread"
 	))
 	virtual int32 K2_Run();
 

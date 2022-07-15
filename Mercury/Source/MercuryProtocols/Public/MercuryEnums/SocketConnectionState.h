@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "MercurySocket.h"
+#include "MercuryProtocols.h"
 
 
 UENUM(BlueprintType, meta = (Keywords = "Socket Object Connection State Connected Error Not"))
@@ -29,7 +29,7 @@ namespace MercuryEnums::SocketConnection
 			return SCS_NotConnected;
 
 		default:
-			UE_LOG(LogMercurySocket, Error, TEXT("Unknown connection state: %d"), ConnectionState);
+			UE_LOG(LogMercuryProtocols, Error, TEXT("Unknown connection state: %d"), ConnectionState);
 			return SCS_NotConnected;
 		}
 	}
@@ -48,7 +48,7 @@ namespace MercuryEnums::SocketConnection
 			return EMercurySocketConnectionState::NotConnected;
 
 		default:
-			UE_LOG(LogMercurySocket, Error, TEXT("Unknown connection state: %d"), ConnectionState);
+			UE_LOG(LogMercuryProtocols, Error, TEXT("Unknown connection state: %d"), ConnectionState);
 			return EMercurySocketConnectionState::NotConnected;
 		}
 	}

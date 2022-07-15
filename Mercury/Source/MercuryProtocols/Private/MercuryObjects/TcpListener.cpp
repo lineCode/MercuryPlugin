@@ -4,7 +4,7 @@
 
 #include "Common/TcpListener.h"
 #include "MercuryNetworkLibrary.h"
-#include "MercurySocketLibrary.h"
+#include "MercuryProtocolsLibrary.h"
 
 
 TSharedPtr<FTcpListener> UMercuryTcpListener::CreateResource(
@@ -75,7 +75,7 @@ void UMercuryTcpListener::Stop()
 
 UMercurySocketObject* UMercuryTcpListener::GetSocket() const
 {
-	return HasResource() ? UMercurySocketLibrary::CreateSocketObject(Resource->GetSocket()) : nullptr;
+	return HasResource() ? UMercuryProtocolsLibrary::CreateSocketObject(Resource->GetSocket()) : nullptr;
 }
 
 bool UMercuryTcpListener::IsActive() const
@@ -104,7 +104,7 @@ bool UMercuryTcpListener::BindConnectionAccepted(FSocket* const Socket, const FI
 	}
 
 	OnMercuryTcpListenerConnectionAcceptedDelegate.Execute(
-		UMercurySocketLibrary::CreateSocketObject(Socket),
+		UMercuryProtocolsLibrary::CreateSocketObject(Socket),
 		UMercuryNetworkLibrary::CreateNetworkEndpoint(new FIPv4Endpoint(Endpoint))
 	);
 	bConnectionAcceptedDone = true;

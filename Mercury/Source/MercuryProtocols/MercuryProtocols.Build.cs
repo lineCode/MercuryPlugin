@@ -5,9 +5,9 @@ using UnrealBuildTool;
 
 
 // ReSharper disable once InconsistentNaming
-public class MercurySocket : ModuleRules
+public class MercuryProtocols : ModuleRules
 {
-	public MercurySocket(ReadOnlyTargetRules Target) : base(Target)
+	public MercuryProtocols(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 		

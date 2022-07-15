@@ -48,7 +48,7 @@
 			]
 		},
 		{
-			"Name": "MercurySocket",
+			"Name": "MercuryProtocols",
 			"Type": "Runtime",
 			"LoadingPhase": "Default",
 			"AdditionalDependencies": [

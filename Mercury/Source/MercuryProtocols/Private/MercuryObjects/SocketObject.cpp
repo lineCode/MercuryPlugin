@@ -3,7 +3,7 @@
 #include "SocketObject.h"
 
 #include "MercuryNetworkLibrary.h"
-#include "MercurySocketLibrary.h"
+#include "MercuryProtocolsLibrary.h"
 #include "Sockets.h"
 
 
@@ -18,7 +18,7 @@ UMercurySocketObject* UMercurySocketObject::Accept(const FString& InSocketDescri
 		return nullptr;
 
 	FSocket* const&& ClientSocket = Resource->Accept(InSocketDescription);
-	return ClientSocket ? UMercurySocketLibrary::CreateSocketObject(ClientSocket) : nullptr;
+	return ClientSocket ? UMercuryProtocolsLibrary::CreateSocketObject(ClientSocket) : nullptr;
 }
 UMercurySocketObject* UMercurySocketObject::Accept(
 	UMercuryInternetAddr* const& OutAddr,
@@ -29,7 +29,7 @@ UMercurySocketObject* UMercurySocketObject::Accept(
 		return nullptr;
 
 	FSocket* const&& ClientSocket = Resource->Accept(*OutAddr->GetResource(), InSocketDescription);
-	return ClientSocket ? UMercurySocketLibrary::CreateSocketObject(ClientSocket) : nullptr;
+	return ClientSocket ? UMercuryProtocolsLibrary::CreateSocketObject(ClientSocket) : nullptr;
 }
 
 bool UMercurySocketObject::Bind(const UMercuryInternetAddr* const& Addr)

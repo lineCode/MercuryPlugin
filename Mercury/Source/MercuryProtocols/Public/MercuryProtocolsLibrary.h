@@ -6,11 +6,11 @@
 #include "MercuryObjects/TcpListener.h"
 #include "MercuryObjects/TcpSocketBuilder.h"
 
-#include "MercurySocketLibrary.generated.h"
+#include "MercuryProtocolsLibrary.generated.h"
 
 
-UCLASS(Abstract, DisplayName = "Mercury Socket Blueprint Function Library")
-class MERCURYSOCKET_API UMercurySocketLibrary : public UBlueprintFunctionLibrary
+UCLASS(Abstract, DisplayName = "Mercury Protocols Blueprint Function Library")
+class MERCURYPROTOCOLS_API UMercuryProtocolsLibrary : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()
 
@@ -22,7 +22,7 @@ public:
 	static UMercurySocketObject* CreateSocketObject(FSocket* const& Resource);
 	static UMercurySocketObject* CreateSocketObject(const TSharedPtr<FSocket>& Resource);
 
-	UFUNCTION(BlueprintPure, DisplayName = "Create TCP Socket Builder", Category = "Mercury|Socket", meta = (
+	UFUNCTION(BlueprintPure, DisplayName = "Create TCP Socket Builder", Category = "Mercury|TCP", meta = (
 		Keywords = "Create TCP Socket Builder In Description"
 	))
 	static UMercuryTcpSocketBuilder* CreateTcpSocketBuilder(const FString& InDescription = TEXT("TCP Socket"));
@@ -32,7 +32,7 @@ public:
 		const FString& InDescription = TEXT("TCP Socket")
 	);
 
-	UFUNCTION(BlueprintPure, DisplayName = "Create TCP Listener", Category = "Mercury|Socket", meta = (
+	UFUNCTION(BlueprintPure, DisplayName = "Create TCP Listener", Category = "Mercury|TCP", meta = (
 		Keywords = "Create TCP Listener In Socket Sleep Time Reusable"
 	))
 	static UMercuryTcpListener* CreateTcpListener(
@@ -64,7 +64,7 @@ public:
 	);
 
 protected:
-	UFUNCTION(BlueprintPure, DisplayName = "Create TCP Listener (Endpoint)", Category = "Mercury|Socket", meta = (
+	UFUNCTION(BlueprintPure, DisplayName = "Create TCP Listener (Endpoint)", Category = "Mercury|TCP", meta = (
 		Keywords = "Create TCP Listener Local Endpoint In Sleep Time Reusable"
 	))
 	static UMercuryTcpListener* K2_CreateTcpListenerWithEndpoint(

@@ -15,7 +15,7 @@ class UMercuryInternetAddr;
 
 
 UCLASS(Blueprintable, BlueprintType, DisplayName = "Mercury Socket Object")
-class MERCURYSOCKET_API UMercurySocketObject : public UObject, public TResourceOwner<FSocket>
+class MERCURYPROTOCOLS_API UMercurySocketObject : public UObject, public TResourceOwner<FSocket>
 {
 	GENERATED_BODY()
 

@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "MercurySocket.h"
+#include "MercuryProtocols.h"
 
 
 UENUM(BlueprintType, meta = (Keywords = "Socket Object Receive Flags None Peek Wait All"))
@@ -29,7 +29,7 @@ namespace MercuryEnums::SocketReceive
 			return ESocketReceiveFlags::WaitAll;
 
 		default:
-			UE_LOG(LogMercurySocket, Error, TEXT("Unknown receive flags: %d"), ReceiveFlags);
+			UE_LOG(LogMercuryProtocols, Error, TEXT("Unknown receive flags: %d"), ReceiveFlags);
 			return ESocketReceiveFlags::None;
 		}
 	}
@@ -48,7 +48,7 @@ namespace MercuryEnums::SocketReceive
 			return EMercurySocketReceiveFlags::WaitAll;
 
 		default:
-			UE_LOG(LogMercurySocket, Error, TEXT("Unknown receive flags: %d"), ReceiveFlags);
+			UE_LOG(LogMercuryProtocols, Error, TEXT("Unknown receive flags: %d"), ReceiveFlags);
 			return EMercurySocketReceiveFlags::None;
 		}
 	}

@@ -3,9 +3,9 @@
 #pragma once
 
 
-DECLARE_LOG_CATEGORY_EXTERN(LogMercurySocket, All, All);
+DECLARE_LOG_CATEGORY_EXTERN(LogMercuryProtocols, All, All);
 
-class FMercurySocketModule : public IModuleInterface
+class FMercuryProtocolsModule : public IModuleInterface
 {
 	static ISocketSubsystem* const SocketSubsystem;
 	

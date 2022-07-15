@@ -5,7 +5,7 @@
 #include "Common/TcpSocketBuilder.h"
 #include "MercuryObjects/NetworkAddress.h"
 #include "MercuryObjects/NetworkEndpoint.h"
-#include "MercurySocketLibrary.h"
+#include "MercuryProtocolsLibrary.h"
 
 
 TSharedPtr<FTcpSocketBuilder> UMercuryTcpSocketBuilder::CreateResource(const std::tuple<FString>& Arguments)
@@ -20,7 +20,7 @@ bool UMercuryTcpSocketBuilder::HasResource() const
 
 UMercurySocketObject* UMercuryTcpSocketBuilder::Build()
 {
-	return Resource ? UMercurySocketLibrary::CreateSocketObject(Resource->Build()) : nullptr;
+	return Resource ? UMercuryProtocolsLibrary::CreateSocketObject(Resource->Build()) : nullptr;
 }
 
 UMercuryTcpSocketBuilder* UMercuryTcpSocketBuilder::Lingering(const int32 Timeout)

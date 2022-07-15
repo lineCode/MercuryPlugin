@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "MercurySocket.h"
+#include "MercuryProtocols.h"
 
 
 UENUM(BlueprintType, meta = (Keywords = "Socket Object Shutdown Mode Read Write"))
@@ -29,7 +29,7 @@ namespace MercuryEnums::SocketShutdown
 			return EMercurySocketShutdownMode::ReadWrite;
 
 		default:
-			UE_LOG(LogMercurySocket, Error, TEXT("Unknown shutdown mode: %d"), ShutdownMode);
+			UE_LOG(LogMercuryProtocols, Error, TEXT("Unknown shutdown mode: %d"), ShutdownMode);
 			return EMercurySocketShutdownMode::Read;
 		}
 	}
@@ -48,7 +48,7 @@ namespace MercuryEnums::SocketShutdown
 			return ESocketShutdownMode::ReadWrite;
 
 		default:
-			UE_LOG(LogMercurySocket, Error, TEXT("Unknown shutdown mode: %d"), ShutdownMode);
+			UE_LOG(LogMercuryProtocols, Error, TEXT("Unknown shutdown mode: %d"), ShutdownMode);
 			return ESocketShutdownMode::Read;
 		}
 	}

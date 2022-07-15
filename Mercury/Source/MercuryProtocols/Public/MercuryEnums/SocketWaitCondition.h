@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "MercurySocket.h"
+#include "MercuryProtocols.h"
 
 
 UENUM(BlueprintType, meta = (Keywords = "Socket Object Wait Condition For Read Or Write"))
@@ -29,7 +29,7 @@ namespace MercuryEnums::SocketWait
 			return ESocketWaitConditions::WaitForReadOrWrite;
 
 		default:
-			UE_LOG(LogMercurySocket, Error, TEXT("Unknown wait condition: %d"), WaitCondition);
+			UE_LOG(LogMercuryProtocols, Error, TEXT("Unknown wait condition: %d"), WaitCondition);
 			return ESocketWaitConditions::WaitForRead;
 		}
 	}
@@ -48,7 +48,7 @@ namespace MercuryEnums::SocketWait
 			return EMercurySocketWaitCondition::WaitForReadOrWrite;
 
 		default:
-			UE_LOG(LogMercurySocket, Error, TEXT("Unknown wait condition: %d"), WaitCondition);
+			UE_LOG(LogMercuryProtocols, Error, TEXT("Unknown wait condition: %d"), WaitCondition);
 			return EMercurySocketWaitCondition::WaitForRead;
 		}
 	}
