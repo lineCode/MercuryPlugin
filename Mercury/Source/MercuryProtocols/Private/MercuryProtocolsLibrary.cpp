@@ -20,26 +20,8 @@ UMercurySocketObject* UMercuryProtocolsLibrary::CreateSocketObject(const TShared
 	return SocketObject;
 }
 
-UMercuryTcpSocketBuilder* UMercuryProtocolsLibrary::CreateTcpSocketBuilder(const FString& InDescription)
-{
-	return CreateTcpSocketBuilder(nullptr, InDescription);
-}
-UMercuryTcpSocketBuilder* UMercuryProtocolsLibrary::CreateTcpSocketBuilder(FTcpSocketBuilder* const& Resource)
-{
-	return CreateTcpSocketBuilder(MakeShareable(Resource));
-}
-UMercuryTcpSocketBuilder* UMercuryProtocolsLibrary::CreateTcpSocketBuilder(
-	const TSharedPtr<FTcpSocketBuilder>& Resource,
-	const FString& InDescription
-)
-{
-	UMercuryTcpSocketBuilder* const&& TcpBuilder = NewObject<UMercuryTcpSocketBuilder>();
-	TcpBuilder->SetResource(Resource ? Resource : TcpBuilder->CreateResource(InDescription));
-	return TcpBuilder;
-}
-
 UMercuryTcpListener* UMercuryProtocolsLibrary::CreateTcpListener(
-	UMercurySocketObject* const& InSocket,
+	const UMercurySocketObject* const& InSocket,
 	const FTimespan& InSleepTime,
 	const bool bInReusable
 )
@@ -48,14 +30,14 @@ UMercuryTcpListener* UMercuryProtocolsLibrary::CreateTcpListener(
 }
 UMercuryTcpListener* UMercuryProtocolsLibrary::CreateTcpListener(
 	FTcpListener* const& Resource,
-	UMercurySocketObject* const& InSocket
+	const UMercurySocketObject* const& InSocket
 )
 {
 	return CreateTcpListener(MakeShareable(Resource), InSocket);
 }
 UMercuryTcpListener* UMercuryProtocolsLibrary::CreateTcpListener(
 	const TSharedPtr<FTcpListener>& Resource,
-	UMercurySocketObject* const& InSocket,
+	const UMercurySocketObject* const& InSocket,
 	const FTimespan& InSleepTime,
 	const bool& bInReusable
 )
@@ -63,7 +45,7 @@ UMercuryTcpListener* UMercuryProtocolsLibrary::CreateTcpListener(
 	if (!InSocket)
 		return nullptr;
 
-	FSocket*&& Socket = InSocket->GetResource().Get();
+	FSocket* const&& Socket = InSocket->GetResource().Get();
 	if (!Socket)
 		return nullptr;
 	
@@ -107,6 +89,59 @@ UMercuryTcpListener* UMercuryProtocolsLibrary::CreateTcpListener(
 		Resource : TcpListener->CreateResourceWithEndpoint({ *Endpoint, InSleepTime, bInReusable })
 	);
 	return TcpListener;
+}
+
+UMercuryTcpMultichannelSocket* UMercuryProtocolsLibrary::CreateTcpMultichannelSocket(
+	const UMercurySocketObject* const& InSocket,
+	const int32 InBandwidthLatencyProduct
+)
+{
+	return CreateTcpMultichannelSocket(nullptr, InSocket, InBandwidthLatencyProduct);
+}
+UMercuryTcpMultichannelSocket* UMercuryProtocolsLibrary::CreateTcpMultichannelSocket(
+	FMultichannelTcpSocket* const& Resource,
+	const UMercurySocketObject* const& InSocket,
+	const uint64& InBandwidthLatencyProduct
+)
+{
+	return CreateTcpMultichannelSocket(MakeShareable(Resource), InSocket, InBandwidthLatencyProduct);
+}
+UMercuryTcpMultichannelSocket* UMercuryProtocolsLibrary::CreateTcpMultichannelSocket(
+	const TSharedPtr<FMultichannelTcpSocket>& Resource,
+	const UMercurySocketObject* const& InSocket,
+	const uint64& InBandwidthLatencyProduct
+)
+{
+	if (!InSocket)
+		return nullptr;
+
+	FSocket* const&& Socket = InSocket->GetResource().Get();
+	if (!Socket)
+		return nullptr;
+	
+	UMercuryTcpMultichannelSocket* const&& MultichannelSocket = NewObject<UMercuryTcpMultichannelSocket>();
+	MultichannelSocket->SetResource(Resource ?
+		Resource : MultichannelSocket->CreateResource({ Socket, InBandwidthLatencyProduct })
+	);
+	return MultichannelSocket;
+}
+
+UMercuryTcpSocketBuilder* UMercuryProtocolsLibrary::CreateTcpSocketBuilder(const FString& InDescription)
+{
+	return CreateTcpSocketBuilder(nullptr, InDescription);
+}
+UMercuryTcpSocketBuilder* UMercuryProtocolsLibrary::CreateTcpSocketBuilder(FTcpSocketBuilder* const& Resource)
+{
+	return CreateTcpSocketBuilder(MakeShareable(Resource));
+}
+UMercuryTcpSocketBuilder* UMercuryProtocolsLibrary::CreateTcpSocketBuilder(
+	const TSharedPtr<FTcpSocketBuilder>& Resource,
+	const FString& InDescription
+)
+{
+	UMercuryTcpSocketBuilder* const&& TcpBuilder = NewObject<UMercuryTcpSocketBuilder>();
+	TcpBuilder->SetResource(Resource ? Resource : TcpBuilder->CreateResource(InDescription));
+	return TcpBuilder;
 }
 
 UMercuryTcpListener* UMercuryProtocolsLibrary::K2_CreateTcpListenerWithEndpoint(

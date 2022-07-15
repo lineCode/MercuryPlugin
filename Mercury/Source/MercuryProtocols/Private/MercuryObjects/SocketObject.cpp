@@ -306,10 +306,10 @@ bool UMercurySocketObject::K2_Recv(
 )
 {
 	uint8*&& ReceivedData = new uint8[BufferSize];
-	Data.SetNumUninitialized(BufferSize, false);
+	Data.SetNumUninitialized(BufferSize);
 	
 	const bool&& bSuccess = Recv(ReceivedData, BufferSize, BytesRead, Flags);
-	for (int32&& Index = 0; Index < BufferSize; ++Index)
+	for (int32&& Index = 0; Index < BytesRead; ++Index)
 	{
 		Data[Index] = ReceivedData[Index];
 	}
@@ -332,10 +332,10 @@ bool UMercurySocketObject::K2_RecvFrom(
 )
 {
 	uint8*&& ReceivedData = new uint8[BufferSize];
-	Data.SetNumUninitialized(BufferSize, false);
+	Data.SetNumUninitialized(BufferSize);
 	
 	const bool&& bSuccess = RecvFrom(ReceivedData, BufferSize, BytesRead, Source, Flags);
-	for (int32&& Index = 0; Index < BufferSize; ++Index)
+	for (int32&& Index = 0; Index < BytesRead; ++Index)
 	{
 		Data[Index] = ReceivedData[Index];
 	}
@@ -385,10 +385,10 @@ bool UMercurySocketObject::K2_RecvFromWithPktInfo(
 )
 {
 	uint8*&& ReceivedData = new uint8[BufferSize];
-	Data.SetNumUninitialized(BufferSize, false);
+	Data.SetNumUninitialized(BufferSize);
 	
 	const bool&& bSuccess = RecvFromWithPktInfo(ReceivedData, BufferSize, BytesRead, Source, Destination, Flags);
-	for (int32&& Index = 0; Index < BufferSize; ++Index)
+	for (int32&& Index = 0; Index < BytesRead; ++Index)
 	{
 		Data[Index] = ReceivedData[Index];
 	}
