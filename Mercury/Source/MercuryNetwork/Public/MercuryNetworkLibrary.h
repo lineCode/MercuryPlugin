@@ -17,7 +17,7 @@ class MERCURYNETWORK_API UMercuryNetworkLibrary : public UBlueprintFunctionLibra
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintPure, DisplayName = "Create Internet Addr (Default)", Category = "Mercury|Network", meta = (
+	UFUNCTION(BlueprintPure, DisplayName = "Create Internet Addr (Default)", Category = "Mercury|Internet", meta = (
 		Keywords = "Create Internet Addr Default Empty"
 	))
 	static UMercuryInternetAddr* CreateInternetAddr();
@@ -55,12 +55,12 @@ public:
 	static UMercuryNetworkSubnet* CreateNetworkSubnet(const TSharedPtr<FIPv4Subnet>& Resource);
 
 protected:
-	UFUNCTION(BlueprintPure, DisplayName = "Create Internet Addr", Category = "Mercury|Network", meta = (
+	UFUNCTION(BlueprintPure, DisplayName = "Create Internet Addr", Category = "Mercury|Internet", meta = (
 		Keywords = "Create Internet Addr Address Port"
 	))
 	static UMercuryInternetAddr* K2_CreateInternetAddr(int32 Address, int32 Port = 0);
 
-	UFUNCTION(BlueprintPure, DisplayName = "Create Internet Addr (Protocol)", Category = "Mercury|Network", meta = (
+	UFUNCTION(BlueprintPure, DisplayName = "Create Internet Addr (Protocol)", Category = "Mercury|Internet", meta = (
 		Keywords = "Create Internet Addr Protocol Type"
 	))
 	static UMercuryInternetAddr* K2_CreateInternetAddrWithProtocol(const FName& ProtocolType);
