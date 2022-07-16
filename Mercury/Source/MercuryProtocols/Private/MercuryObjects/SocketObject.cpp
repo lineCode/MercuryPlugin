@@ -180,25 +180,20 @@ bool UMercurySocketObject::HasPendingData(uint32& PendingDataSize) const
 	return HasResource() && Resource->HasPendingData(PendingDataSize);
 }
 
-bool UMercurySocketObject::JoinMulticastGroup(const UMercuryInternetAddr* const& GroupAddress)
-{
-	return HasResource() && Resource->JoinMulticastGroup(*GroupAddress->GetResource());
-}
-
 bool UMercurySocketObject::JoinMulticastGroup(
 	const UMercuryInternetAddr* const& GroupAddress,
 	const UMercuryInternetAddr* const& InterfaceAddress
 )
 {
-	return HasResource() && Resource->JoinMulticastGroup(
-		*GroupAddress->GetResource(),
-		*InterfaceAddress->GetResource()
-	);
-}
+	const FInternetAddr* const&& GroupResource = GroupAddress->GetResource().Get();
+	if (!HasResource() || !GroupResource)
+		return false;
 
-bool UMercurySocketObject::LeaveMulticastGroup(const UMercuryInternetAddr* const& GroupAddress)
-{
-	return HasResource() && Resource->LeaveMulticastGroup(*GroupAddress->GetResource());
+	if (!InterfaceAddress)
+		return Resource->JoinMulticastGroup(*GroupResource);
+
+	const FInternetAddr* const&& InterfaceResource = InterfaceAddress->GetResource().Get();
+	return Resource->JoinMulticastGroup(*GroupResource, *InterfaceResource);
 }
 
 bool UMercurySocketObject::LeaveMulticastGroup(
@@ -206,15 +201,21 @@ bool UMercurySocketObject::LeaveMulticastGroup(
 	const UMercuryInternetAddr* const& InterfaceAddress
 )
 {
-	return HasResource() && Resource->LeaveMulticastGroup(
-		*GroupAddress->GetResource(),
-		*InterfaceAddress->GetResource()
-	);
+	const FInternetAddr* const&& GroupResource = GroupAddress->GetResource().Get();
+	if (!HasResource() || !GroupResource)
+		return false;
+
+	if (!InterfaceAddress)
+		return Resource->LeaveMulticastGroup(*GroupResource);
+
+	const FInternetAddr* const&& InterfaceResource = InterfaceAddress->GetResource().Get();
+	return Resource->LeaveMulticastGroup(*GroupResource, *InterfaceResource);
 }
 
 bool UMercurySocketObject::SetMulticastInterface(const UMercuryInternetAddr* const& InterfaceAddress)
 {
-	return HasResource() && Resource->SetMulticastInterface(*InterfaceAddress->GetResource());
+	const FInternetAddr* const&& InternetResource = InterfaceAddress->GetResource().Get();
+	return HasResource() && InternetResource ? Resource->SetMulticastInterface(*InternetResource) : false;
 }
 
 bool UMercurySocketObject::SetMulticastLoopback(const bool bLoopback)
@@ -362,22 +363,6 @@ bool UMercurySocketObject::K2_SendTo(
 bool UMercurySocketObject::K2_HasPendingData(int32& PendingDataSize) const
 {
 	return HasPendingData(reinterpret_cast<uint32&>(PendingDataSize));
-}
-
-bool UMercurySocketObject::K2_JoinMulticastGroup(
-	const UMercuryInternetAddr* const& GroupAddress,
-	const UMercuryInternetAddr* const& InterfaceAddress
-)
-{
-	return JoinMulticastGroup(GroupAddress, InterfaceAddress);
-}
-
-bool UMercurySocketObject::K2_LeaveMulticastGroup(
-	const UMercuryInternetAddr* const& GroupAddress,
-	const UMercuryInternetAddr* const& InterfaceAddress
-)
-{
-	return LeaveMulticastGroup(GroupAddress, InterfaceAddress);
 }
 
 bool UMercurySocketObject::K2_RecvFromWithPktInfo(

@@ -163,25 +163,21 @@ public:
 	virtual bool HasPendingData(uint32& PendingDataSize) const;
 
 	UFUNCTION(BlueprintCallable, DisplayName = "Join Multicast Group", Category = "Socket|Object", meta = (
-		Keywords = "Socket Object Join Multicast Group Address"
+		Keywords = "Socket Object Join Multicast Group Address Interface"
 	))
 	virtual UPARAM(DisplayName = "Success") bool
-	JoinMulticastGroup(const UMercuryInternetAddr* const& GroupAddress);
-	
-	virtual bool JoinMulticastGroup(
+	JoinMulticastGroup(
 		const UMercuryInternetAddr* const& GroupAddress,
-		const UMercuryInternetAddr* const& InterfaceAddress
+		const UMercuryInternetAddr* const& InterfaceAddress = nullptr
 	);
 
 	UFUNCTION(BlueprintCallable, DisplayName = "Leave Multicast Group", Category = "Socket|Object", meta = (
-		Keywords = "Socket Object Leave Multicast Group Address"
+		Keywords = "Socket Object Leave Multicast Group Address Interface"
 	))
 	virtual UPARAM(DisplayName = "Success") bool
-	LeaveMulticastGroup(const UMercuryInternetAddr* const& GroupAddress);
-	
-	virtual bool LeaveMulticastGroup(
+	LeaveMulticastGroup(
 		const UMercuryInternetAddr* const& GroupAddress,
-		const UMercuryInternetAddr* const& InterfaceAddress
+		const UMercuryInternetAddr* const& InterfaceAddress = nullptr
 	);
 
 	UFUNCTION(BlueprintCallable, DisplayName = "Set Multicast Interface", Category = "Socket|Object", meta = (
@@ -315,24 +311,6 @@ protected:
 		Keywords = "Socket Object Has Pending Data Size"
 	))
 	virtual bool K2_HasPendingData(int32& PendingDataSize) const;
-
-	UFUNCTION(BlueprintCallable, DisplayName = "Join Multicast Group On", Category = "Socket|Object", meta = (
-		Keywords = "Socket Object Join Multicast Group On Interface Address"
-	))
-	virtual UPARAM(DisplayName = "Success") bool
-	K2_JoinMulticastGroup(
-		const UMercuryInternetAddr* const& GroupAddress,
-		const UMercuryInternetAddr* const& InterfaceAddress
-	);
-
-	UFUNCTION(BlueprintCallable, DisplayName = "Leave Multicast Group On", Category = "Socket|Object", meta = (
-		Keywords = "Socket Object Leave Multicast Group On Interface Address"
-	))
-	virtual UPARAM(DisplayName = "Success") bool
-	K2_LeaveMulticastGroup(
-		const UMercuryInternetAddr* const& GroupAddress,
-		const UMercuryInternetAddr* const& InterfaceAddress
-	);
 
 	UFUNCTION(BlueprintCallable, DisplayName = "Recv From With Packet Info", Category = "Socket|Object", meta = (
 		Keywords = "Socket Object Recv From With Packet Info Data Buffer Size Bytes Read Source Destination Flags"
