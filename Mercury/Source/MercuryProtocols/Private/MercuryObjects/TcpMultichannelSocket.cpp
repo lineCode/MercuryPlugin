@@ -22,7 +22,7 @@ bool UMercuryTcpMultichannelSocket::HasResource() const
 
 void UMercuryTcpMultichannelSocket::Send(const uint8* const& Data, const int32& Count, const uint32& Channel)
 {
-	if (!Resource)
+	if (!HasResource())
 		return;
 
 	Resource->Send(Data, Count, Channel);
@@ -30,17 +30,17 @@ void UMercuryTcpMultichannelSocket::Send(const uint8* const& Data, const int32& 
 
 int32 UMercuryTcpMultichannelSocket::BlockingReceive(uint8*& Data, const int32& Count, const uint32& Channel)
 {
-	return Resource ? Resource->BlockingReceive(Data, Count, Channel) : 0;
+	return HasResource() ? Resource->BlockingReceive(Data, Count, Channel) : 0;
 }
 
 int32 UMercuryTcpMultichannelSocket::DataAvailable(const uint32& Channel)
 {
-	return Resource ? Resource->DataAvailable(Channel) : 0;
+	return HasResource() ? Resource->DataAvailable(Channel) : 0;
 }
 
 int32 UMercuryTcpMultichannelSocket::PollingReceive(uint8*& Data, const int32& MaxCount, const uint32& Channel)
 {
-	return Resource ? Resource->PollingReceive(Data, MaxCount, Channel) : 0;
+	return HasResource() ? Resource->PollingReceive(Data, MaxCount, Channel) : 0;
 }
 
 void UMercuryTcpMultichannelSocket::K2_Send(const TArray<uint8>& Data, const int32 Count, const int32 Channel)

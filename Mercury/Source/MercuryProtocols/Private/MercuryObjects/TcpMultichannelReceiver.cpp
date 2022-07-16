@@ -12,6 +12,11 @@ TSharedPtr<FMultichannelTcpReceiver> UMercuryTcpMultichannelReceiver::CreateReso
 	
 	return MakeShareable(new FMultichannelTcpReceiver(std::get<0>(Arguments), InReceiveDelegate));
 }
+UMercuryTcpMultichannelReceiver::UMercuryTcpMultichannelReceiver(const FObjectInitializer& ObjectInitializer)
+: Super(ObjectInitializer)
+{
+	bReceiveDone = false;
+}
 
 bool UMercuryTcpMultichannelReceiver::HasResource() const
 {

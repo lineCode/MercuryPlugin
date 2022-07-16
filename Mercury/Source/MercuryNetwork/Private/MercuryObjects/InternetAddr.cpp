@@ -22,18 +22,18 @@ bool UMercuryInternetAddr::HasResource() const
 
 UMercuryInternetAddr* UMercuryInternetAddr::Clone() const
 {
-	return Resource ? UMercuryNetworkLibrary::CreateInternetAddr(Resource->Clone()) : nullptr;
+	return HasResource() ? UMercuryNetworkLibrary::CreateInternetAddr(Resource->Clone()) : nullptr;
 }
 
 bool UMercuryInternetAddr::CompareEndpoints(const UMercuryInternetAddr* const& InAddr) const
 {
-	return Resource && Resource->CompareEndpoints(*InAddr->GetResource());
+	return HasResource() && Resource->CompareEndpoints(*InAddr->GetResource());
 }
 
 void UMercuryInternetAddr::GetIp(uint32& OutAddr) const
 {
 	OutAddr = 0u;
-	if (!Resource)
+	if (!HasResource())
 		return;
 	
 	Resource->GetIp(OutAddr);
@@ -41,11 +41,11 @@ void UMercuryInternetAddr::GetIp(uint32& OutAddr) const
 
 int32 UMercuryInternetAddr::GetPort() const
 {
-	return Resource ? Resource->GetPort() : 0;
+	return HasResource() ? Resource->GetPort() : 0;
 }
 void UMercuryInternetAddr::GetPort(int32& OutPort) const
 {
-	if (!Resource)
+	if (!HasResource())
 		return;
 
 	Resource->GetPort(OutPort);
@@ -53,20 +53,20 @@ void UMercuryInternetAddr::GetPort(int32& OutPort) const
 
 bool UMercuryInternetAddr::IsValid() const
 {
-	return Resource && Resource->IsValid();
+	return HasResource() && Resource->IsValid();
 }
 
 void UMercuryInternetAddr::SetIp(const FString& InAddr, bool& bIsValid)
 {
 	bIsValid = false;
-	if (!Resource)
+	if (!HasResource())
 		return;
 	
 	Resource->SetIp(*InAddr, bIsValid);
 }
 void UMercuryInternetAddr::SetIp(const uint32& InAddr)
 {
-	if (!Resource)
+	if (!HasResource())
 		return;
 	
 	Resource->SetIp(InAddr);
@@ -74,7 +74,7 @@ void UMercuryInternetAddr::SetIp(const uint32& InAddr)
 
 void UMercuryInternetAddr::SetPort(const int32 InPort)
 {
-	if (!Resource)
+	if (!HasResource())
 		return;
 	
 	Resource->SetPort(InPort);
@@ -82,12 +82,12 @@ void UMercuryInternetAddr::SetPort(const int32 InPort)
 
 FString UMercuryInternetAddr::ToString(const bool bAppendPort) const
 {
-	return Resource ? Resource->ToString(bAppendPort) : TEXT("");
+	return HasResource() ? Resource->ToString(bAppendPort) : TEXT("");
 }
 
 void UMercuryInternetAddr::DumpAddrData() const
 {
-	if (!Resource)
+	if (!HasResource())
 		return;
 	
 	Resource->DumpAddrData();
@@ -95,27 +95,27 @@ void UMercuryInternetAddr::DumpAddrData() const
 
 int32 UMercuryInternetAddr::GetPlatformPort() const
 {
-	return Resource ? Resource->GetPlatformPort() : 0;
+	return HasResource() ? Resource->GetPlatformPort() : 0;
 }
 
 FName UMercuryInternetAddr::GetProtocolType() const
 {
-	return Resource ? Resource->GetProtocolType() : TEXT("");
+	return HasResource() ? Resource->GetProtocolType() : TEXT("");
 }
 
 TArray<uint8> UMercuryInternetAddr::GetRawIp() const
 {
-	return Resource ? Resource->GetRawIp() : TArray<uint8>({ 0u, 0u, 0u, 0u });
+	return HasResource() ? Resource->GetRawIp() : TArray<uint8>({ 0u, 0u, 0u, 0u });
 }
 
 uint32 UMercuryInternetAddr::GetTypeHash() const
 {
-	return Resource ? Resource->GetTypeHash() : 0u;
+	return HasResource() ? Resource->GetTypeHash() : 0u;
 }
 
 void UMercuryInternetAddr::SetAnyAddress()
 {
-	if (!Resource)
+	if (!HasResource())
 		return;
 
 	Resource->SetAnyAddress();
@@ -123,7 +123,7 @@ void UMercuryInternetAddr::SetAnyAddress()
 
 void UMercuryInternetAddr::SetBroadcastAddress()
 {
-	if (!Resource)
+	if (!HasResource())
 		return;
 
 	Resource->SetBroadcastAddress();
@@ -131,7 +131,7 @@ void UMercuryInternetAddr::SetBroadcastAddress()
 
 void UMercuryInternetAddr::SetLoopbackAddress()
 {
-	if (!Resource)
+	if (!HasResource())
 		return;
 
 	Resource->SetLoopbackAddress();
@@ -139,7 +139,7 @@ void UMercuryInternetAddr::SetLoopbackAddress()
 
 void UMercuryInternetAddr::SetPlatformPort(const int32 InPort)
 {
-	if (!Resource)
+	if (!HasResource())
 		return;
 
 	Resource->SetPlatformPort(InPort);
@@ -147,7 +147,7 @@ void UMercuryInternetAddr::SetPlatformPort(const int32 InPort)
 
 void UMercuryInternetAddr::SetRawIp(const TArray<uint8>& RawAddr)
 {
-	if (!Resource)
+	if (!HasResource())
 		return;
 
 	Resource->SetRawIp(RawAddr);

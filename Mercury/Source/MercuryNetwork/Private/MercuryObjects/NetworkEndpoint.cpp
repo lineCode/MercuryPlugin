@@ -19,12 +19,12 @@ bool UMercuryNetworkEndpoint::HasResource() const
 
 UMercuryNetworkAddress* UMercuryNetworkEndpoint::GetAddress() const
 {
-	return Resource ? UMercuryNetworkLibrary::CreateNetworkAddress(new FIPv4Address(Resource->Address)) : nullptr;
+	return HasResource() ? UMercuryNetworkLibrary::CreateNetworkAddress(new FIPv4Address(Resource->Address)) : nullptr;
 }
 UMercuryNetworkEndpoint* UMercuryNetworkEndpoint::SetAddress(const UMercuryNetworkAddress* const& Value)
 {
 	const TSharedPtr<FIPv4Address>& ValueResource = Value->GetResource();
-	if (!Resource || !Value || !ValueResource)
+	if (!HasResource() || !Value || !ValueResource)
 		return nullptr;
 
 	Resource->Address = *ValueResource;
@@ -52,11 +52,11 @@ void UMercuryNetworkEndpoint::Parse(const FString& EndpointString, UMercuryNetwo
 
 uint16 UMercuryNetworkEndpoint::GetPort() const
 {
-	return Resource ? Resource->Port : 0u;
+	return HasResource() ? Resource->Port : 0u;
 }
 UMercuryNetworkEndpoint* UMercuryNetworkEndpoint::SetPort(const uint16& Value)
 {
-	if (!Resource)
+	if (!HasResource())
 		return nullptr;
 
 	Resource->Port = Value;
@@ -65,17 +65,17 @@ UMercuryNetworkEndpoint* UMercuryNetworkEndpoint::SetPort(const uint16& Value)
 
 FString UMercuryNetworkEndpoint::ToString() const
 {
-	return Resource ? Resource->ToString() : TEXT("");
+	return HasResource() ? Resource->ToString() : TEXT("");
 }
 
 FText UMercuryNetworkEndpoint::ToText() const
 {
-	return Resource ? Resource->ToText() : FText::GetEmpty();
+	return HasResource() ? Resource->ToText() : FText::GetEmpty();
 }
 
 UMercuryInternetAddr* UMercuryNetworkEndpoint::ToInternetAddr() const
 {
-	return Resource ? UMercuryNetworkLibrary::CreateInternetAddr(Resource->ToInternetAddr()) : nullptr;
+	return HasResource() ? UMercuryNetworkLibrary::CreateInternetAddr(Resource->ToInternetAddr()) : nullptr;
 }
 
 bool UMercuryNetworkEndpoint::FromHostAndPort(const FString& HostAndPortString, UMercuryNetworkEndpoint*& OutEndpoint)
@@ -86,7 +86,7 @@ bool UMercuryNetworkEndpoint::FromHostAndPort(const FString& HostAndPortString, 
 
 UMercuryInternetAddr* UMercuryNetworkEndpoint::ToInternetAddrIPv4() const
 {
-	return Resource ? UMercuryNetworkLibrary::CreateInternetAddr(Resource->ToInternetAddrIPV4()) : nullptr;
+	return HasResource() ? UMercuryNetworkLibrary::CreateInternetAddr(Resource->ToInternetAddrIPV4()) : nullptr;
 }
 
 int32 UMercuryNetworkEndpoint::K2_GetPort() const

@@ -27,6 +27,7 @@ class MERCURYPROTOCOLS_API UMercuryTcpMultichannelReceiver
 
 public:
 	virtual TSharedPtr<FMultichannelTcpReceiver> CreateResource(const std::tuple<FSocket*>& Arguments) override;
+	explicit UMercuryTcpMultichannelReceiver(const FObjectInitializer& ObjectInitializer);
 
 	UFUNCTION(BlueprintPure, DisplayName = "Has Resource", Category = "TCP|Multichannel|Receiver", meta = (
 		Keywords = "Has Mercury Resource"

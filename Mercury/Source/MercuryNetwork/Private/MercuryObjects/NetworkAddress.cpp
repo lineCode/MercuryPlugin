@@ -17,11 +17,11 @@ bool UMercuryNetworkAddress::HasResource() const
 
 uint8 UMercuryNetworkAddress::GetA() const
 {
-	return Resource ? Resource->A : 0u;
+	return HasResource() ? Resource->A : 0u;
 }
 UMercuryNetworkAddress* UMercuryNetworkAddress::SetA(const uint8 Value)
 {
-	if (!Resource)
+	if (!HasResource())
 		return nullptr;
 
 	Resource->A = Value;
@@ -30,11 +30,11 @@ UMercuryNetworkAddress* UMercuryNetworkAddress::SetA(const uint8 Value)
 
 uint8 UMercuryNetworkAddress::GetB() const
 {
-	return Resource ? Resource->B : 0u;
+	return HasResource() ? Resource->B : 0u;
 }
 UMercuryNetworkAddress* UMercuryNetworkAddress::SetB(const uint8 Value)
 {
-	if (!Resource)
+	if (!HasResource())
 		return nullptr;
 
 	Resource->B = Value;
@@ -43,11 +43,11 @@ UMercuryNetworkAddress* UMercuryNetworkAddress::SetB(const uint8 Value)
 
 uint8 UMercuryNetworkAddress::GetC() const
 {
-	return Resource ? Resource->C : 0u;
+	return HasResource() ? Resource->C : 0u;
 }
 UMercuryNetworkAddress* UMercuryNetworkAddress::SetC(const uint8 Value)
 {
-	if (!Resource)
+	if (!HasResource())
 		return nullptr;
 
 	Resource->C = Value;
@@ -56,11 +56,11 @@ UMercuryNetworkAddress* UMercuryNetworkAddress::SetC(const uint8 Value)
 
 uint8 UMercuryNetworkAddress::GetD() const
 {
-	return Resource ? Resource->D : 0u;
+	return HasResource() ? Resource->D : 0u;
 }
 UMercuryNetworkAddress* UMercuryNetworkAddress::SetD(const uint8 Value)
 {
-	if (!Resource)
+	if (!HasResource())
 		return nullptr;
 
 	Resource->D = Value;
@@ -69,11 +69,11 @@ UMercuryNetworkAddress* UMercuryNetworkAddress::SetD(const uint8 Value)
 
 uint32 UMercuryNetworkAddress::GetValue() const
 {
-	return Resource ? Resource->Value : 0u;
+	return HasResource() ? Resource->Value : 0u;
 }
 UMercuryNetworkAddress* UMercuryNetworkAddress::SetValue(const uint32& Value)
 {
-	if (!Resource)
+	if (!HasResource())
 		return nullptr;
 
 	Resource->Value = Value;
@@ -82,57 +82,57 @@ UMercuryNetworkAddress* UMercuryNetworkAddress::SetValue(const uint32& Value)
 
 FString UMercuryNetworkAddress::ToString() const
 {
-	return Resource ? Resource->ToString() : TEXT("");
+	return HasResource() ? Resource->ToString() : TEXT("");
 }
 
 FText UMercuryNetworkAddress::ToText() const
 {
-	return Resource ? Resource->ToText() : FText::GetEmpty();
+	return HasResource() ? Resource->ToText() : FText::GetEmpty();
 }
 
 bool UMercuryNetworkAddress::IsGlobalMulticast() const
 {
-	return Resource && Resource->IsGlobalMulticast();
+	return HasResource() && Resource->IsGlobalMulticast();
 }
 
 bool UMercuryNetworkAddress::IsLinkLocal() const
 {
-	return Resource && Resource->IsLinkLocal();
+	return HasResource() && Resource->IsLinkLocal();
 }
 
 bool UMercuryNetworkAddress::IsLoopbackAddress() const
 {
-	return Resource && Resource->IsLoopbackAddress();
+	return HasResource() && Resource->IsLoopbackAddress();
 }
 
 bool UMercuryNetworkAddress::IsMulticastAddress() const
 {
-	return Resource && Resource->IsMulticastAddress();
+	return HasResource() && Resource->IsMulticastAddress();
 }
 
 bool UMercuryNetworkAddress::IsLinkLocalMulticast() const
 {
-	return Resource && Resource->IsLinkLocalMulticast();
+	return HasResource() && Resource->IsLinkLocalMulticast();
 }
 
 bool UMercuryNetworkAddress::IsOrganizationLocalMulticast() const
 {
-	return Resource && Resource->IsOrganizationLocalMulticast();
+	return HasResource() && Resource->IsOrganizationLocalMulticast();
 }
 
 bool UMercuryNetworkAddress::IsSessionFrontendMulticast() const
 {
-	return Resource && Resource->IsSessionFrontendMulticast();
+	return HasResource() && Resource->IsSessionFrontendMulticast();
 }
 
 bool UMercuryNetworkAddress::IsSiteLocalAddress() const
 {
-	return Resource && Resource->IsSiteLocalAddress();
+	return HasResource() && Resource->IsSiteLocalAddress();
 }
 
 bool UMercuryNetworkAddress::IsSiteLocalMulticast() const
 {
-	return Resource && Resource->IsSiteLocalMulticast();
+	return HasResource() && Resource->IsSiteLocalMulticast();
 }
 
 const UMercuryNetworkAddress* const& UMercuryNetworkAddress::GetAny()

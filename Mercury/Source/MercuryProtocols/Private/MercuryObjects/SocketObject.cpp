@@ -14,7 +14,7 @@ bool UMercurySocketObject::HasResource() const
 
 UMercurySocketObject* UMercurySocketObject::Accept(const FString& InSocketDescription)
 {
-	if (!Resource)
+	if (!HasResource())
 		return nullptr;
 
 	FSocket* const&& ClientSocket = Resource->Accept(InSocketDescription);
@@ -25,7 +25,7 @@ UMercurySocketObject* UMercurySocketObject::Accept(
 	const FString& InSocketDescription
 )
 {
-	if (!Resource)
+	if (!HasResource())
 		return nullptr;
 
 	FSocket* const&& ClientSocket = Resource->Accept(*OutAddr->GetResource(), InSocketDescription);
@@ -34,22 +34,22 @@ UMercurySocketObject* UMercurySocketObject::Accept(
 
 bool UMercurySocketObject::Bind(const UMercuryInternetAddr* const& Addr)
 {
-	return Resource && Resource->Bind(*Addr->GetResource());
+	return HasResource() && Resource->Bind(*Addr->GetResource());
 }
 
 bool UMercurySocketObject::Close()
 {
-	return Resource && Resource->Close();
+	return HasResource() && Resource->Close();
 }
 
 bool UMercurySocketObject::Connect(const UMercuryInternetAddr* const& Addr)
 {
-	return Resource && Resource->Connect(*Addr->GetResource());
+	return HasResource() && Resource->Connect(*Addr->GetResource());
 }
 
 bool UMercurySocketObject::Listen(const int32 MaxBacklog)
 {
-	return Resource && Resource->Listen(MaxBacklog);
+	return HasResource() && Resource->Listen(MaxBacklog);
 }
 
 bool UMercurySocketObject::Recv(
@@ -60,29 +60,34 @@ bool UMercurySocketObject::Recv(
 )
 {
 	BytesRead = 0;
-	return Resource && Resource->Recv(Data, BufferSize, BytesRead, MercuryEnums::SocketReceive::Convert(Flags));
+	return HasResource() && Resource->Recv(
+		Data,
+		BufferSize,
+		BytesRead,
+		MercuryEnums::SocketReceive::Convert(Flags)
+	);
 }
 
 bool UMercurySocketObject::Send(const uint8* const& Data, const int32& Count, int32& BytesSent)
 {
 	BytesSent = 0;
-	return Resource && Resource->Send(Data, Count, BytesSent);
+	return HasResource() && Resource->Send(Data, Count, BytesSent);
 }
 
 bool UMercurySocketObject::Shutdown(const EMercurySocketShutdownMode Mode)
 {
-	return Resource && Resource->Shutdown(MercuryEnums::SocketShutdown::Convert(Mode));
+	return HasResource() && Resource->Shutdown(MercuryEnums::SocketShutdown::Convert(Mode));
 }
 
 bool UMercurySocketObject::Wait(const EMercurySocketWaitCondition Condition, const FTimespan& WaitTime)
 {
-	return Resource && Resource->Wait(MercuryEnums::SocketWait::Convert(Condition), WaitTime);
+	return HasResource() && Resource->Wait(MercuryEnums::SocketWait::Convert(Condition), WaitTime);
 }
 
 void UMercurySocketObject::GetAddress(UMercuryInternetAddr*& OutAddr) const
 {
 	OutAddr = nullptr;
-	if (!Resource)
+	if (!HasResource())
 		return;
 
 	OutAddr = UMercuryNetworkLibrary::CreateInternetAddr();
@@ -91,12 +96,12 @@ void UMercurySocketObject::GetAddress(UMercuryInternetAddr*& OutAddr) const
 
 FString UMercurySocketObject::GetDescription() const
 {
-	return Resource ? Resource->GetDescription() : TEXT("");
+	return HasResource() ? Resource->GetDescription() : TEXT("");
 }
 
 FName UMercurySocketObject::GetProtocol() const
 {
-	return Resource ? Resource->GetProtocol() : TEXT("");
+	return HasResource() ? Resource->GetProtocol() : TEXT("");
 }
 
 bool UMercurySocketObject::RecvFrom(
@@ -108,7 +113,7 @@ bool UMercurySocketObject::RecvFrom(
 )
 {
 	BytesRead = 0;
-	return Resource && Resource->RecvFrom(
+	return HasResource() && Resource->RecvFrom(
 		Data,
 		BufferSize,
 		BytesRead,
@@ -119,7 +124,7 @@ bool UMercurySocketObject::RecvFrom(
 
 bool UMercurySocketObject::RecvMulti(FRecvMulti& MultiData, const EMercurySocketReceiveFlags& Flags)
 {
-	return Resource && Resource->RecvMulti(MultiData, MercuryEnums::SocketReceive::Convert(Flags));
+	return HasResource() && Resource->RecvMulti(MultiData, MercuryEnums::SocketReceive::Convert(Flags));
 }
 
 bool UMercurySocketObject::SendTo(
@@ -130,54 +135,54 @@ bool UMercurySocketObject::SendTo(
 )
 {
 	BytesSent = 0;
-	return Resource && Resource->SendTo(Data, Count, BytesSent, *Destination->GetResource());
+	return HasResource() && Resource->SendTo(Data, Count, BytesSent, *Destination->GetResource());
 }
 
 bool UMercurySocketObject::SetBroadcast(const bool bAllowBroadcast)
 {
-	return Resource && Resource->SetBroadcast(bAllowBroadcast);
+	return HasResource() && Resource->SetBroadcast(bAllowBroadcast);
 }
 
 bool UMercurySocketObject::SetLinger(const bool bShouldLinger, const int32 Timeout)
 {
-	return Resource && Resource->SetLinger(bShouldLinger, Timeout);
+	return HasResource() && Resource->SetLinger(bShouldLinger, Timeout);
 }
 
 EMercurySocketConnectionState UMercurySocketObject::GetConnectionState() const
 {
-	return MercuryEnums::SocketConnection::Convert(Resource ? Resource->GetConnectionState() : SCS_NotConnected);
+	return MercuryEnums::SocketConnection::Convert(HasResource() ? Resource->GetConnectionState() : SCS_NotConnected);
 }
 
 bool UMercurySocketObject::GetPeerAddress(UMercuryInternetAddr*& OutAddr) const
 {
-	return Resource && Resource->GetPeerAddress(*OutAddr->GetResource());
+	return HasResource() && Resource->GetPeerAddress(*OutAddr->GetResource());
 }
 
 int32 UMercurySocketObject::GetPortNo() const
 {
-	return Resource ? Resource->GetPortNo() : 0;
+	return HasResource() ? Resource->GetPortNo() : 0;
 }
 
 EMercurySocketType UMercurySocketObject::GetSocketType() const
 {
-	return MercuryEnums::SocketType::Convert(Resource ? Resource->GetSocketType() : SOCKTYPE_Unknown);
+	return MercuryEnums::SocketType::Convert(HasResource() ? Resource->GetSocketType() : SOCKTYPE_Unknown);
 }
 
 bool UMercurySocketObject::HasPendingConnection(bool& bHasPendingConnection) const
 {
 	bHasPendingConnection = false;
-	return Resource && Resource->HasPendingConnection(bHasPendingConnection);
+	return HasResource() && Resource->HasPendingConnection(bHasPendingConnection);
 }
 
 bool UMercurySocketObject::HasPendingData(uint32& PendingDataSize) const
 {
 	PendingDataSize = 0u;
-	return Resource && Resource->HasPendingData(PendingDataSize);
+	return HasResource() && Resource->HasPendingData(PendingDataSize);
 }
 
 bool UMercurySocketObject::JoinMulticastGroup(const UMercuryInternetAddr* const& GroupAddress)
 {
-	return Resource && Resource->JoinMulticastGroup(*GroupAddress->GetResource());
+	return HasResource() && Resource->JoinMulticastGroup(*GroupAddress->GetResource());
 }
 
 bool UMercurySocketObject::JoinMulticastGroup(
@@ -185,7 +190,7 @@ bool UMercurySocketObject::JoinMulticastGroup(
 	const UMercuryInternetAddr* const& InterfaceAddress
 )
 {
-	return Resource && Resource->JoinMulticastGroup(
+	return HasResource() && Resource->JoinMulticastGroup(
 		*GroupAddress->GetResource(),
 		*InterfaceAddress->GetResource()
 	);
@@ -193,7 +198,7 @@ bool UMercurySocketObject::JoinMulticastGroup(
 
 bool UMercurySocketObject::LeaveMulticastGroup(const UMercuryInternetAddr* const& GroupAddress)
 {
-	return Resource && Resource->LeaveMulticastGroup(*GroupAddress->GetResource());
+	return HasResource() && Resource->LeaveMulticastGroup(*GroupAddress->GetResource());
 }
 
 bool UMercurySocketObject::LeaveMulticastGroup(
@@ -201,7 +206,7 @@ bool UMercurySocketObject::LeaveMulticastGroup(
 	const UMercuryInternetAddr* const& InterfaceAddress
 )
 {
-	return Resource && Resource->LeaveMulticastGroup(
+	return HasResource() && Resource->LeaveMulticastGroup(
 		*GroupAddress->GetResource(),
 		*InterfaceAddress->GetResource()
 	);
@@ -209,65 +214,65 @@ bool UMercurySocketObject::LeaveMulticastGroup(
 
 bool UMercurySocketObject::SetMulticastInterface(const UMercuryInternetAddr* const& InterfaceAddress)
 {
-	return Resource && Resource->SetMulticastInterface(*InterfaceAddress->GetResource());
+	return HasResource() && Resource->SetMulticastInterface(*InterfaceAddress->GetResource());
 }
 
 bool UMercurySocketObject::SetMulticastLoopback(const bool bLoopback)
 {
-	return Resource && Resource->SetMulticastLoopback(bLoopback);
+	return HasResource() && Resource->SetMulticastLoopback(bLoopback);
 }
 
 bool UMercurySocketObject::SetMulticastTtl(const uint8 TimeToLive)
 {
-	return Resource && Resource->SetMulticastTtl(TimeToLive);
+	return HasResource() && Resource->SetMulticastTtl(TimeToLive);
 }
 
 bool UMercurySocketObject::SetNoDelay(const bool bIsNoDelay)
 {
-	return Resource && Resource->SetNoDelay(bIsNoDelay);
+	return HasResource() && Resource->SetNoDelay(bIsNoDelay);
 }
 
 bool UMercurySocketObject::SetNonBlocking(const bool bIsNonBlocking)
 {
-	return Resource && Resource->SetNonBlocking(bIsNonBlocking);
+	return HasResource() && Resource->SetNonBlocking(bIsNonBlocking);
 }
 
 bool UMercurySocketObject::SetRecvErr(const bool bUseErrorQueue)
 {
-	return Resource && Resource->SetRecvErr(bUseErrorQueue);
+	return HasResource() && Resource->SetRecvErr(bUseErrorQueue);
 }
 
 bool UMercurySocketObject::SetRetrieveTimestamp(const bool bRetrieveTimestamp)
 {
-	return Resource && Resource->SetRetrieveTimestamp(bRetrieveTimestamp);
+	return HasResource() && Resource->SetRetrieveTimestamp(bRetrieveTimestamp);
 }
 
 bool UMercurySocketObject::SetReuseAddr(const bool bAllowReuse)
 {
-	return Resource && Resource->SetReuseAddr(bAllowReuse);
+	return HasResource() && Resource->SetReuseAddr(bAllowReuse);
 }
 
 bool UMercurySocketObject::SetIpPktInfo(const bool bEnable)
 {
-	return Resource && Resource->SetIpPktInfo(bEnable);
+	return HasResource() && Resource->SetIpPktInfo(bEnable);
 }
 
 bool UMercurySocketObject::SetReceiveBufferSize(const int32 Size, int32& NewSize)
 {
 	NewSize = 0;
-	return Resource && Resource->SetReceiveBufferSize(Size, NewSize);
+	return HasResource() && Resource->SetReceiveBufferSize(Size, NewSize);
 }
 
 bool UMercurySocketObject::SetSendBufferSize(const int32 Size, int32& NewSize)
 {
 	NewSize = 0;
-	return Resource && Resource->SetSendBufferSize(Size, NewSize);
+	return HasResource() && Resource->SetSendBufferSize(Size, NewSize);
 }
 
 bool UMercurySocketObject::WaitForPendingConnection(bool& bHasPendingConnection, const FTimespan& WaitTime) const
 {
 	bHasPendingConnection = false;
-	return Resource && Resource->WaitForPendingConnection(bHasPendingConnection, WaitTime);
+	return HasResource() && Resource->WaitForPendingConnection(bHasPendingConnection, WaitTime);
 }
 
 bool UMercurySocketObject::RecvFromWithPktInfo(
@@ -280,7 +285,7 @@ bool UMercurySocketObject::RecvFromWithPktInfo(
 )
 {
 	BytesRead = 0;
-	return Resource && Resource->RecvFromWithPktInfo(
+	return HasResource() && Resource->RecvFromWithPktInfo(
 		Data,
 		BufferSize,
 		BytesRead,

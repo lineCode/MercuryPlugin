@@ -18,7 +18,7 @@ bool UMercuryJsonObject::HasResource() const
 
 void UMercuryJsonObject::Duplicate(const UMercuryJsonObject* const& Source, UMercuryJsonObject* const& Destination)
 {
-	if (!Resource)
+	if (!HasResource())
 		return;
 
 	TSharedPtr<FJsonObject>&& ResourceDestination = nullptr;
@@ -29,7 +29,7 @@ void UMercuryJsonObject::Duplicate(const UMercuryJsonObject* const& Source, UMer
 TMap<FString, UMercuryJsonValue*> UMercuryJsonObject::GetValues() const
 {
 	TMap<FString, UMercuryJsonValue*>&& MercuryJsonValues = TMap<FString, UMercuryJsonValue*>();
-	if (!Resource)
+	if (!HasResource())
 		return MercuryJsonValues;
 	
 	for (const TTuple<FString, TSharedPtr<FJsonValue>>& JsonValues : Resource->Values)
@@ -40,7 +40,7 @@ TMap<FString, UMercuryJsonValue*> UMercuryJsonObject::GetValues() const
 }
 UMercuryJsonObject* UMercuryJsonObject::SetValues(const TMap<FString, UMercuryJsonValue*>& Value)
 {
-	if (!Resource)
+	if (!HasResource())
 		return nullptr;
 	
 	Resource->Values.Empty();
@@ -53,7 +53,7 @@ UMercuryJsonObject* UMercuryJsonObject::SetValues(const TMap<FString, UMercuryJs
 
 UMercuryJsonValue* UMercuryJsonObject::GetField(const FString& FieldName, const EMercuryJsonValueType ValueType) const
 {
-	if (!Resource)
+	if (!HasResource())
 		return nullptr;
 
 	TSharedPtr<FJsonValue>&& JsonValue = nullptr;
@@ -97,12 +97,12 @@ UMercuryJsonValue* UMercuryJsonObject::GetField(const FString& FieldName, const 
 
 bool UMercuryJsonObject::HasField(const FString& FieldName) const
 {
-	return Resource && Resource->HasField(FieldName);
+	return HasResource() && Resource->HasField(FieldName);
 }
 
 void UMercuryJsonObject::RemoveField(const FString& FieldName)
 {
-	if (!Resource)
+	if (!HasResource())
 		return;
 	
 	Resource->RemoveField(FieldName);
@@ -110,7 +110,7 @@ void UMercuryJsonObject::RemoveField(const FString& FieldName)
 
 void UMercuryJsonObject::SetField(const FString& FieldName, const UMercuryJsonValue* const& Value)
 {
-	if (!Resource)
+	if (!HasResource())
 		return;
 	
 	Resource->SetField(FieldName, Value->GetResource());
@@ -119,7 +119,7 @@ void UMercuryJsonObject::SetField(const FString& FieldName, const UMercuryJsonVa
 TArray<UMercuryJsonValue*> UMercuryJsonObject::GetArrayField(const FString& FieldName) const
 {
 	const TArray<TSharedPtr<FJsonValue>>&& ArrayField =
-		Resource ? Resource->GetArrayField(FieldName) : TArray<TSharedPtr<FJsonValue>>();
+		HasResource() ? Resource->GetArrayField(FieldName) : TArray<TSharedPtr<FJsonValue>>();
 
 	TArray<UMercuryJsonValue*>&& MercuryArrayField = TArray<UMercuryJsonValue*>();
 	for (const TSharedPtr<FJsonValue>& JsonValue : ArrayField)
@@ -132,32 +132,32 @@ TArray<UMercuryJsonValue*> UMercuryJsonObject::GetArrayField(const FString& Fiel
 
 bool UMercuryJsonObject::GetBoolField(const FString& FieldName) const
 {
-	return Resource && Resource->GetBoolField(FieldName);
+	return HasResource() && Resource->GetBoolField(FieldName);
 }
 
 int32 UMercuryJsonObject::GetIntegerField(const FString& FieldName) const
 {
-	return Resource ? Resource->GetIntegerField(FieldName) : 0;
+	return HasResource() ? Resource->GetIntegerField(FieldName) : 0;
 }
 
 double UMercuryJsonObject::GetNumberField(const FString& FieldName) const
 {
-	return Resource ? Resource->GetNumberField(FieldName) : 0.0;
+	return HasResource() ? Resource->GetNumberField(FieldName) : 0.0;
 }
 
 UMercuryJsonObject* UMercuryJsonObject::GetObjectField(const FString& FieldName) const
 {
-	return Resource ? UMercuryJsonLibrary::CreateJsonObject(Resource->GetObjectField(FieldName)) : nullptr;
+	return HasResource() ? UMercuryJsonLibrary::CreateJsonObject(Resource->GetObjectField(FieldName)) : nullptr;
 }
 
 FString UMercuryJsonObject::GetStringField(const FString& FieldName) const
 {
-	return Resource ? Resource->GetStringField(FieldName) : TEXT("");
+	return HasResource() ? Resource->GetStringField(FieldName) : TEXT("");
 }
 
 bool UMercuryJsonObject::HasTypedField(const FString& FieldName, const EMercuryJsonValueType ValueType) const
 {
-	if (!Resource)
+	if (!HasResource())
 		return false;
 
 	switch (ValueType)
@@ -191,7 +191,7 @@ bool UMercuryJsonObject::HasTypedField(const FString& FieldName, const EMercuryJ
 
 void UMercuryJsonObject::SetArrayField(const FString& FieldName, const TArray<UMercuryJsonValue*>& Array)
 {
-	if (!Resource)
+	if (!HasResource())
 		return;
 
 	TArray<TSharedPtr<FJsonValue>>&& JsonValues = TArray<TSharedPtr<FJsonValue>>();
@@ -205,7 +205,7 @@ void UMercuryJsonObject::SetArrayField(const FString& FieldName, const TArray<UM
 
 void UMercuryJsonObject::SetBoolField(const FString& FieldName, const bool bInValue)
 {
-	if (!Resource)
+	if (!HasResource())
 		return;
 	
 	Resource->SetBoolField(FieldName, bInValue);
@@ -213,7 +213,7 @@ void UMercuryJsonObject::SetBoolField(const FString& FieldName, const bool bInVa
 
 void UMercuryJsonObject::SetNumberField(const FString& FieldName, const double Number)
 {
-	if (!Resource)
+	if (!HasResource())
 		return;
 
 	Resource->SetNumberField(FieldName, Number);
@@ -221,7 +221,7 @@ void UMercuryJsonObject::SetNumberField(const FString& FieldName, const double N
 
 void UMercuryJsonObject::SetObjectField(const FString& FieldName, const UMercuryJsonObject* const& JsonObject)
 {
-	if (!Resource)
+	if (!HasResource())
 		return;
 
 	Resource->SetObjectField(FieldName, JsonObject->GetResource());
@@ -229,7 +229,7 @@ void UMercuryJsonObject::SetObjectField(const FString& FieldName, const UMercury
 
 void UMercuryJsonObject::SetStringField(const FString& FieldName, const FString& StringValue)
 {
-	if (!Resource)
+	if (!HasResource())
 		return;
 
 	Resource->SetStringField(FieldName, StringValue);
@@ -240,7 +240,7 @@ bool UMercuryJsonObject::TryGetArrayField(const FString& FieldName, TArray<UMerc
 	OutArray.Empty();
 
 	const TArray<TSharedPtr<FJsonValue>>*&& ArrayField = nullptr;
-	const bool&& bGotArray = Resource && Resource->TryGetArrayField(FieldName, ArrayField);
+	const bool&& bGotArray = HasResource() && Resource->TryGetArrayField(FieldName, ArrayField);
 
 	for (const TSharedPtr<FJsonValue>& JsonValue : ArrayField ? *ArrayField: TArray<TSharedPtr<FJsonValue>>())
 	{
@@ -252,19 +252,19 @@ bool UMercuryJsonObject::TryGetArrayField(const FString& FieldName, TArray<UMerc
 bool UMercuryJsonObject::TryGetBoolField(const FString& FieldName, bool& OutBool) const
 {
 	OutBool = false;
-	return Resource && Resource->TryGetBoolField(FieldName, OutBool);
+	return HasResource() && Resource->TryGetBoolField(FieldName, OutBool);
 }
 
 bool UMercuryJsonObject::TryGetNumberField(const FString& FieldName, double& OutNumber) const
 {
 	OutNumber = 0.0;
-	return Resource && Resource->TryGetNumberField(FieldName, OutNumber);
+	return HasResource() && Resource->TryGetNumberField(FieldName, OutNumber);
 }
 
 bool UMercuryJsonObject::TryGetObjectField(const FString& FieldName, UMercuryJsonObject*& OutObject) const
 {
 	const TSharedPtr<FJsonObject>*&& ObjectField = nullptr;
-	const bool&& bGotObject = Resource ? Resource->TryGetObjectField(FieldName, ObjectField) : false;
+	const bool&& bGotObject = HasResource() ? Resource->TryGetObjectField(FieldName, ObjectField) : false;
 
 	OutObject->SetResource(ObjectField ? *ObjectField : nullptr);
 	return bGotObject;
@@ -273,17 +273,17 @@ bool UMercuryJsonObject::TryGetObjectField(const FString& FieldName, UMercuryJso
 bool UMercuryJsonObject::TryGetStringField(const FString& FieldName, FString& OutString) const
 {
 	OutString = TEXT("");
-	return Resource && Resource->TryGetStringField(FieldName, OutString);
+	return HasResource() && Resource->TryGetStringField(FieldName, OutString);
 }
 
 bool UMercuryJsonObject::TryGetEnumArrayField(const FString& FieldName, TArray<int32>& OutArray) const
 {
 	OutArray.Empty();
-	return Resource && Resource->TryGetEnumArrayField(FieldName, OutArray);
+	return HasResource() && Resource->TryGetEnumArrayField(FieldName, OutArray);
 }
 
 bool UMercuryJsonObject::TryGetStringArrayField(const FString& FieldName, TArray<FString>& OutArray) const
 {
 	OutArray.Empty();
-	return Resource && Resource->TryGetStringArrayField(FieldName, OutArray);
+	return HasResource() && Resource->TryGetStringArrayField(FieldName, OutArray);
 }

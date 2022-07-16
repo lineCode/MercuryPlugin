@@ -20,12 +20,12 @@ bool UMercuryTcpSocketBuilder::HasResource() const
 
 UMercurySocketObject* UMercuryTcpSocketBuilder::Build()
 {
-	return Resource ? UMercuryProtocolsLibrary::CreateSocketObject(Resource->Build()) : nullptr;
+	return HasResource() ? UMercuryProtocolsLibrary::CreateSocketObject(Resource->Build()) : nullptr;
 }
 
 UMercuryTcpSocketBuilder* UMercuryTcpSocketBuilder::Lingering(const int32 Timeout)
 {
-	if (!Resource)
+	if (!HasResource())
 		return nullptr;
 	
 	*Resource = Resource->Lingering(Timeout);
@@ -34,7 +34,7 @@ UMercuryTcpSocketBuilder* UMercuryTcpSocketBuilder::Lingering(const int32 Timeou
 
 UMercuryTcpSocketBuilder* UMercuryTcpSocketBuilder::Listening(const int32 MaxBacklog)
 {
-	if (!Resource)
+	if (!HasResource())
 		return nullptr;
 	
 	*Resource = Resource->Listening(MaxBacklog);
@@ -43,7 +43,7 @@ UMercuryTcpSocketBuilder* UMercuryTcpSocketBuilder::Listening(const int32 MaxBac
 
 UMercuryTcpSocketBuilder* UMercuryTcpSocketBuilder::AsBlocking()
 {
-	if (!Resource)
+	if (!HasResource())
 		return nullptr;
 
 	*Resource = Resource->AsBlocking();
@@ -52,7 +52,7 @@ UMercuryTcpSocketBuilder* UMercuryTcpSocketBuilder::AsBlocking()
 
 UMercuryTcpSocketBuilder* UMercuryTcpSocketBuilder::AsReusable()
 {
-	if (!Resource)
+	if (!HasResource())
 		return nullptr;
 
 	*Resource = Resource->AsReusable();
@@ -61,7 +61,7 @@ UMercuryTcpSocketBuilder* UMercuryTcpSocketBuilder::AsReusable()
 
 UMercuryTcpSocketBuilder* UMercuryTcpSocketBuilder::AsReusable(const bool& bInReusable)
 {
-	if (!Resource)
+	if (!HasResource())
 		return nullptr;
 
 	*Resource = Resource->AsReusable(bInReusable);
@@ -70,7 +70,7 @@ UMercuryTcpSocketBuilder* UMercuryTcpSocketBuilder::AsReusable(const bool& bInRe
 
 UMercuryTcpSocketBuilder* UMercuryTcpSocketBuilder::AsNonBlocking()
 {
-	if (!Resource)
+	if (!HasResource())
 		return nullptr;
 
 	*Resource = Resource->AsNonBlocking();
@@ -79,7 +79,7 @@ UMercuryTcpSocketBuilder* UMercuryTcpSocketBuilder::AsNonBlocking()
 
 UMercuryTcpSocketBuilder* UMercuryTcpSocketBuilder::BoundToAddress(const UMercuryNetworkAddress* const& Address)
 {
-	if (!Resource)
+	if (!HasResource())
 		return nullptr;
 
 	*Resource = Resource->BoundToAddress(*Address->GetResource());
@@ -88,7 +88,7 @@ UMercuryTcpSocketBuilder* UMercuryTcpSocketBuilder::BoundToAddress(const UMercur
 
 UMercuryTcpSocketBuilder* UMercuryTcpSocketBuilder::BoundToEndpoint(const UMercuryNetworkEndpoint* const& Endpoint)
 {
-	if (!Resource)
+	if (!HasResource())
 		return nullptr;
 
 	*Resource = Resource->BoundToEndpoint(*Endpoint->GetResource());
@@ -97,7 +97,7 @@ UMercuryTcpSocketBuilder* UMercuryTcpSocketBuilder::BoundToEndpoint(const UMercu
 
 UMercuryTcpSocketBuilder* UMercuryTcpSocketBuilder::BoundToPort(const int32 Port)
 {
-	if (!Resource)
+	if (!HasResource())
 		return nullptr;
 
 	*Resource = Resource->BoundToPort(Port);
@@ -106,7 +106,7 @@ UMercuryTcpSocketBuilder* UMercuryTcpSocketBuilder::BoundToPort(const int32 Port
 
 UMercuryTcpSocketBuilder* UMercuryTcpSocketBuilder::WithReceiveBufferSize(const int32 SizeInBytes)
 {
-	if (!Resource)
+	if (!HasResource())
 		return nullptr;
 
 	*Resource = Resource->WithReceiveBufferSize(SizeInBytes);
@@ -115,7 +115,7 @@ UMercuryTcpSocketBuilder* UMercuryTcpSocketBuilder::WithReceiveBufferSize(const 
 
 UMercuryTcpSocketBuilder* UMercuryTcpSocketBuilder::WithSendBufferSize(const int32 SizeInBytes)
 {
-	if (!Resource)
+	if (!HasResource())
 		return nullptr;
 
 	*Resource = Resource->WithSendBufferSize(SizeInBytes);
