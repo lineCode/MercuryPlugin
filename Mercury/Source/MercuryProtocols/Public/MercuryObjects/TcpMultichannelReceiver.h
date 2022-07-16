@@ -3,8 +3,8 @@
 #pragma once
 
 #include "MercuryDelegates/TcpMultichannelReceiverReceive.h"
+#include "MercuryResourceOwner.h"
 #include "MultichannelTcpReceiver.h"
-#include "ResourceOwner.h"
 
 #include "TcpMultichannelReceiver.generated.h"
 

@@ -3,7 +3,7 @@
 #pragma once
 
 #include "MercuryEnums/NetworkSubnetClass.h"
-#include "ResourceOwner.h"
+#include "MercuryResourceOwner.h"
 
 #include "NetworkMask.generated.h"
 

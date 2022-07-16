@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "ResourceOwner.h"
+#include "MercuryResourceOwner.h"
 
 #include "TcpSocketBuilder.generated.h"
 

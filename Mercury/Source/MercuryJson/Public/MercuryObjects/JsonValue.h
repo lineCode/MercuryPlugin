@@ -3,7 +3,7 @@
 #pragma once
 
 #include "MercuryEnums/JsonValueType.h"
-#include "ResourceOwner.h"
+#include "MercuryResourceOwner.h"
 
 #include "JsonValue.generated.h"
 

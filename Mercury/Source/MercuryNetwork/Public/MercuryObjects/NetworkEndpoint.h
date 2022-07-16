@@ -3,7 +3,7 @@
 #pragma once
 
 #include "Interfaces/IPv4/IPv4Endpoint.h"
-#include "ResourceOwner.h"
+#include "MercuryResourceOwner.h"
 
 #include "NetworkEndpoint.generated.h"
 

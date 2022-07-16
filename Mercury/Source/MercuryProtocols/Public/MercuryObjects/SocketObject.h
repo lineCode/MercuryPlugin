@@ -7,7 +7,7 @@
 #include "MercuryEnums/SocketShutdownMode.h"
 #include "MercuryEnums/SocketType.h"
 #include "MercuryEnums/SocketWaitCondition.h"
-#include "ResourceOwner.h"
+#include "MercuryResourceOwner.h"
 
 #include "SocketObject.generated.h"
 

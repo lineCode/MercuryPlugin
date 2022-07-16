@@ -7,7 +7,7 @@
 #include "MercuryDelegates/HttpRequestProgress.h"
 #include "MercuryDelegates/HttpRequestWillRetry.h"
 #include "MercuryEnums/HttpRequestStatus.h"
-#include "ResourceOwner.h"
+#include "MercuryResourceOwner.h"
 
 #include "HttpRequest.generated.h"
 

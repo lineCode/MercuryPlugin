@@ -4,7 +4,7 @@
 
 #include "Interfaces/IPv4/IPv4Endpoint.h"
 #include "MercuryDelegates/TcpListenerConnectionAccepted.h"
-#include "ResourceOwner.h"
+#include "MercuryResourceOwner.h"
 
 #include "TcpListener.generated.h"
 

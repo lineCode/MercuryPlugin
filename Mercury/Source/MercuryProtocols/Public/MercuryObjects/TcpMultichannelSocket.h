@@ -2,8 +2,8 @@
 
 #pragma once
 
+#include "MercuryResourceOwner.h"
 #include "MultichannelTcpSocket.h"
-#include "ResourceOwner.h"
 
 #include "TcpMultichannelSocket.generated.h"
 

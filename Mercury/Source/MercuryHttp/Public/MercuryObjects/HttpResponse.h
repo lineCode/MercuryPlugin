@@ -3,7 +3,7 @@
 #pragma once
 
 #include "Interfaces/IHttpResponse.h"
-#include "ResourceOwner.h"
+#include "MercuryResourceOwner.h"
 
 #include "HttpResponse.generated.h"
 
