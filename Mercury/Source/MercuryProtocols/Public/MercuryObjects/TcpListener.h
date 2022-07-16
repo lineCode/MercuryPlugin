@@ -3,7 +3,7 @@
 #pragma once
 
 #include "Interfaces/IPv4/IPv4Endpoint.h"
-#include "MercuryDelegates/SocketConnectionAccepted.h"
+#include "MercuryDelegates/TcpListenerConnectionAccepted.h"
 #include "ResourceOwner.h"
 
 #include "TcpListener.generated.h"

@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "SocketConnectionAccepted.generated.h"
+#include "TcpListenerConnectionAccepted.generated.h"
 
 class UMercuryNetworkEndpoint;
 class UMercurySocketObject;

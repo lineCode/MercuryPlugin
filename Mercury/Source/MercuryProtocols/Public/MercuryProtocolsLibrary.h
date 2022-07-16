@@ -4,6 +4,7 @@
 
 #include "MercuryObjects/SocketObject.h"
 #include "MercuryObjects/TcpListener.h"
+#include "MercuryObjects/TcpMultichannelReceiver.h"
 #include "MercuryObjects/TcpMultichannelSocket.h"
 #include "MercuryObjects/TcpSocketBuilder.h"
 
@@ -55,6 +56,21 @@ public:
 		const UMercuryNetworkEndpoint* const& LocalEndpoint,
 		const FTimespan& InSleepTime = FTimespan::FromSeconds(1.0),
 		const bool& bInReusable = true
+	);
+
+	UFUNCTION(BlueprintPure, DisplayName = "Create TCP Multichannel Receiver", Category = "Mercury|TCP", meta = (
+		Keywords = "Create TCP Multichannel Receiver In Socket"
+	))
+	static UMercuryTcpMultichannelReceiver* CreateTcpMultichannelReceiver(
+		const UMercurySocketObject* const& InSocket
+	);
+	static UMercuryTcpMultichannelReceiver* CreateTcpMultichannelReceiver(
+		FMultichannelTcpReceiver* const& Resource,
+		const UMercurySocketObject* const& InSocket
+	);
+	static UMercuryTcpMultichannelReceiver* CreateTcpMultichannelReceiver(
+		const TSharedPtr<FMultichannelTcpReceiver>& Resource,
+		const UMercurySocketObject* const& InSocket
 	);
 
 	UFUNCTION(BlueprintPure, DisplayName = "Create TCP Multichannel Socket", Category = "Mercury|TCP", meta = (
