@@ -121,6 +121,36 @@ UMercuryTcpMultichannelReceiver* UMercuryProtocolsLibrary::CreateTcpMultichannel
 	return MultichannelReceiver;
 }
 
+UMercuryTcpMultichannelSender* UMercuryProtocolsLibrary::CreateTcpMultichannelSender(
+	const UMercurySocketObject* const& InSocket
+)
+{
+	return CreateTcpMultichannelSender(nullptr, InSocket);
+}
+UMercuryTcpMultichannelSender* UMercuryProtocolsLibrary::CreateTcpMultichannelSender(
+	FMultichannelTcpSender* const& Resource,
+	const UMercurySocketObject* const& InSocket
+)
+{
+	return CreateTcpMultichannelSender(MakeShareable(Resource), InSocket);
+}
+UMercuryTcpMultichannelSender* UMercuryProtocolsLibrary::CreateTcpMultichannelSender(
+	const TSharedPtr<FMultichannelTcpSender>& Resource,
+	const UMercurySocketObject* const& InSocket
+)
+{
+	if (!InSocket)
+		return nullptr;
+
+	FSocket* const&& Socket = InSocket->GetResource().Get();
+	if (!Socket)
+		return nullptr;
+
+	UMercuryTcpMultichannelSender* const&& MultichannelSender = NewObject<UMercuryTcpMultichannelSender>();
+	MultichannelSender->SetResource(Resource ? Resource : MultichannelSender->CreateResource(Socket));
+	return MultichannelSender;
+}
+
 UMercuryTcpMultichannelSocket* UMercuryProtocolsLibrary::CreateTcpMultichannelSocket(
 	const UMercurySocketObject* const& InSocket,
 	const int32 InBandwidthLatencyProduct

@@ -5,6 +5,7 @@
 #include "MercuryObjects/SocketObject.h"
 #include "MercuryObjects/TcpListener.h"
 #include "MercuryObjects/TcpMultichannelReceiver.h"
+#include "MercuryObjects/TcpMultichannelSender.h"
 #include "MercuryObjects/TcpMultichannelSocket.h"
 #include "MercuryObjects/TcpSocketBuilder.h"
 
@@ -70,6 +71,21 @@ public:
 	);
 	static UMercuryTcpMultichannelReceiver* CreateTcpMultichannelReceiver(
 		const TSharedPtr<FMultichannelTcpReceiver>& Resource,
+		const UMercurySocketObject* const& InSocket
+	);
+
+	UFUNCTION(BlueprintPure, DisplayName = "Create TCP Multichannel Sender", Category = "Mercury|TCP", meta = (
+		Keywords = "Create TCP Multichannel Sender In Socket"
+	))
+	static UMercuryTcpMultichannelSender* CreateTcpMultichannelSender(
+		const UMercurySocketObject* const& InSocket
+	);
+	static UMercuryTcpMultichannelSender* CreateTcpMultichannelSender(
+		FMultichannelTcpSender* const& Resource,
+		const UMercurySocketObject* const& InSocket
+	);
+	static UMercuryTcpMultichannelSender* CreateTcpMultichannelSender(
+		const TSharedPtr<FMultichannelTcpSender>& Resource,
 		const UMercurySocketObject* const& InSocket
 	);
 

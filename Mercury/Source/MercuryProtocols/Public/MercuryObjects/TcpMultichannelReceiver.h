@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "MercuryDelegates/TcpMultichannelReceiverReceive.h"
+#include "MercuryDelegates/TcpMultichannelReceive.h"
 #include "MercuryResourceOwner.h"
 #include "MultichannelTcpReceiver.h"
 
@@ -18,7 +18,7 @@ class MERCURYPROTOCOLS_API UMercuryTcpMultichannelReceiver
 	UPROPERTY(BlueprintReadOnly, DisplayName = "Receive Event", Category = "TCP|Multichannel|Receive", meta = (
 		AllowPrivateAccess = "true"
 	))
-	FMercuryTcpMultichannelReceiverReceiveDelegate OnMercuryTcpMultichannelReceiverReceiveDelegate;
+	FMercuryTcpMultichannelReceiveDelegate OnMercuryTcpMultichannelReceiveDelegate;
 
 	UPROPERTY(BlueprintReadOnly, DisplayName = "Receive", Category = "TCP|Multichannel|Receive", meta = (
 		AllowPrivateAccess = "true"
@@ -66,7 +66,7 @@ protected:
 		Keywords = "On Set Receive Delegate Event"
 	))
 	virtual UMercuryTcpMultichannelReceiver* K2_SetReceiveEvent(
-		const FMercuryTcpMultichannelReceiverReceiveDelegate& Event
+		const FMercuryTcpMultichannelReceiveDelegate& Event
 	);
 	
 	UFUNCTION(BlueprintCallable, DisplayName = "Run", Category = "TCP|Multichannel|Receive", meta = (
@@ -75,13 +75,13 @@ protected:
 	virtual int32 K2_Run();
 
 public:
-	FORCEINLINE const FMercuryTcpMultichannelReceiverReceiveDelegate& OnReceive() const
+	FORCEINLINE const FMercuryTcpMultichannelReceiveDelegate& OnReceive() const
 	{
-		return OnMercuryTcpMultichannelReceiverReceiveDelegate;
+		return OnMercuryTcpMultichannelReceiveDelegate;
 	}
-	FORCEINLINE FMercuryTcpMultichannelReceiverReceiveDelegate& OnReceive()
+	FORCEINLINE FMercuryTcpMultichannelReceiveDelegate& OnReceive()
 	{
-		return OnMercuryTcpMultichannelReceiverReceiveDelegate;
+		return OnMercuryTcpMultichannelReceiveDelegate;
 	}
 
 	FORCEINLINE bool IsReceiveDone() const { return bReceiveDone; }

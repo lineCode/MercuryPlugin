@@ -97,18 +97,20 @@ FSingleThreadRunnable* UMercuryTcpListener::GetSingleThreadInterface()
 bool UMercuryTcpListener::BindConnectionAccepted(FSocket* const Socket, const FIPv4Endpoint& Endpoint)
 {
 	bConnectionAcceptedDone = false;
+
+	bool&& bSuccess = false;
 	if (!OnMercuryTcpListenerConnectionAcceptedDelegate.IsBound())
 	{
 		bConnectionAcceptedDone = true;
-		return false;
+		return bSuccess;
 	}
 
-	OnMercuryTcpListenerConnectionAcceptedDelegate.Execute(
+	bSuccess = OnMercuryTcpListenerConnectionAcceptedDelegate.Execute(
 		UMercuryProtocolsLibrary::CreateSocketObject(Socket),
 		UMercuryNetworkLibrary::CreateNetworkEndpoint(new FIPv4Endpoint(Endpoint))
 	);
 	bConnectionAcceptedDone = true;
-	return true;
+	return bSuccess;
 }
 
 UMercuryTcpListener* UMercuryTcpListener::K2_SetConnectionAcceptedEvent(

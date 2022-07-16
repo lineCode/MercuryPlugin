@@ -66,24 +66,24 @@ void UMercuryTcpMultichannelReceiver::BindReceive(
 )
 {
 	bReceiveDone = false;
-	if (!OnMercuryTcpMultichannelReceiverReceiveDelegate.IsBound())
+	if (!OnMercuryTcpMultichannelReceiveDelegate.IsBound())
 	{
 		bReceiveDone = true;
 		return;
 	}
 
-	OnMercuryTcpMultichannelReceiverReceiveDelegate.Execute(Data, BytesReceived, bNeedsByteSwap);
+	OnMercuryTcpMultichannelReceiveDelegate.Execute(Data, BytesReceived, bNeedsByteSwap);
 	bReceiveDone = true;
 }
 
 UMercuryTcpMultichannelReceiver* UMercuryTcpMultichannelReceiver::K2_SetReceiveEvent(
-	const FMercuryTcpMultichannelReceiverReceiveDelegate& Event
+	const FMercuryTcpMultichannelReceiveDelegate& Event
 )
 {
 	if (!HasResource())
 		return nullptr;
 
-	OnMercuryTcpMultichannelReceiverReceiveDelegate = Event;
+	OnMercuryTcpMultichannelReceiveDelegate = Event;
 	return this;
 }
 
