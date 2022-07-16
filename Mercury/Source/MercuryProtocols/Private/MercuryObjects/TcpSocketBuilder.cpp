@@ -58,7 +58,6 @@ UMercuryTcpSocketBuilder* UMercuryTcpSocketBuilder::AsReusable()
 	*Resource = Resource->AsReusable();
 	return this;
 }
-
 UMercuryTcpSocketBuilder* UMercuryTcpSocketBuilder::AsReusable(const bool& bInReusable)
 {
 	if (!HasResource())

@@ -8,6 +8,7 @@
 #include "MercuryObjects/TcpMultichannelSender.h"
 #include "MercuryObjects/TcpMultichannelSocket.h"
 #include "MercuryObjects/TcpSocketBuilder.h"
+#include "MercuryObjects/UdpSocketBuilder.h"
 
 #include "MercuryProtocolsLibrary.generated.h"
 
@@ -110,11 +111,21 @@ public:
 	UFUNCTION(BlueprintPure, DisplayName = "Create TCP Socket Builder", Category = "Mercury|TCP", meta = (
 		Keywords = "Create TCP Socket Builder In Description"
 	))
-	static UMercuryTcpSocketBuilder* CreateTcpSocketBuilder(const FString& InDescription = TEXT("TCP Socket"));
+	static UMercuryTcpSocketBuilder* CreateTcpSocketBuilder(const FString& InDescription = TEXT("TCP_Socket"));
 	static UMercuryTcpSocketBuilder* CreateTcpSocketBuilder(FTcpSocketBuilder* const& Resource);
 	static UMercuryTcpSocketBuilder* CreateTcpSocketBuilder(
 		const TSharedPtr<FTcpSocketBuilder>& Resource,
-		const FString& InDescription = TEXT("TCP Socket")
+		const FString& InDescription = TEXT("TCP_Socket")
+	);
+
+	UFUNCTION(BlueprintPure, DisplayName = "Create UDP Socket Builder", Category = "Mercury|UDP", meta = (
+		Keywords = "Create UDP Socket Builder In Description"
+	))
+	static UMercuryUdpSocketBuilder* CreateUdpSocketBuilder(const FString& InDescription = TEXT("UDP_Socket"));
+	static UMercuryUdpSocketBuilder* CreateUdpSocketBuilder(FUdpSocketBuilder* const& Resource);
+	static UMercuryUdpSocketBuilder* CreateUdpSocketBuilder(
+		const TSharedPtr<FUdpSocketBuilder>& Resource,
+		const FString& InDescription = TEXT("UDP_Socket")
 	);
 
 protected:

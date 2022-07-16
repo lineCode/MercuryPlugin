@@ -204,6 +204,24 @@ UMercuryTcpSocketBuilder* UMercuryProtocolsLibrary::CreateTcpSocketBuilder(
 	return TcpBuilder;
 }
 
+UMercuryUdpSocketBuilder* UMercuryProtocolsLibrary::CreateUdpSocketBuilder(const FString& InDescription)
+{
+	return CreateUdpSocketBuilder(nullptr, InDescription);
+}
+UMercuryUdpSocketBuilder* UMercuryProtocolsLibrary::CreateUdpSocketBuilder(FUdpSocketBuilder* const& Resource)
+{
+	return CreateUdpSocketBuilder(MakeShareable(Resource));
+}
+UMercuryUdpSocketBuilder* UMercuryProtocolsLibrary::CreateUdpSocketBuilder(
+	const TSharedPtr<FUdpSocketBuilder>& Resource,
+	const FString& InDescription
+)
+{
+	UMercuryUdpSocketBuilder* const&& UdpBuilder = NewObject<UMercuryUdpSocketBuilder>();
+	UdpBuilder->SetResource(Resource ? Resource : UdpBuilder->CreateResource(InDescription));
+	return UdpBuilder;
+}
+
 UMercuryTcpListener* UMercuryProtocolsLibrary::K2_CreateTcpListenerWithEndpoint(
 	const UMercuryNetworkEndpoint* const& LocalEndpoint,
 	const FTimespan& InSleepTime,
