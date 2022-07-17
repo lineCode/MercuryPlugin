@@ -222,6 +222,44 @@ UMercuryUdpSocketBuilder* UMercuryProtocolsLibrary::CreateUdpSocketBuilder(
 	return UdpBuilder;
 }
 
+UMercuryUdpSocketReceiver* UMercuryProtocolsLibrary::CreateUdpSocketReceiver(
+	const UMercurySocketObject* const& InSocket,
+	const FTimespan& InWaitTime,
+	const FString& InThreadName
+)
+{
+	return CreateUdpSocketReceiver(nullptr, InSocket, InWaitTime, InThreadName);
+}
+UMercuryUdpSocketReceiver* UMercuryProtocolsLibrary::CreateUdpSocketReceiver(
+	FUdpSocketReceiver* const& Resource,
+	const UMercurySocketObject* const& InSocket,
+	const FTimespan& InWaitTime,
+	const FString& InThreadName
+)
+{
+	return CreateUdpSocketReceiver(MakeShareable(Resource), InSocket, InWaitTime, InThreadName);
+}
+UMercuryUdpSocketReceiver* UMercuryProtocolsLibrary::CreateUdpSocketReceiver(
+	const TSharedPtr<FUdpSocketReceiver>& Resource,
+	const UMercurySocketObject* const& InSocket,
+	const FTimespan& InWaitTime,
+	const FString& InThreadName
+)
+{
+	if (!InSocket)
+		return nullptr;
+
+	FSocket* const&& Socket = InSocket->GetResource().Get();
+	if (!Socket)
+		return nullptr;
+	
+	UMercuryUdpSocketReceiver* const&& UdpReceiver = NewObject<UMercuryUdpSocketReceiver>();
+	UdpReceiver->SetResource(
+		Resource ? Resource : UdpReceiver->CreateResource({ Socket, InWaitTime, *InThreadName })
+	);
+	return UdpReceiver;
+}
+
 UMercuryTcpListener* UMercuryProtocolsLibrary::K2_CreateTcpListenerWithEndpoint(
 	const UMercuryNetworkEndpoint* const& LocalEndpoint,
 	const FTimespan& InSleepTime,

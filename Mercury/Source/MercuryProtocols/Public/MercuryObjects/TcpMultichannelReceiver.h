@@ -15,12 +15,12 @@ class MERCURYPROTOCOLS_API UMercuryTcpMultichannelReceiver
 {
 	GENERATED_BODY()
 
-	UPROPERTY(BlueprintReadOnly, DisplayName = "Receive Event", Category = "TCP|Multichannel|Receive", meta = (
+	UPROPERTY(BlueprintReadOnly, DisplayName = "Receive Event", Category = "TCP|Multichannel|Receiver", meta = (
 		AllowPrivateAccess = "true"
 	))
 	FMercuryTcpMultichannelReceiveDelegate OnMercuryTcpMultichannelReceiveDelegate;
 
-	UPROPERTY(BlueprintReadOnly, DisplayName = "Receive", Category = "TCP|Multichannel|Receive", meta = (
+	UPROPERTY(BlueprintReadOnly, DisplayName = "Receive", Category = "TCP|Multichannel|Receiver", meta = (
 		AllowPrivateAccess = "true"
 	))
 	uint8 bReceiveDone : 1;
@@ -62,15 +62,15 @@ public:
 protected:
 	virtual void BindReceive(const TArray<uint8>& Data, uint32 BytesReceived, bool bNeedsByteSwap);
 	
-	UFUNCTION(BlueprintCallable, DisplayName = "Set Receive Event", Category = "TCP|Multichannel|Receive", meta = (
+	UFUNCTION(BlueprintCallable, DisplayName = "Set Receive Event", Category = "TCP|Multichannel|Receiver", meta = (
 		Keywords = "On Set Receive Delegate Event"
 	))
 	virtual UMercuryTcpMultichannelReceiver* K2_SetReceiveEvent(
 		const FMercuryTcpMultichannelReceiveDelegate& Event
 	);
 	
-	UFUNCTION(BlueprintCallable, DisplayName = "Run", Category = "TCP|Multichannel|Receive", meta = (
-		Keywords = "Protocols TCP Multichannel Receive Run Activate Execute Thread"
+	UFUNCTION(BlueprintCallable, DisplayName = "Run", Category = "TCP|Multichannel|Receiver", meta = (
+		Keywords = "Protocols TCP Multichannel Receiver Run Activate Execute Thread"
 	))
 	virtual int32 K2_Run();
 

@@ -9,6 +9,7 @@
 #include "MercuryObjects/TcpMultichannelSocket.h"
 #include "MercuryObjects/TcpSocketBuilder.h"
 #include "MercuryObjects/UdpSocketBuilder.h"
+#include "MercuryObjects/UdpSocketReceiver.h"
 
 #include "MercuryProtocolsLibrary.generated.h"
 
@@ -126,6 +127,27 @@ public:
 	static UMercuryUdpSocketBuilder* CreateUdpSocketBuilder(
 		const TSharedPtr<FUdpSocketBuilder>& Resource,
 		const FString& InDescription = TEXT("UDP_Socket")
+	);
+
+	UFUNCTION(BlueprintPure, DisplayName = "Create UDP Socket Receiver", Category = "Mercury|UDP", meta = (
+		Keywords = "Create UDP Socket Receiver In Socket Wait Time Thread Name"
+	))
+	static UMercuryUdpSocketReceiver* CreateUdpSocketReceiver(
+		const UMercurySocketObject* const& InSocket,
+		const FTimespan& InWaitTime,
+		const FString& InThreadName
+	);
+	static UMercuryUdpSocketReceiver* CreateUdpSocketReceiver(
+		FUdpSocketReceiver* const& Resource,
+		const UMercurySocketObject* const& InSocket,
+		const FTimespan& InWaitTime,
+		const FString& InThreadName
+	);
+	static UMercuryUdpSocketReceiver* CreateUdpSocketReceiver(
+		const TSharedPtr<FUdpSocketReceiver>& Resource,
+		const UMercurySocketObject* const& InSocket,
+		const FTimespan& InWaitTime,
+		const FString& InThreadName
 	);
 
 protected:
