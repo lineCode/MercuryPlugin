@@ -212,7 +212,7 @@ bool UMercurySocket::LeaveMulticastGroup(
 bool UMercurySocket::SetMulticastInterface(const UMercuryInternetAddr* const& InterfaceAddress)
 {
 	const FInternetAddr* const&& InternetResource = InterfaceAddress->GetResource().Get();
-	return HasResource() && InternetResource ? Resource->SetMulticastInterface(*InternetResource) : false;
+	return InternetResource && HasResource() && Resource->SetMulticastInterface(*InternetResource);
 }
 
 bool UMercurySocket::SetMulticastLoopback(const bool bLoopback)

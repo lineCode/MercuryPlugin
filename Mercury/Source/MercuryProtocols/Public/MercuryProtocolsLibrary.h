@@ -10,6 +10,7 @@
 #include "MercuryObjects/TCP/StreamSocketBuilder.h"
 #include "MercuryObjects/UDP/DatagramSocketBuilder.h"
 #include "MercuryObjects/UDP/SocketReceiver.h"
+#include "MercuryObjects/UDP/SocketSender.h"
 
 #include "MercuryProtocolsLibrary.generated.h"
 
@@ -144,6 +145,24 @@ public:
 		const UMercurySocket* const& InSocket,
 		const FTimespan& InWaitTime,
 		const FString& InThreadName
+	);
+
+	UFUNCTION(BlueprintPure, DisplayName = "Create UDP Socket Sender", Category = "Mercury|UDP", meta = (
+		Keywords = "Create UDP Socket Sender In Socket Thread Description"
+	))
+	static UMercuryUdpSocketSender* CreateUdpSocketSender(
+		const UMercurySocket* const& InSocket,
+		const FString& ThreadDescription
+	);
+	static UMercuryUdpSocketSender* CreateUdpSocketSender(
+		FUdpSocketSender* const& Resource,
+		const UMercurySocket* const& InSocket,
+		const FString& ThreadDescription
+	);
+	static UMercuryUdpSocketSender* CreateUdpSocketSender(
+		const TSharedPtr<FUdpSocketSender>& Resource,
+		const UMercurySocket* const& InSocket,
+		const FString& ThreadDescription
 	);
 
 protected:

@@ -256,6 +256,39 @@ UMercuryUdpSocketReceiver* UMercuryProtocolsLibrary::CreateUdpSocketReceiver(
 	return UdpReceiver;
 }
 
+UMercuryUdpSocketSender* UMercuryProtocolsLibrary::CreateUdpSocketSender(
+	const UMercurySocket* const& InSocket,
+	const FString& ThreadDescription
+)
+{
+	return CreateUdpSocketSender(nullptr, InSocket, ThreadDescription);
+}
+UMercuryUdpSocketSender* UMercuryProtocolsLibrary::CreateUdpSocketSender(
+	FUdpSocketSender* const& Resource,
+	const UMercurySocket* const& InSocket,
+	const FString& ThreadDescription
+)
+{
+	return CreateUdpSocketSender(MakeShareable(Resource), InSocket, ThreadDescription);
+}
+UMercuryUdpSocketSender* UMercuryProtocolsLibrary::CreateUdpSocketSender(
+	const TSharedPtr<FUdpSocketSender>& Resource,
+	const UMercurySocket* const& InSocket,
+	const FString& ThreadDescription
+)
+{
+	if (!InSocket)
+		return nullptr;
+
+	FSocket* const&& Socket = InSocket->GetResource().Get();
+	if (!Socket)
+		return nullptr;
+	
+	UMercuryUdpSocketSender* const&& UdpSender = NewObject<UMercuryUdpSocketSender>();
+	UdpSender->SetResource(Resource ? Resource : UdpSender->CreateResource({ Socket, *ThreadDescription }));
+	return UdpSender;
+}
+
 UMercuryTcpListener* UMercuryProtocolsLibrary::K2_CreateTcpListenerWithEndpoint(
 	const UMercuryNetworkEndpoint* const& LocalEndpoint,
 	const FTimespan& InSleepTime,
