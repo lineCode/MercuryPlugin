@@ -171,8 +171,11 @@ UMercuryJsonValue* UMercuryJsonValue::Duplicate(const UMercuryJsonValue* const& 
 
 bool UMercuryJsonValue::CompareEqual(const UMercuryJsonValue* const& Left, const UMercuryJsonValue* const& Right) const
 {
-	return HasResource() && Left->GetResource() && Right->GetResource() ?
-		Resource->CompareEqual(*Left->GetResource(), *Right->GetResource()) : false;
+	const FJsonValue* const&& LeftResource = Left->GetResource().Get();
+	const FJsonValue* const&& RightResource = Right->GetResource().Get();
+	
+	return LeftResource && RightResource
+	&& HasResource() && Resource->CompareEqual(*LeftResource, *RightResource);
 }
 
 void UMercuryJsonValue::K2_AsArgumentTypeArray(TArray<UMercuryJsonValue*>& Value) const

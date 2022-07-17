@@ -17,6 +17,7 @@ public:
 
 	virtual bool HasResource() const = 0;
 
+	FORCEINLINE virtual TSharedPtr<T> GetResource() { return Resource; }
 	FORCEINLINE virtual const TSharedPtr<T>& GetResource() const { return Resource; }
 	FORCEINLINE virtual void SetResource(const TSharedPtr<T>& Value) { Resource = Value; }
 	FORCEINLINE virtual void SetResource(TSharedPtr<T>&& Value) { Resource = Value; }

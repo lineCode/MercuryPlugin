@@ -101,7 +101,7 @@ public:
 		uint8*& Data,
 		const int32& BufferSize,
 		int32& BytesRead,
-		const UMercuryInternetAddr* const& Source,
+		UMercuryInternetAddr*& Source,
 		const EMercurySocketReceiveFlags& Flags = EMercurySocketReceiveFlags::None
 	);
 	
@@ -256,8 +256,8 @@ public:
 		uint8*& Data,
 		const int32& BufferSize,
 		int32& BytesRead,
-		const UMercuryInternetAddr* const& Source,
-		const UMercuryInternetAddr* const& Destination,
+		UMercuryInternetAddr*& Source,
+		UMercuryInternetAddr*& Destination,
 		const EMercurySocketReceiveFlags& Flags = EMercurySocketReceiveFlags::None
 	);
 
@@ -292,7 +292,7 @@ protected:
 		TArray<uint8>& Data,
 		int32 BufferSize,
 		int32& BytesRead,
-		const UMercuryInternetAddr* const& Source,
+		UMercuryInternetAddr*& Source,
 		EMercurySocketReceiveFlags Flags = EMercurySocketReceiveFlags::None
 	);
 
@@ -320,8 +320,8 @@ protected:
 		TArray<uint8>& Data,
 		int32 BufferSize,
 		int32& BytesRead,
-		const UMercuryInternetAddr* const& Source,
-		const UMercuryInternetAddr* const& Destination,
+		UMercuryInternetAddr*& Source,
+		UMercuryInternetAddr*& Destination,
 		EMercurySocketReceiveFlags Flags = EMercurySocketReceiveFlags::None
 	);
 };

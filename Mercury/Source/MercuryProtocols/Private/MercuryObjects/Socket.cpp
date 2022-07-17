@@ -105,18 +105,24 @@ bool UMercurySocket::RecvFrom(
 	uint8*& Data,
 	const int32& BufferSize,
 	int32& BytesRead,
-	const UMercuryInternetAddr* const& Source,
+	UMercuryInternetAddr*& Source,
 	const EMercurySocketReceiveFlags& Flags
 )
 {
 	BytesRead = 0;
-	return HasResource() && Resource->RecvFrom(
+	Source = UMercuryNetworkLibrary::CreateInternetAddr();
+	
+	const TSharedPtr<FInternetAddr>& SourceResource = Source->GetResource();
+	const bool&& bSuccess = HasResource() && Resource->RecvFrom(
 		Data,
 		BufferSize,
 		BytesRead,
-		*Source->GetResource(),
+		*SourceResource,
 		MercuryEnums::SocketReceive::Convert(Flags)
 	);
+
+	Source->SetResource(SourceResource);
+	return bSuccess;
 }
 
 bool UMercurySocket::RecvMulti(FRecvMulti& MultiData, const EMercurySocketReceiveFlags& Flags)
@@ -277,20 +283,29 @@ bool UMercurySocket::RecvFromWithPktInfo(
 	uint8*& Data,
 	const int32& BufferSize,
 	int32& BytesRead,
-	const UMercuryInternetAddr* const& Source,
-	const UMercuryInternetAddr* const& Destination,
+	UMercuryInternetAddr*& Source,
+	UMercuryInternetAddr*& Destination,
 	const EMercurySocketReceiveFlags& Flags
 )
 {
 	BytesRead = 0;
-	return HasResource() && Resource->RecvFromWithPktInfo(
+	Source = UMercuryNetworkLibrary::CreateInternetAddr();
+	Destination = UMercuryNetworkLibrary::CreateInternetAddr();
+
+	const TSharedPtr<FInternetAddr>& SourceResource = Source->GetResource();
+	const TSharedPtr<FInternetAddr>& DestinationResource = Destination->GetResource();
+	const bool&& bSuccess = HasResource() && Resource->RecvFromWithPktInfo(
 		Data,
 		BufferSize,
 		BytesRead,
-		*Source->GetResource(),
-		*Destination->GetResource(),
+		*SourceResource,
+		*DestinationResource,
 		MercuryEnums::SocketReceive::Convert(Flags)
 	);
+
+	Source->SetResource(SourceResource);
+	Destination->SetResource(DestinationResource);
+	return bSuccess;
 }
 
 UMercurySocket* UMercurySocket::K2_Accept(UMercuryInternetAddr* const& OutAddr, const FString& InSocketDescription)
@@ -305,17 +320,10 @@ bool UMercurySocket::K2_Recv(
 	const EMercurySocketReceiveFlags Flags
 )
 {
-	uint8*&& ReceivedData = new uint8[BufferSize];
 	Data.SetNumUninitialized(BufferSize);
+	uint8*&& ReceivedData = Data.GetData();
 	
-	const bool&& bSuccess = Recv(ReceivedData, BufferSize, BytesRead, Flags);
-	for (int32&& Index = 0; Index < BytesRead; ++Index)
-	{
-		Data[Index] = ReceivedData[Index];
-	}
-	
-	delete[] ReceivedData;
-	return bSuccess;
+	return Recv(ReceivedData, BufferSize, BytesRead, Flags);
 }
 
 bool UMercurySocket::K2_Send(const TArray<uint8>& Data, const int32 Count, int32& BytesSent)
@@ -327,21 +335,14 @@ bool UMercurySocket::K2_RecvFrom(
 	TArray<uint8>& Data,
 	const int32 BufferSize,
 	int32& BytesRead,
-	const UMercuryInternetAddr* const& Source,
+	UMercuryInternetAddr*& Source,
 	const EMercurySocketReceiveFlags Flags
 )
 {
-	uint8*&& ReceivedData = new uint8[BufferSize];
 	Data.SetNumUninitialized(BufferSize);
+	uint8*&& ReceivedData = Data.GetData();
 	
-	const bool&& bSuccess = RecvFrom(ReceivedData, BufferSize, BytesRead, Source, Flags);
-	for (int32&& Index = 0; Index < BytesRead; ++Index)
-	{
-		Data[Index] = ReceivedData[Index];
-	}
-	
-	delete[] ReceivedData;
-	return bSuccess;
+	return RecvFrom(ReceivedData, BufferSize, BytesRead, Source, Flags);
 }
 
 bool UMercurySocket::K2_SendTo(
@@ -363,20 +364,13 @@ bool UMercurySocket::K2_RecvFromWithPktInfo(
 	TArray<uint8>& Data,
 	const int32 BufferSize,
 	int32& BytesRead,
-	const UMercuryInternetAddr* const& Source,
-	const UMercuryInternetAddr* const& Destination,
+	UMercuryInternetAddr*& Source,
+	UMercuryInternetAddr*& Destination,
 	const EMercurySocketReceiveFlags Flags
 )
 {
-	uint8*&& ReceivedData = new uint8[BufferSize];
 	Data.SetNumUninitialized(BufferSize);
+	uint8*&& ReceivedData = Data.GetData();
 	
-	const bool&& bSuccess = RecvFromWithPktInfo(ReceivedData, BufferSize, BytesRead, Source, Destination, Flags);
-	for (int32&& Index = 0; Index < BytesRead; ++Index)
-	{
-		Data[Index] = ReceivedData[Index];
-	}
-	
-	delete[] ReceivedData;
-	return bSuccess;
+	return RecvFromWithPktInfo(ReceivedData, BufferSize, BytesRead, Source, Destination, Flags);
 }
