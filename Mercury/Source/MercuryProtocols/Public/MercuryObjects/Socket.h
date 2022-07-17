@@ -9,13 +9,13 @@
 #include "MercuryEnums/SocketWaitCondition.h"
 #include "MercuryResourceOwner.h"
 
-#include "SocketObject.generated.h"
+#include "Socket.generated.h"
 
 class UMercuryInternetAddr;
 
 
-UCLASS(Blueprintable, BlueprintType, DisplayName = "Mercury Socket Object")
-class MERCURYPROTOCOLS_API UMercurySocketObject : public UObject, public TResourceOwner<FSocket>
+UCLASS(Blueprintable, BlueprintType, DisplayName = "Mercury Socket")
+class MERCURYPROTOCOLS_API UMercurySocket : public UObject, public TResourceOwner<FSocket>
 {
 	GENERATED_BODY()
 
@@ -28,8 +28,8 @@ public:
 	UFUNCTION(BlueprintCallable, DisplayName = "Accept", Category = "Socket|Object", meta = (
 		Keywords = "Socket Object Accept Out Addr Address In Description"
 	))
-	virtual UMercurySocketObject* Accept(const FString& InSocketDescription);
-	virtual UMercurySocketObject* Accept(
+	virtual UMercurySocket* Accept(const FString& InSocketDescription);
+	virtual UMercurySocket* Accept(
 		UMercuryInternetAddr* const& OutAddr,
 		const FString& InSocketDescription
 	);
@@ -265,7 +265,7 @@ protected:
 	UFUNCTION(BlueprintCallable, DisplayName = "Accept With Address", Category = "Socket|Object", meta = (
 		Keywords = "Socket Object Accept With Address Out Addr In Description"
 	))
-	virtual UMercurySocketObject* K2_Accept(UMercuryInternetAddr* const& OutAddr, const FString& InSocketDescription);
+	virtual UMercurySocket* K2_Accept(UMercuryInternetAddr* const& OutAddr, const FString& InSocketDescription);
 	
 	UFUNCTION(BlueprintCallable, DisplayName = "Recv", Category = "Socket|Object", meta = (
 		Keywords = "Socket Object Recv Data Buffer Size Bytes Read Flags"

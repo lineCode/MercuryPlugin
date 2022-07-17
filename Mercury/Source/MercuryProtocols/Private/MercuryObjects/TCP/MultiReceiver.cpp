@@ -1,29 +1,27 @@
 ﻿// Copyright (c) 2022 Kaya Adrian
 
-#include "TcpMultichannelReceiver.h"
+#include "MultiReceiver.h"
 
 
-TSharedPtr<FMultichannelTcpReceiver> UMercuryTcpMultichannelReceiver::CreateResource(
-	const std::tuple<FSocket*>& Arguments
-)
+TSharedPtr<FMultichannelTcpReceiver> UMercuryTcpMultiReceiver::CreateResource(const std::tuple<FSocket*>& Arguments)
 {
 	FOnMultichannelTcpReceive&& InReceiveDelegate = FOnMultichannelTcpReceive();
-	InReceiveDelegate.BindUObject(this, &UMercuryTcpMultichannelReceiver::BindReceive);
+	InReceiveDelegate.BindUObject(this, &UMercuryTcpMultiReceiver::BindReceive);
 	
 	return MakeShareable(new FMultichannelTcpReceiver(std::get<0>(Arguments), InReceiveDelegate));
 }
-UMercuryTcpMultichannelReceiver::UMercuryTcpMultichannelReceiver(const FObjectInitializer& ObjectInitializer)
+UMercuryTcpMultiReceiver::UMercuryTcpMultiReceiver(const FObjectInitializer& ObjectInitializer)
 : Super(ObjectInitializer)
 {
 	bReceiveDone = false;
 }
 
-bool UMercuryTcpMultichannelReceiver::HasResource() const
+bool UMercuryTcpMultiReceiver::HasResource() const
 {
 	return Resource != nullptr;
 }
 
-void UMercuryTcpMultichannelReceiver::Exit()
+void UMercuryTcpMultiReceiver::Exit()
 {
 	if (!HasResource())
 		return;
@@ -31,17 +29,17 @@ void UMercuryTcpMultichannelReceiver::Exit()
 	Resource->Exit();
 }
 
-bool UMercuryTcpMultichannelReceiver::Init()
+bool UMercuryTcpMultiReceiver::Init()
 {
 	return HasResource() && Resource->Init();
 }
 
-uint32 UMercuryTcpMultichannelReceiver::Run()
+uint32 UMercuryTcpMultiReceiver::Run()
 {
 	return HasResource() ? Resource->Run() : 0u;
 }
 
-void UMercuryTcpMultichannelReceiver::Stop()
+void UMercuryTcpMultiReceiver::Stop()
 {
 	if (!HasResource())
 		return;
@@ -49,17 +47,17 @@ void UMercuryTcpMultichannelReceiver::Stop()
 	Resource->Stop();
 }
 
-int32 UMercuryTcpMultichannelReceiver::GetBytesReceived() const
+int32 UMercuryTcpMultiReceiver::GetBytesReceived() const
 {
 	return HasResource() ? Resource->GetBytesReceived() : 0;
 }
 
-FSingleThreadRunnable* UMercuryTcpMultichannelReceiver::GetSingleThreadInterface()
+FSingleThreadRunnable* UMercuryTcpMultiReceiver::GetSingleThreadInterface()
 {
 	return HasResource() ? Resource->GetSingleThreadInterface() : nullptr;
 }
 
-void UMercuryTcpMultichannelReceiver::BindReceive(
+void UMercuryTcpMultiReceiver::BindReceive(
 	const TArray<uint8>& Data,
 	const uint32 BytesReceived,
 	const bool bNeedsByteSwap
@@ -76,7 +74,7 @@ void UMercuryTcpMultichannelReceiver::BindReceive(
 	bReceiveDone = true;
 }
 
-UMercuryTcpMultichannelReceiver* UMercuryTcpMultichannelReceiver::K2_SetReceiveEvent(
+UMercuryTcpMultiReceiver* UMercuryTcpMultiReceiver::K2_SetReceiveEvent(
 	const FMercuryTcpMultichannelReceiveDelegate& Event
 )
 {
@@ -87,7 +85,7 @@ UMercuryTcpMultichannelReceiver* UMercuryTcpMultichannelReceiver::K2_SetReceiveE
 	return this;
 }
 
-int32 UMercuryTcpMultichannelReceiver::K2_Run()
+int32 UMercuryTcpMultiReceiver::K2_Run()
 {
 	return Run();
 }

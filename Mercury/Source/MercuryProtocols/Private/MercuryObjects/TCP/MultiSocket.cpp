@@ -1,13 +1,11 @@
 ﻿// Copyright (c) 2022 Kaya Adrian
 
-#include "TcpMultichannelSocket.h"
+#include "MultiSocket.h"
 
 #include "MercuryProtocolsLibrary.h"
 
 
-TSharedPtr<FMultichannelTcpSocket> UMercuryTcpMultichannelSocket::CreateResource(
-	const std::tuple<FSocket*, uint64>& Arguments
-)
+TSharedPtr<FMultichannelTcpSocket> UMercuryTcpMultiSocket::CreateResource(const std::tuple<FSocket*, uint64>& Arguments)
 {
 	return MakeShareable(new FMultichannelTcpSocket(
 		std::get<0>(Arguments),
@@ -15,12 +13,12 @@ TSharedPtr<FMultichannelTcpSocket> UMercuryTcpMultichannelSocket::CreateResource
 	));
 }
 
-bool UMercuryTcpMultichannelSocket::HasResource() const
+bool UMercuryTcpMultiSocket::HasResource() const
 {
 	return Resource != nullptr;
 }
 
-void UMercuryTcpMultichannelSocket::Send(const uint8* const& Data, const int32& Count, const uint32& Channel)
+void UMercuryTcpMultiSocket::Send(const uint8* const& Data, const int32& Count, const uint32& Channel)
 {
 	if (!HasResource())
 		return;
@@ -28,27 +26,27 @@ void UMercuryTcpMultichannelSocket::Send(const uint8* const& Data, const int32& 
 	Resource->Send(Data, Count, Channel);
 }
 
-int32 UMercuryTcpMultichannelSocket::BlockingReceive(uint8*& Data, const int32& Count, const uint32& Channel)
+int32 UMercuryTcpMultiSocket::BlockingReceive(uint8*& Data, const int32& Count, const uint32& Channel)
 {
 	return HasResource() ? Resource->BlockingReceive(Data, Count, Channel) : 0;
 }
 
-int32 UMercuryTcpMultichannelSocket::DataAvailable(const uint32& Channel)
+int32 UMercuryTcpMultiSocket::DataAvailable(const uint32& Channel)
 {
 	return HasResource() ? Resource->DataAvailable(Channel) : 0;
 }
 
-int32 UMercuryTcpMultichannelSocket::PollingReceive(uint8*& Data, const int32& MaxCount, const uint32& Channel)
+int32 UMercuryTcpMultiSocket::PollingReceive(uint8*& Data, const int32& MaxCount, const uint32& Channel)
 {
 	return HasResource() ? Resource->PollingReceive(Data, MaxCount, Channel) : 0;
 }
 
-void UMercuryTcpMultichannelSocket::K2_Send(const TArray<uint8>& Data, const int32 Count, const int32 Channel)
+void UMercuryTcpMultiSocket::K2_Send(const TArray<uint8>& Data, const int32 Count, const int32 Channel)
 {
 	return Send(Data.GetData(), Count, Channel);
 }
 
-int32 UMercuryTcpMultichannelSocket::K2_BlockingReceive(TArray<uint8>& Data, const int32 Count, const int32 Channel)
+int32 UMercuryTcpMultiSocket::K2_BlockingReceive(TArray<uint8>& Data, const int32 Count, const int32 Channel)
 {
 	uint8*&& ReceivedData = new uint8[Count];
 	Data.SetNumUninitialized(Count);
@@ -63,12 +61,12 @@ int32 UMercuryTcpMultichannelSocket::K2_BlockingReceive(TArray<uint8>& Data, con
 	return BytesRead;
 }
 
-int32 UMercuryTcpMultichannelSocket::K2_DataAvailable(const int32 Channel)
+int32 UMercuryTcpMultiSocket::K2_DataAvailable(const int32 Channel)
 {
 	return DataAvailable(Channel);
 }
 
-int32 UMercuryTcpMultichannelSocket::K2_PollingReceive(TArray<uint8>& Data, const int32 MaxCount, const int32 Channel)
+int32 UMercuryTcpMultiSocket::K2_PollingReceive(TArray<uint8>& Data, const int32 MaxCount, const int32 Channel)
 {
 	uint8*&& ReceivedData = new uint8[MaxCount];
 	Data.SetNumUninitialized(MaxCount);

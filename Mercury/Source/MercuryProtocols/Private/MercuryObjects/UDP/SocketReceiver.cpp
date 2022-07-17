@@ -1,8 +1,7 @@
 ﻿// Copyright (c) 2022 Kaya Adrian
 
-#include "UdpSocketReceiver.h"
+#include "SocketReceiver.h"
 
-#include "Common/UdpSocketReceiver.h"
 #include "MercuryNetworkLibrary.h"
 
 

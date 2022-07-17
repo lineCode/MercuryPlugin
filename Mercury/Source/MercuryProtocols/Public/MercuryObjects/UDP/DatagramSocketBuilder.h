@@ -2,14 +2,14 @@
 
 #pragma once
 
+#include "Common/UdpSocketBuilder.h"
 #include "MercuryResourceOwner.h"
 
-#include "UdpSocketBuilder.generated.h"
+#include "DatagramSocketBuilder.generated.h"
 
-class FUdpSocketBuilder;
 class UMercuryNetworkAddress;
 class UMercuryNetworkEndpoint;
-class UMercurySocketObject;
+class UMercurySocket;
 
 
 UCLASS(Blueprintable, BlueprintType, DisplayName = "Mercury UDP Socket Builder")
@@ -28,7 +28,7 @@ public:
 	UFUNCTION(BlueprintCallable, DisplayName = "Build", Category = "UDP|Socket Builder", meta = (
 		Keywords = "Protocols UDP Socket Builder Build"
 	))
-	virtual UMercurySocketObject* Build();
+	virtual UMercurySocket* Build();
 
 	UFUNCTION(BlueprintPure, DisplayName = "As Blocking", Category = "UDP|Socket Builder", meta = (
 		CompactNodeTitle = "Blocking",

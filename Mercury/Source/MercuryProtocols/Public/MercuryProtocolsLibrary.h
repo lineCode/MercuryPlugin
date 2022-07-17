@@ -2,14 +2,14 @@
 
 #pragma once
 
-#include "MercuryObjects/SocketObject.h"
-#include "MercuryObjects/TcpListener.h"
-#include "MercuryObjects/TcpMultichannelReceiver.h"
-#include "MercuryObjects/TcpMultichannelSender.h"
-#include "MercuryObjects/TcpMultichannelSocket.h"
-#include "MercuryObjects/TcpSocketBuilder.h"
-#include "MercuryObjects/UdpSocketBuilder.h"
-#include "MercuryObjects/UdpSocketReceiver.h"
+#include "MercuryObjects/Socket.h"
+#include "MercuryObjects/TCP/Listener.h"
+#include "MercuryObjects/TCP/MultiReceiver.h"
+#include "MercuryObjects/TCP/MultiSender.h"
+#include "MercuryObjects/TCP/MultiSocket.h"
+#include "MercuryObjects/TCP/StreamSocketBuilder.h"
+#include "MercuryObjects/UDP/DatagramSocketBuilder.h"
+#include "MercuryObjects/UDP/SocketReceiver.h"
 
 #include "MercuryProtocolsLibrary.generated.h"
 
@@ -20,28 +20,28 @@ class MERCURYPROTOCOLS_API UMercuryProtocolsLibrary : public UBlueprintFunctionL
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintPure, DisplayName = "Create Socket Object", Category = "Mercury|Socket", meta = (
+	UFUNCTION(BlueprintPure, DisplayName = "Create Socket", Category = "Mercury|Socket", meta = (
 		Keywords = "Create Socket Object"
 	))
-	static UMercurySocketObject* CreateSocketObject();
-	static UMercurySocketObject* CreateSocketObject(FSocket* const& Resource);
-	static UMercurySocketObject* CreateSocketObject(const TSharedPtr<FSocket>& Resource);
+	static UMercurySocket* CreateSocket();
+	static UMercurySocket* CreateSocket(FSocket* const& Resource);
+	static UMercurySocket* CreateSocket(const TSharedPtr<FSocket>& Resource);
 
 	UFUNCTION(BlueprintPure, DisplayName = "Create TCP Listener", Category = "Mercury|TCP", meta = (
 		Keywords = "Create TCP Listener In Socket Sleep Time Reusable"
 	))
 	static UMercuryTcpListener* CreateTcpListener(
-		const UMercurySocketObject* const& InSocket,
+		const UMercurySocket* const& InSocket,
 		const FTimespan& InSleepTime,
 		bool bInReusable = true
 	);
 	static UMercuryTcpListener* CreateTcpListener(
 		FTcpListener* const& Resource,
-		const UMercurySocketObject* const& InSocket
+		const UMercurySocket* const& InSocket
 	);
 	static UMercuryTcpListener* CreateTcpListener(
 		const TSharedPtr<FTcpListener>& Resource,
-		const UMercurySocketObject* const& InSocket,
+		const UMercurySocket* const& InSocket,
 		const FTimespan& InSleepTime = FTimespan::FromSeconds(1.0),
 		const bool& bInReusable = true
 	);
@@ -61,51 +61,47 @@ public:
 		const bool& bInReusable = true
 	);
 
-	UFUNCTION(BlueprintPure, DisplayName = "Create TCP Multichannel Receiver", Category = "Mercury|TCP", meta = (
-		Keywords = "Create TCP Multichannel Receiver In Socket"
+	UFUNCTION(BlueprintPure, DisplayName = "Create TCP Multi Receiver", Category = "Mercury|TCP", meta = (
+		Keywords = "Create TCP Multi Multichannel Receiver In Socket"
 	))
-	static UMercuryTcpMultichannelReceiver* CreateTcpMultichannelReceiver(
-		const UMercurySocketObject* const& InSocket
-	);
-	static UMercuryTcpMultichannelReceiver* CreateTcpMultichannelReceiver(
+	static UMercuryTcpMultiReceiver* CreateTcpMultiReceiver(const UMercurySocket* const& InSocket);
+	static UMercuryTcpMultiReceiver* CreateTcpMultiReceiver(
 		FMultichannelTcpReceiver* const& Resource,
-		const UMercurySocketObject* const& InSocket
+		const UMercurySocket* const& InSocket
 	);
-	static UMercuryTcpMultichannelReceiver* CreateTcpMultichannelReceiver(
+	static UMercuryTcpMultiReceiver* CreateTcpMultiReceiver(
 		const TSharedPtr<FMultichannelTcpReceiver>& Resource,
-		const UMercurySocketObject* const& InSocket
+		const UMercurySocket* const& InSocket
 	);
 
-	UFUNCTION(BlueprintPure, DisplayName = "Create TCP Multichannel Sender", Category = "Mercury|TCP", meta = (
-		Keywords = "Create TCP Multichannel Sender In Socket"
+	UFUNCTION(BlueprintPure, DisplayName = "Create TCP Multi Sender", Category = "Mercury|TCP", meta = (
+		Keywords = "Create TCP Multi Multichannel Sender In Socket"
 	))
-	static UMercuryTcpMultichannelSender* CreateTcpMultichannelSender(
-		const UMercurySocketObject* const& InSocket
-	);
-	static UMercuryTcpMultichannelSender* CreateTcpMultichannelSender(
+	static UMercuryTcpMultiSender* CreateTcpMultiSender(const UMercurySocket* const& InSocket);
+	static UMercuryTcpMultiSender* CreateTcpMultiSender(
 		FMultichannelTcpSender* const& Resource,
-		const UMercurySocketObject* const& InSocket
+		const UMercurySocket* const& InSocket
 	);
-	static UMercuryTcpMultichannelSender* CreateTcpMultichannelSender(
+	static UMercuryTcpMultiSender* CreateTcpMultiSender(
 		const TSharedPtr<FMultichannelTcpSender>& Resource,
-		const UMercurySocketObject* const& InSocket
+		const UMercurySocket* const& InSocket
 	);
 
-	UFUNCTION(BlueprintPure, DisplayName = "Create TCP Multichannel Socket", Category = "Mercury|TCP", meta = (
-		Keywords = "Create TCP Multichannel Socket In Bandwidth Latency Product"
+	UFUNCTION(BlueprintPure, DisplayName = "Create TCP Multi Socket", Category = "Mercury|TCP", meta = (
+		Keywords = "Create TCP Multi Multichannel Socket In Bandwidth Latency Product"
 	))
-	static UMercuryTcpMultichannelSocket* CreateTcpMultichannelSocket(
-		const UMercurySocketObject* const& InSocket,
+	static UMercuryTcpMultiSocket* CreateTcpMultiSocket(
+		const UMercurySocket* const& InSocket,
 		int32 InBandwidthLatencyProduct
 	);
-	static UMercuryTcpMultichannelSocket* CreateTcpMultichannelSocket(
+	static UMercuryTcpMultiSocket* CreateTcpMultiSocket(
 		FMultichannelTcpSocket* const& Resource,
-		const UMercurySocketObject* const& InSocket,
+		const UMercurySocket* const& InSocket,
 		const uint64& InBandwidthLatencyProduct
 	);
-	static UMercuryTcpMultichannelSocket* CreateTcpMultichannelSocket(
+	static UMercuryTcpMultiSocket* CreateTcpMultiSocket(
 		const TSharedPtr<FMultichannelTcpSocket>& Resource,
-		const UMercurySocketObject* const& InSocket,
+		const UMercurySocket* const& InSocket,
 		const uint64& InBandwidthLatencyProduct
 	);
 
@@ -133,19 +129,19 @@ public:
 		Keywords = "Create UDP Socket Receiver In Socket Wait Time Thread Name"
 	))
 	static UMercuryUdpSocketReceiver* CreateUdpSocketReceiver(
-		const UMercurySocketObject* const& InSocket,
+		const UMercurySocket* const& InSocket,
 		const FTimespan& InWaitTime,
 		const FString& InThreadName
 	);
 	static UMercuryUdpSocketReceiver* CreateUdpSocketReceiver(
 		FUdpSocketReceiver* const& Resource,
-		const UMercurySocketObject* const& InSocket,
+		const UMercurySocket* const& InSocket,
 		const FTimespan& InWaitTime,
 		const FString& InThreadName
 	);
 	static UMercuryUdpSocketReceiver* CreateUdpSocketReceiver(
 		const TSharedPtr<FUdpSocketReceiver>& Resource,
-		const UMercurySocketObject* const& InSocket,
+		const UMercurySocket* const& InSocket,
 		const FTimespan& InWaitTime,
 		const FString& InThreadName
 	);

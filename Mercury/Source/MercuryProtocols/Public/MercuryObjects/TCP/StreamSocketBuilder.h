@@ -2,14 +2,14 @@
 
 #pragma once
 
+#include "Common/TcpSocketBuilder.h"
 #include "MercuryResourceOwner.h"
 
-#include "TcpSocketBuilder.generated.h"
+#include "StreamSocketBuilder.generated.h"
 
-class FTcpSocketBuilder;
 class UMercuryNetworkAddress;
 class UMercuryNetworkEndpoint;
-class UMercurySocketObject;
+class UMercurySocket;
 
 
 UCLASS(Blueprintable, BlueprintType, DisplayName = "Mercury TCP Socket Builder")
@@ -28,7 +28,7 @@ public:
 	UFUNCTION(BlueprintCallable, DisplayName = "Build", Category = "TCP|Socket Builder", meta = (
 		Keywords = "Protocols TCP Socket Builder Build"
 	))
-	virtual UMercurySocketObject* Build();
+	virtual UMercurySocket* Build();
 
 	UFUNCTION(BlueprintPure, DisplayName = "Lingering", Category = "TCP|Socket Builder", meta = (
 		CompactNodeTitle = "Lingering",

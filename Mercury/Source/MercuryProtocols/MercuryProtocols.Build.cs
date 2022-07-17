@@ -26,7 +26,9 @@ public class MercuryProtocols : ModuleRules
 		{
 			Path.Combine(ModuleDirectory, "Public/MercuryDelegates"),
 			Path.Combine(ModuleDirectory, "Public/MercuryEnums"),
-			Path.Combine(ModuleDirectory, "Public/MercuryObjects")
+			Path.Combine(ModuleDirectory, "Public/MercuryObjects"),
+			Path.Combine(ModuleDirectory, "Public/MercuryObjects/TCP"),
+			Path.Combine(ModuleDirectory, "Public/MercuryObjects/UDP")
 		});
 	}
 }

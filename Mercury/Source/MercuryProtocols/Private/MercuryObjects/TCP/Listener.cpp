@@ -1,8 +1,7 @@
 ﻿// Copyright (c) 2022 Kaya Adrian
 
-#include "TcpListener.h"
+#include "Listener.h"
 
-#include "Common/TcpListener.h"
 #include "MercuryNetworkLibrary.h"
 #include "MercuryProtocolsLibrary.h"
 
@@ -73,9 +72,9 @@ void UMercuryTcpListener::Stop()
 	Resource->Stop();
 }
 
-UMercurySocketObject* UMercuryTcpListener::GetSocket() const
+UMercurySocket* UMercuryTcpListener::GetSocket() const
 {
-	return HasResource() ? UMercuryProtocolsLibrary::CreateSocketObject(Resource->GetSocket()) : nullptr;
+	return HasResource() ? UMercuryProtocolsLibrary::CreateSocket(Resource->GetSocket()) : nullptr;
 }
 
 bool UMercuryTcpListener::IsActive() const
@@ -106,7 +105,7 @@ bool UMercuryTcpListener::BindConnectionAccepted(FSocket* const Socket, const FI
 	}
 
 	bSuccess = OnMercuryTcpListenerConnectionAcceptedDelegate.Execute(
-		UMercuryProtocolsLibrary::CreateSocketObject(Socket),
+		UMercuryProtocolsLibrary::CreateSocket(Socket),
 		UMercuryNetworkLibrary::CreateNetworkEndpoint(new FIPv4Endpoint(Endpoint))
 	);
 	bConnectionAcceptedDone = true;

@@ -1,29 +1,26 @@
 ﻿// Copyright (c) 2022 Kaya Adrian
 
-#include "TcpMultichannelSender.h"
+#include "MultiSender.h"
 
 
-TSharedPtr<FMultichannelTcpSender> UMercuryTcpMultichannelSender::CreateResource(
-	const std::tuple<FSocket*>& Arguments
-)
+TSharedPtr<FMultichannelTcpSender> UMercuryTcpMultiSender::CreateResource(const std::tuple<FSocket*>& Arguments)
 {
 	FOnMultichannelTcpOkToSend&& InOkToSendDelegate = FOnMultichannelTcpOkToSend();
-	InOkToSendDelegate.BindUObject(this, &UMercuryTcpMultichannelSender::BindOkToSend);
+	InOkToSendDelegate.BindUObject(this, &UMercuryTcpMultiSender::BindOkToSend);
 	
 	return MakeShareable(new FMultichannelTcpSender(std::get<0>(Arguments), InOkToSendDelegate));
 }
-UMercuryTcpMultichannelSender::UMercuryTcpMultichannelSender(const FObjectInitializer& ObjectInitializer)
-: Super(ObjectInitializer)
+UMercuryTcpMultiSender::UMercuryTcpMultiSender(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
 	bOkToSendDone = false;
 }
 
-bool UMercuryTcpMultichannelSender::HasResource() const
+bool UMercuryTcpMultiSender::HasResource() const
 {
 	return Resource != nullptr;
 }
 
-void UMercuryTcpMultichannelSender::Exit()
+void UMercuryTcpMultiSender::Exit()
 {
 	if (!HasResource())
 		return;
@@ -31,17 +28,17 @@ void UMercuryTcpMultichannelSender::Exit()
 	Resource->Exit();
 }
 
-bool UMercuryTcpMultichannelSender::Init()
+bool UMercuryTcpMultiSender::Init()
 {
 	return HasResource() && Resource->Init();
 }
 
-uint32 UMercuryTcpMultichannelSender::Run()
+uint32 UMercuryTcpMultiSender::Run()
 {
 	return HasResource() ? Resource->Run() : 0u;
 }
 
-void UMercuryTcpMultichannelSender::Send(const uint8* const& Data, const int32& Count, const uint32& Channel)
+void UMercuryTcpMultiSender::Send(const uint8* const& Data, const int32& Count, const uint32& Channel)
 {
 	if (!HasResource())
 		return;
@@ -49,7 +46,7 @@ void UMercuryTcpMultichannelSender::Send(const uint8* const& Data, const int32& 
 	Resource->Send(Data, Count, Channel);
 }
 
-void UMercuryTcpMultichannelSender::Stop()
+void UMercuryTcpMultiSender::Stop()
 {
 	if (!HasResource())
 		return;
@@ -57,7 +54,7 @@ void UMercuryTcpMultichannelSender::Stop()
 	Resource->Stop();
 }
 
-void UMercuryTcpMultichannelSender::AttemptResumeSending()
+void UMercuryTcpMultiSender::AttemptResumeSending()
 {
 	if (!HasResource())
 		return;
@@ -65,17 +62,17 @@ void UMercuryTcpMultichannelSender::AttemptResumeSending()
 	Resource->AttemptResumeSending();
 }
 
-int32 UMercuryTcpMultichannelSender::GetBytesSent() const
+int32 UMercuryTcpMultiSender::GetBytesSent() const
 {
 	return HasResource() ? Resource->GetBytesSent() : 0;
 }
 
-FSingleThreadRunnable* UMercuryTcpMultichannelSender::GetSingleThreadInterface()
+FSingleThreadRunnable* UMercuryTcpMultiSender::GetSingleThreadInterface()
 {
 	return HasResource() ? Resource->GetSingleThreadInterface() : nullptr;
 }
 
-bool UMercuryTcpMultichannelSender::BindOkToSend(const int32 Count, const uint32 Channel)
+bool UMercuryTcpMultiSender::BindOkToSend(const int32 Count, const uint32 Channel)
 {
 	bOkToSendDone = false;
 
@@ -91,7 +88,7 @@ bool UMercuryTcpMultichannelSender::BindOkToSend(const int32 Count, const uint32
 	return bSuccess;
 }
 
-UMercuryTcpMultichannelSender* UMercuryTcpMultichannelSender::K2_SetOkToSendEvent(
+UMercuryTcpMultiSender* UMercuryTcpMultiSender::K2_SetOkToSendEvent(
 	const FMercuryTcpMultichannelOkToSendDelegate& Event
 )
 {
@@ -102,12 +99,12 @@ UMercuryTcpMultichannelSender* UMercuryTcpMultichannelSender::K2_SetOkToSendEven
 	return this;
 }
 
-int32 UMercuryTcpMultichannelSender::K2_Run()
+int32 UMercuryTcpMultiSender::K2_Run()
 {
 	return Run();
 }
 
-void UMercuryTcpMultichannelSender::K2_Send(const TArray<uint8>& Data, const int32 Count, const int32 Channel)
+void UMercuryTcpMultiSender::K2_Send(const TArray<uint8>& Data, const int32 Count, const int32 Channel)
 {
 	Send(Data.GetData(), Count, Channel);
 }

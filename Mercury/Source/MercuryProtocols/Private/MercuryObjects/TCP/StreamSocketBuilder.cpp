@@ -1,8 +1,7 @@
 ﻿// Copyright (c) 2022 Kaya Adrian
 
-#include "TcpSocketBuilder.h"
+#include "StreamSocketBuilder.h"
 
-#include "Common/TcpSocketBuilder.h"
 #include "MercuryObjects/NetworkAddress.h"
 #include "MercuryObjects/NetworkEndpoint.h"
 #include "MercuryProtocolsLibrary.h"
@@ -18,9 +17,9 @@ bool UMercuryTcpSocketBuilder::HasResource() const
 	return Resource != nullptr;
 }
 
-UMercurySocketObject* UMercuryTcpSocketBuilder::Build()
+UMercurySocket* UMercuryTcpSocketBuilder::Build()
 {
-	return HasResource() ? UMercuryProtocolsLibrary::CreateSocketObject(Resource->Build()) : nullptr;
+	return HasResource() ? UMercuryProtocolsLibrary::CreateSocket(Resource->Build()) : nullptr;
 }
 
 UMercuryTcpSocketBuilder* UMercuryTcpSocketBuilder::Lingering(const int32 Timeout)

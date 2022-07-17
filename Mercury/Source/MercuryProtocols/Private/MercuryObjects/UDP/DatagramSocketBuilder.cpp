@@ -1,8 +1,7 @@
 ﻿// Copyright (c) 2022 Kaya Adrian
 
-#include "UdpSocketBuilder.h"
+#include "DatagramSocketBuilder.h"
 
-#include "Common/UdpSocketBuilder.h"
 #include "MercuryProtocolsLibrary.h"
 #include "MercuryObjects/NetworkAddress.h"
 #include "MercuryObjects/NetworkEndpoint.h"
@@ -18,9 +17,9 @@ bool UMercuryUdpSocketBuilder::HasResource() const
 	return Resource != nullptr;
 }
 
-UMercurySocketObject* UMercuryUdpSocketBuilder::Build()
+UMercurySocket* UMercuryUdpSocketBuilder::Build()
 {
-	return HasResource() ? UMercuryProtocolsLibrary::CreateSocketObject(Resource->Build()) : nullptr;
+	return HasResource() ? UMercuryProtocolsLibrary::CreateSocket(Resource->Build()) : nullptr;
 }
 
 UMercuryUdpSocketBuilder* UMercuryUdpSocketBuilder::AsBlocking()

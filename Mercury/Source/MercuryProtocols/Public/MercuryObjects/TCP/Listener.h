@@ -2,13 +2,12 @@
 
 #pragma once
 
+#include "Common/TcpListener.h"
 #include "Interfaces/IPv4/IPv4Endpoint.h"
 #include "MercuryDelegates/TcpListenerConnectionAccepted.h"
 #include "MercuryResourceOwner.h"
 
-#include "TcpListener.generated.h"
-
-class FTcpListener;
+#include "Listener.generated.h"
 
 
 UCLASS(Blueprintable, BlueprintType, DisplayName = "Mercury TCP Listener")
@@ -46,7 +45,7 @@ public:
 	virtual void Exit();
 
 	UFUNCTION(BlueprintCallable, DisplayName = "Init", Category = "TCP|Listener", meta = (
-		Keywords = "Protocols TCP Listener Init Initialise Initialize Begin Start Thread"
+		Keywords = "Protocols TCP Listener Init Initialise Initialize Thread"
 	))
 	virtual UPARAM(DisplayName = "Success") bool Init();
 	
@@ -61,7 +60,7 @@ public:
 		CompactNodeTitle = "Socket",
 		Keywords = "Protocols TCP Listener Get Socket"
 	))
-	virtual UMercurySocketObject* GetSocket() const;
+	virtual UMercurySocket* GetSocket() const;
 
 	UFUNCTION(BlueprintPure, DisplayName = "Is Active", Category = "TCP|Listener", meta = (
 		Keywords = "Protocols TCP Listener Is Active Activated"

@@ -5,12 +5,12 @@
 #include "TcpListenerConnectionAccepted.generated.h"
 
 class UMercuryNetworkEndpoint;
-class UMercurySocketObject;
+class UMercurySocket;
 
 
 UDELEGATE(BlueprintCallable, DisplayName = "Connection Accepted Event")
 DECLARE_DYNAMIC_DELEGATE_RetVal_TwoParams(
 	bool, FMercuryTcpListenerConnectionAcceptedDelegate,
-	UMercurySocketObject* const&, Socket,
+	UMercurySocket* const&, Socket,
 	UMercuryNetworkEndpoint* const&, Endpoint
 );

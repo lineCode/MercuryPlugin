@@ -5,23 +5,23 @@
 #include "MercuryObjects/NetworkEndpoint.h"
 
 
-UMercurySocketObject* UMercuryProtocolsLibrary::CreateSocketObject()
+UMercurySocket* UMercuryProtocolsLibrary::CreateSocket()
 {
-	return CreateSocketObject(nullptr);
+	return CreateSocket(nullptr);
 }
-UMercurySocketObject* UMercuryProtocolsLibrary::CreateSocketObject(FSocket* const& Resource)
+UMercurySocket* UMercuryProtocolsLibrary::CreateSocket(FSocket* const& Resource)
 {
-	return CreateSocketObject(MakeShareable(Resource));
+	return CreateSocket(MakeShareable(Resource));
 }
-UMercurySocketObject* UMercuryProtocolsLibrary::CreateSocketObject(const TSharedPtr<FSocket>& Resource)
+UMercurySocket* UMercuryProtocolsLibrary::CreateSocket(const TSharedPtr<FSocket>& Resource)
 {
-	UMercurySocketObject* const&& SocketObject = NewObject<UMercurySocketObject>();
+	UMercurySocket* const&& SocketObject = NewObject<UMercurySocket>();
 	SocketObject->SetResource(Resource ? Resource : SocketObject->CreateResource());
 	return SocketObject;
 }
 
 UMercuryTcpListener* UMercuryProtocolsLibrary::CreateTcpListener(
-	const UMercurySocketObject* const& InSocket,
+	const UMercurySocket* const& InSocket,
 	const FTimespan& InSleepTime,
 	const bool bInReusable
 )
@@ -30,14 +30,14 @@ UMercuryTcpListener* UMercuryProtocolsLibrary::CreateTcpListener(
 }
 UMercuryTcpListener* UMercuryProtocolsLibrary::CreateTcpListener(
 	FTcpListener* const& Resource,
-	const UMercurySocketObject* const& InSocket
+	const UMercurySocket* const& InSocket
 )
 {
 	return CreateTcpListener(MakeShareable(Resource), InSocket);
 }
 UMercuryTcpListener* UMercuryProtocolsLibrary::CreateTcpListener(
 	const TSharedPtr<FTcpListener>& Resource,
-	const UMercurySocketObject* const& InSocket,
+	const UMercurySocket* const& InSocket,
 	const FTimespan& InSleepTime,
 	const bool& bInReusable
 )
@@ -91,22 +91,20 @@ UMercuryTcpListener* UMercuryProtocolsLibrary::CreateTcpListener(
 	return TcpListener;
 }
 
-UMercuryTcpMultichannelReceiver* UMercuryProtocolsLibrary::CreateTcpMultichannelReceiver(
-	const UMercurySocketObject* const& InSocket
-)
+UMercuryTcpMultiReceiver* UMercuryProtocolsLibrary::CreateTcpMultiReceiver(const UMercurySocket* const& InSocket)
 {
-	return CreateTcpMultichannelReceiver(nullptr, InSocket);
+	return CreateTcpMultiReceiver(nullptr, InSocket);
 }
-UMercuryTcpMultichannelReceiver* UMercuryProtocolsLibrary::CreateTcpMultichannelReceiver(
+UMercuryTcpMultiReceiver* UMercuryProtocolsLibrary::CreateTcpMultiReceiver(
 	FMultichannelTcpReceiver* const& Resource,
-	const UMercurySocketObject* const& InSocket
+	const UMercurySocket* const& InSocket
 )
 {
-	return CreateTcpMultichannelReceiver(MakeShareable(Resource), InSocket);
+	return CreateTcpMultiReceiver(MakeShareable(Resource), InSocket);
 }
-UMercuryTcpMultichannelReceiver* UMercuryProtocolsLibrary::CreateTcpMultichannelReceiver(
+UMercuryTcpMultiReceiver* UMercuryProtocolsLibrary::CreateTcpMultiReceiver(
 	const TSharedPtr<FMultichannelTcpReceiver>& Resource,
-	const UMercurySocketObject* const& InSocket
+	const UMercurySocket* const& InSocket
 )
 {
 	if (!InSocket)
@@ -116,27 +114,25 @@ UMercuryTcpMultichannelReceiver* UMercuryProtocolsLibrary::CreateTcpMultichannel
 	if (!Socket)
 		return nullptr;
 
-	UMercuryTcpMultichannelReceiver* const&& MultichannelReceiver = NewObject<UMercuryTcpMultichannelReceiver>();
-	MultichannelReceiver->SetResource(Resource ? Resource : MultichannelReceiver->CreateResource(Socket));
-	return MultichannelReceiver;
+	UMercuryTcpMultiReceiver* const&& MultiReceiver = NewObject<UMercuryTcpMultiReceiver>();
+	MultiReceiver->SetResource(Resource ? Resource : MultiReceiver->CreateResource(Socket));
+	return MultiReceiver;
 }
 
-UMercuryTcpMultichannelSender* UMercuryProtocolsLibrary::CreateTcpMultichannelSender(
-	const UMercurySocketObject* const& InSocket
-)
+UMercuryTcpMultiSender* UMercuryProtocolsLibrary::CreateTcpMultiSender(const UMercurySocket* const& InSocket)
 {
-	return CreateTcpMultichannelSender(nullptr, InSocket);
+	return CreateTcpMultiSender(nullptr, InSocket);
 }
-UMercuryTcpMultichannelSender* UMercuryProtocolsLibrary::CreateTcpMultichannelSender(
+UMercuryTcpMultiSender* UMercuryProtocolsLibrary::CreateTcpMultiSender(
 	FMultichannelTcpSender* const& Resource,
-	const UMercurySocketObject* const& InSocket
+	const UMercurySocket* const& InSocket
 )
 {
-	return CreateTcpMultichannelSender(MakeShareable(Resource), InSocket);
+	return CreateTcpMultiSender(MakeShareable(Resource), InSocket);
 }
-UMercuryTcpMultichannelSender* UMercuryProtocolsLibrary::CreateTcpMultichannelSender(
+UMercuryTcpMultiSender* UMercuryProtocolsLibrary::CreateTcpMultiSender(
 	const TSharedPtr<FMultichannelTcpSender>& Resource,
-	const UMercurySocketObject* const& InSocket
+	const UMercurySocket* const& InSocket
 )
 {
 	if (!InSocket)
@@ -146,29 +142,29 @@ UMercuryTcpMultichannelSender* UMercuryProtocolsLibrary::CreateTcpMultichannelSe
 	if (!Socket)
 		return nullptr;
 
-	UMercuryTcpMultichannelSender* const&& MultichannelSender = NewObject<UMercuryTcpMultichannelSender>();
-	MultichannelSender->SetResource(Resource ? Resource : MultichannelSender->CreateResource(Socket));
-	return MultichannelSender;
+	UMercuryTcpMultiSender* const&& MultiSender = NewObject<UMercuryTcpMultiSender>();
+	MultiSender->SetResource(Resource ? Resource : MultiSender->CreateResource(Socket));
+	return MultiSender;
 }
 
-UMercuryTcpMultichannelSocket* UMercuryProtocolsLibrary::CreateTcpMultichannelSocket(
-	const UMercurySocketObject* const& InSocket,
+UMercuryTcpMultiSocket* UMercuryProtocolsLibrary::CreateTcpMultiSocket(
+	const UMercurySocket* const& InSocket,
 	const int32 InBandwidthLatencyProduct
 )
 {
-	return CreateTcpMultichannelSocket(nullptr, InSocket, InBandwidthLatencyProduct);
+	return CreateTcpMultiSocket(nullptr, InSocket, InBandwidthLatencyProduct);
 }
-UMercuryTcpMultichannelSocket* UMercuryProtocolsLibrary::CreateTcpMultichannelSocket(
+UMercuryTcpMultiSocket* UMercuryProtocolsLibrary::CreateTcpMultiSocket(
 	FMultichannelTcpSocket* const& Resource,
-	const UMercurySocketObject* const& InSocket,
+	const UMercurySocket* const& InSocket,
 	const uint64& InBandwidthLatencyProduct
 )
 {
-	return CreateTcpMultichannelSocket(MakeShareable(Resource), InSocket, InBandwidthLatencyProduct);
+	return CreateTcpMultiSocket(MakeShareable(Resource), InSocket, InBandwidthLatencyProduct);
 }
-UMercuryTcpMultichannelSocket* UMercuryProtocolsLibrary::CreateTcpMultichannelSocket(
+UMercuryTcpMultiSocket* UMercuryProtocolsLibrary::CreateTcpMultiSocket(
 	const TSharedPtr<FMultichannelTcpSocket>& Resource,
-	const UMercurySocketObject* const& InSocket,
+	const UMercurySocket* const& InSocket,
 	const uint64& InBandwidthLatencyProduct
 )
 {
@@ -179,11 +175,11 @@ UMercuryTcpMultichannelSocket* UMercuryProtocolsLibrary::CreateTcpMultichannelSo
 	if (!Socket)
 		return nullptr;
 	
-	UMercuryTcpMultichannelSocket* const&& MultichannelSocket = NewObject<UMercuryTcpMultichannelSocket>();
-	MultichannelSocket->SetResource(Resource ?
-		Resource : MultichannelSocket->CreateResource({ Socket, InBandwidthLatencyProduct })
+	UMercuryTcpMultiSocket* const&& MultiSocket = NewObject<UMercuryTcpMultiSocket>();
+	MultiSocket->SetResource(Resource ?
+		Resource : MultiSocket->CreateResource({ Socket, InBandwidthLatencyProduct })
 	);
-	return MultichannelSocket;
+	return MultiSocket;
 }
 
 UMercuryTcpSocketBuilder* UMercuryProtocolsLibrary::CreateTcpSocketBuilder(const FString& InDescription)
@@ -223,7 +219,7 @@ UMercuryUdpSocketBuilder* UMercuryProtocolsLibrary::CreateUdpSocketBuilder(
 }
 
 UMercuryUdpSocketReceiver* UMercuryProtocolsLibrary::CreateUdpSocketReceiver(
-	const UMercurySocketObject* const& InSocket,
+	const UMercurySocket* const& InSocket,
 	const FTimespan& InWaitTime,
 	const FString& InThreadName
 )
@@ -232,7 +228,7 @@ UMercuryUdpSocketReceiver* UMercuryProtocolsLibrary::CreateUdpSocketReceiver(
 }
 UMercuryUdpSocketReceiver* UMercuryProtocolsLibrary::CreateUdpSocketReceiver(
 	FUdpSocketReceiver* const& Resource,
-	const UMercurySocketObject* const& InSocket,
+	const UMercurySocket* const& InSocket,
 	const FTimespan& InWaitTime,
 	const FString& InThreadName
 )
@@ -241,7 +237,7 @@ UMercuryUdpSocketReceiver* UMercuryProtocolsLibrary::CreateUdpSocketReceiver(
 }
 UMercuryUdpSocketReceiver* UMercuryProtocolsLibrary::CreateUdpSocketReceiver(
 	const TSharedPtr<FUdpSocketReceiver>& Resource,
-	const UMercurySocketObject* const& InSocket,
+	const UMercurySocket* const& InSocket,
 	const FTimespan& InWaitTime,
 	const FString& InThreadName
 )

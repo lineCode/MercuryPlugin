@@ -2,17 +2,11 @@
 
 #pragma once
 
+#include "Common/UdpSocketReceiver.h"
 #include "MercuryDelegates/UdpSocketDataReceived.h"
 #include "MercuryResourceOwner.h"
 
-#include "UdpSocketReceiver.generated.h"
-
-struct FIPv4Endpoint;
-
-class FArrayReader;
-class FUdpSocketReceiver;
-
-typedef TSharedPtr<FArrayReader, ESPMode::ThreadSafe> FArrayReaderPtr;
+#include "SocketReceiver.generated.h"
 
 
 UCLASS(Blueprintable, BlueprintType, DisplayName = "Mercury UDP Socket Receiver")
