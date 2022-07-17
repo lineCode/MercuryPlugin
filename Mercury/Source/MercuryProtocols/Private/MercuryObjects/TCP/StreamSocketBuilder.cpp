@@ -19,7 +19,16 @@ bool UMercuryTcpSocketBuilder::HasResource() const
 
 UMercurySocket* UMercuryTcpSocketBuilder::Build()
 {
-	return HasResource() ? UMercuryProtocolsLibrary::CreateSocket(Resource->Build()) : nullptr;
+	if (!HasResource())
+		return nullptr;
+
+	FSocket* const&& Socket = Resource->Build();
+	return UMercuryProtocolsLibrary::CreateSocket(
+		Socket,
+		NAME_Stream,
+		Socket->GetDescription(),
+		Socket->GetProtocol()
+	);
 }
 
 UMercuryTcpSocketBuilder* UMercuryTcpSocketBuilder::Lingering(const int32 Timeout)

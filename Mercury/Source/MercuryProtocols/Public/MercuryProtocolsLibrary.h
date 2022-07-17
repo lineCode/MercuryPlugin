@@ -22,11 +22,42 @@ class MERCURYPROTOCOLS_API UMercuryProtocolsLibrary : public UBlueprintFunctionL
 
 public:
 	UFUNCTION(BlueprintPure, DisplayName = "Create Socket", Category = "Mercury|Socket", meta = (
-		Keywords = "Create Socket Object"
+		Keywords = "Create Socket Object Type Description Force UDP"
 	))
-	static UMercurySocket* CreateSocket();
-	static UMercurySocket* CreateSocket(FSocket* const& Resource);
-	static UMercurySocket* CreateSocket(const TSharedPtr<FSocket>& Resource);
+	static UMercurySocket* CreateSocket(
+		const FName& SocketType,
+		const FString& SocketDescription,
+		bool bForceUDP = false
+	);
+	static UMercurySocket* CreateSocket(
+		FSocket* const& Resource,
+		const FName& SocketType,
+		const FString& SocketDescription,
+		bool bForceUDP = false
+	);
+	static UMercurySocket* CreateSocket(
+		const TSharedPtr<FSocket>& Resource,
+		const FName& SocketType,
+		const FString& SocketDescription,
+		bool bForceUDP = false
+	);
+	static UMercurySocket* CreateSocket(
+		const FName& SocketType,
+		const FString& SocketDescription,
+		const FName& ProtocolName
+	);
+	static UMercurySocket* CreateSocket(
+		FSocket* const& Resource,
+		const FName& SocketType,
+		const FString& SocketDescription,
+		const FName& ProtocolName
+	);
+	static UMercurySocket* CreateSocket(
+		const TSharedPtr<FSocket>& Resource,
+		const FName& SocketType,
+		const FString& SocketDescription,
+		const FName& ProtocolName
+	);
 
 	UFUNCTION(BlueprintPure, DisplayName = "Create TCP Listener", Category = "Mercury|TCP", meta = (
 		Keywords = "Create TCP Listener In Socket Sleep Time Reusable"
@@ -166,6 +197,15 @@ public:
 	);
 
 protected:
+	UFUNCTION(BlueprintPure, DisplayName = "Create Socket (Protocol)", Category = "Mercury|Socket", meta = (
+		Keywords = "Create Socket Object Type Description Protocol Name"
+	))
+	static UMercurySocket* K2_CreateSocketWithProtocol(
+		const FName& SocketType,
+		const FString& SocketDescription,
+		const FName& ProtocolName
+	);
+	
 	UFUNCTION(BlueprintPure, DisplayName = "Create TCP Listener (Endpoint)", Category = "Mercury|TCP", meta = (
 		Keywords = "Create TCP Listener Local Endpoint In Sleep Time Reusable"
 	))

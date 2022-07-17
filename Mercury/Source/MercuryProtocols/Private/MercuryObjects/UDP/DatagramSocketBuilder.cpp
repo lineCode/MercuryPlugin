@@ -19,7 +19,16 @@ bool UMercuryUdpSocketBuilder::HasResource() const
 
 UMercurySocket* UMercuryUdpSocketBuilder::Build()
 {
-	return HasResource() ? UMercuryProtocolsLibrary::CreateSocket(Resource->Build()) : nullptr;
+	if (!HasResource())
+		return nullptr;
+
+	FSocket* const&& Socket = Resource->Build();
+	return UMercuryProtocolsLibrary::CreateSocket(
+		Socket,
+		NAME_DGram,
+		Socket->GetDescription(),
+		Socket->GetProtocol()
+	);
 }
 
 UMercuryUdpSocketBuilder* UMercuryUdpSocketBuilder::AsBlocking()

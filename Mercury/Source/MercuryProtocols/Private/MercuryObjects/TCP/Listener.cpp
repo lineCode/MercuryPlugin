@@ -74,7 +74,16 @@ void UMercuryTcpListener::Stop()
 
 UMercurySocket* UMercuryTcpListener::GetSocket() const
 {
-	return HasResource() ? UMercuryProtocolsLibrary::CreateSocket(Resource->GetSocket()) : nullptr;
+	if (!HasResource())
+		return nullptr;
+
+	FSocket* const&& Socket = Resource->GetSocket();
+	return UMercuryProtocolsLibrary::CreateSocket(
+		Socket,
+		NAME_Stream,
+		Socket->GetDescription(),
+		Socket->GetProtocol()
+	);
 }
 
 bool UMercuryTcpListener::IsActive() const
@@ -105,7 +114,12 @@ bool UMercuryTcpListener::BindConnectionAccepted(FSocket* const Socket, const FI
 	}
 
 	bSuccess = OnMercuryTcpListenerConnectionAcceptedDelegate.Execute(
-		UMercuryProtocolsLibrary::CreateSocket(Socket),
+		UMercuryProtocolsLibrary::CreateSocket(
+			Socket,
+			NAME_Stream,
+			Socket->GetDescription(),
+			Socket->GetProtocol()
+		),
 		UMercuryNetworkLibrary::CreateNetworkEndpoint(new FIPv4Endpoint(Endpoint))
 	);
 	bConnectionAcceptedDone = true;

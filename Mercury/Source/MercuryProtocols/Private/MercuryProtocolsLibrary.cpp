@@ -5,18 +5,66 @@
 #include "MercuryObjects/NetworkEndpoint.h"
 
 
-UMercurySocket* UMercuryProtocolsLibrary::CreateSocket()
+UMercurySocket* UMercuryProtocolsLibrary::CreateSocket(
+	const FName& SocketType,
+	const FString& SocketDescription,
+	const bool bForceUDP
+)
 {
-	return CreateSocket(nullptr);
+	return CreateSocket(nullptr, SocketType, SocketDescription, bForceUDP);
 }
-UMercurySocket* UMercuryProtocolsLibrary::CreateSocket(FSocket* const& Resource)
+UMercurySocket* UMercuryProtocolsLibrary::CreateSocket(
+	FSocket* const& Resource,
+	const FName& SocketType,
+	const FString& SocketDescription,
+	const bool bForceUDP
+)
 {
-	return CreateSocket(MakeShareable(Resource));
+	return CreateSocket(MakeShareable(Resource), SocketType, SocketDescription, bForceUDP);
 }
-UMercurySocket* UMercuryProtocolsLibrary::CreateSocket(const TSharedPtr<FSocket>& Resource)
+UMercurySocket* UMercuryProtocolsLibrary::CreateSocket(
+	const TSharedPtr<FSocket>& Resource,
+	const FName& SocketType,
+	const FString& SocketDescription,
+	const bool bForceUDP
+)
 {
 	UMercurySocket* const&& SocketObject = NewObject<UMercurySocket>();
-	SocketObject->SetResource(Resource ? Resource : SocketObject->CreateResource());
+	SocketObject->SetResource(
+		Resource ? Resource : SocketObject->CreateResource({ SocketType, SocketDescription, bForceUDP })
+	);
+	return SocketObject;
+}
+UMercurySocket* UMercuryProtocolsLibrary::CreateSocket(
+	const FName& SocketType,
+	const FString& SocketDescription,
+	const FName& ProtocolName
+)
+{
+	return CreateSocket(nullptr, SocketType, SocketDescription, ProtocolName);
+}
+UMercurySocket* UMercuryProtocolsLibrary::CreateSocket(
+	FSocket* const& Resource,
+	const FName& SocketType,
+	const FString& SocketDescription,
+	const FName& ProtocolName
+)
+{
+	return CreateSocket(MakeShareable(Resource), SocketType, SocketDescription, ProtocolName);
+}
+UMercurySocket* UMercuryProtocolsLibrary::CreateSocket(
+	const TSharedPtr<FSocket>& Resource,
+	const FName& SocketType,
+	const FString& SocketDescription,
+	const FName& ProtocolName
+)
+{
+	UMercurySocket* const&& SocketObject = NewObject<UMercurySocket>();
+	SocketObject->SetResource(Resource ? Resource : SocketObject->CreateResourceWithProtocol({
+		SocketType,
+		SocketDescription,
+		ProtocolName
+	}));
 	return SocketObject;
 }
 
@@ -287,6 +335,15 @@ UMercuryUdpSocketSender* UMercuryProtocolsLibrary::CreateUdpSocketSender(
 	UMercuryUdpSocketSender* const&& UdpSender = NewObject<UMercuryUdpSocketSender>();
 	UdpSender->SetResource(Resource ? Resource : UdpSender->CreateResource({ Socket, *ThreadDescription }));
 	return UdpSender;
+}
+
+UMercurySocket* UMercuryProtocolsLibrary::K2_CreateSocketWithProtocol(
+	const FName& SocketType,
+	const FString& SocketDescription,
+	const FName& ProtocolName
+)
+{
+	return CreateSocket(SocketType, SocketDescription, ProtocolName);
 }
 
 UMercuryTcpListener* UMercuryProtocolsLibrary::K2_CreateTcpListenerWithEndpoint(

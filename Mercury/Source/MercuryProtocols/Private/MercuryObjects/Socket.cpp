@@ -3,9 +3,28 @@
 #include "Socket.h"
 
 #include "MercuryNetworkLibrary.h"
+#include "MercuryProtocols.h"
 #include "MercuryProtocolsLibrary.h"
 #include "Sockets.h"
 
+
+TSharedPtr<FSocket> UMercurySocket::CreateResource(const std::tuple<FName, FString, bool>& Arguments)
+{
+	return MakeShareable(FMercuryProtocolsModule::GetSocketSubsystem()->CreateSocket(
+		std::get<0>(Arguments),
+		std::get<1>(Arguments),
+		std::get<2>(Arguments)
+	));
+}
+
+TSharedPtr<FSocket> UMercurySocket::CreateResourceWithProtocol(const std::tuple<FName, FString, FName>& Arguments)
+{
+	return MakeShareable(FMercuryProtocolsModule::GetSocketSubsystem()->CreateSocket(
+		std::get<0>(Arguments),
+		std::get<1>(Arguments),
+		std::get<2>(Arguments)
+	));
+}
 
 bool UMercurySocket::HasResource() const
 {
@@ -18,7 +37,12 @@ UMercurySocket* UMercurySocket::Accept(const FString& InSocketDescription)
 		return nullptr;
 
 	FSocket* const&& ClientSocket = Resource->Accept(InSocketDescription);
-	return ClientSocket ? UMercuryProtocolsLibrary::CreateSocket(ClientSocket) : nullptr;
+	return ClientSocket ? UMercuryProtocolsLibrary::CreateSocket(
+		ClientSocket,
+		NAME_Stream,
+		ClientSocket->GetDescription(),
+		ClientSocket->GetProtocol()
+	) : nullptr;
 }
 UMercurySocket* UMercurySocket::Accept(UMercuryInternetAddr* const& OutAddr, const FString& InSocketDescription)
 {
@@ -26,7 +50,12 @@ UMercurySocket* UMercurySocket::Accept(UMercuryInternetAddr* const& OutAddr, con
 		return nullptr;
 
 	FSocket* const&& ClientSocket = Resource->Accept(*OutAddr->GetResource(), InSocketDescription);
-	return ClientSocket ? UMercuryProtocolsLibrary::CreateSocket(ClientSocket) : nullptr;
+	return ClientSocket ? UMercuryProtocolsLibrary::CreateSocket(
+		ClientSocket,
+		NAME_Stream,
+		ClientSocket->GetDescription(),
+		ClientSocket->GetProtocol()
+	) : nullptr;
 }
 
 bool UMercurySocket::Bind(const UMercuryInternetAddr* const& Addr)

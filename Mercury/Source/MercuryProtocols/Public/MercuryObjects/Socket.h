@@ -15,11 +15,15 @@ class UMercuryInternetAddr;
 
 
 UCLASS(Blueprintable, BlueprintType, DisplayName = "Mercury Socket")
-class MERCURYPROTOCOLS_API UMercurySocket : public UObject, public TResourceOwner<FSocket>
+class MERCURYPROTOCOLS_API UMercurySocket : public UObject, public TResourceOwner<FSocket, FName, FString, bool>
 {
 	GENERATED_BODY()
 
 public:
+	virtual TSharedPtr<FSocket> CreateResource(const std::tuple<FName, FString, bool>& Arguments) override;
+
+	virtual TSharedPtr<FSocket> CreateResourceWithProtocol(const std::tuple<FName, FString, FName>& Arguments);
+	
 	UFUNCTION(BlueprintPure, DisplayName = "Has Resource", Category = "Socket|Object", meta = (
 		Keywords = "Has Mercury Resource"
 	))
