@@ -3,10 +3,19 @@
 #include "GymEnvironment.h"
 
 
-void UGymEnvironment::Step()
+void UGymEnvironment::Step_Implementation()
 {
-	ExecuteAction();
+	if (AIDecisionData->WantsReset())
+	{
+		Reset();
+	}
+	else
+	{
+		ExecuteAction();
+		UpdateReward();
+		UpdateDone();
+	}
+	
 	UpdateState();
-	UpdateReward();
-	IsDone();
+	ExchangeData(AIDecisionData.Get(), EnvironmentData.Get());
 }

@@ -14,8 +14,7 @@ public class MercuryCore : ModuleRules
 		{
 			"Core",
 			"CoreUObject",
-			"Engine",
-			"MercuryUtilities"
+			"Engine"
 		});
 	}
 }
