@@ -3,6 +3,8 @@
 #pragma once
 
 #include "MercuryProtocols.h"
+#include "SocketTypes.h"
+#include "UObject/ObjectMacros.h"
 
 
 UENUM(BlueprintType, meta = (Keywords = "Socket Object Type Datagram Streaming Unknown TCP UDP"))
@@ -15,25 +17,6 @@ enum class EMercurySocketType : uint8
 
 namespace MercuryEnums::SocketType
 {
-	constexpr ESocketType Convert(const EMercurySocketType& SocketType)
-	{
-		switch (SocketType)
-		{
-		case EMercurySocketType::Datagram:
-			return SOCKTYPE_Datagram;
-
-		case EMercurySocketType::Streaming:
-			return SOCKTYPE_Streaming;
-
-		case EMercurySocketType::Unknown:
-			return SOCKTYPE_Unknown;
-
-		default:
-			UE_LOG(LogMercuryProtocols, Error, TEXT("Unknown socket type: %d"), SocketType);
-			return SOCKTYPE_Unknown;
-		}
-	}
-
 	constexpr EMercurySocketType Convert(const ESocketType& SocketType)
 	{
 		switch (SocketType)
@@ -50,6 +33,25 @@ namespace MercuryEnums::SocketType
 		default:
 			UE_LOG(LogMercuryProtocols, Error, TEXT("Unknown socket type: %d"), SocketType);
 			return EMercurySocketType::Unknown;
+		}
+	}
+	
+	constexpr ESocketType Convert(const EMercurySocketType& SocketType)
+	{
+		switch (SocketType)
+		{
+		case EMercurySocketType::Datagram:
+			return SOCKTYPE_Datagram;
+
+		case EMercurySocketType::Streaming:
+			return SOCKTYPE_Streaming;
+
+		case EMercurySocketType::Unknown:
+			return SOCKTYPE_Unknown;
+
+		default:
+			UE_LOG(LogMercuryProtocols, Error, TEXT("Unknown socket type: %d"), SocketType);
+			return SOCKTYPE_Unknown;
 		}
 	}
 }

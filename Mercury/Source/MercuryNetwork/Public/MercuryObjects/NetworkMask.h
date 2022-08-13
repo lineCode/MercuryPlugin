@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "Interfaces/IPv4/IPv4SubnetMask.h"
 #include "MercuryEnums/NetworkSubnetClass.h"
 #include "MercuryResourceOwner.h"
 

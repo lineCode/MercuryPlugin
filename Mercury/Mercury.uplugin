@@ -3,7 +3,7 @@
 	"Version": 1,
 	"VersionName": "1.0",
 	"FriendlyName": "Mercury",
-	"Description": "Allows connecting to Flask server via HTTP to model AI agents to navigate maps by looking at images",
+	"Description": "Allows connecting to server via HTTP/TCP/UDP to model AI agents using reinforcement learning",
 	"Category": "AI",
 	"CreatedBy": "Kaya Adrian",
 	"CreatedByURL": "",
@@ -11,55 +11,63 @@
 	"MarketplaceURL": "",
 	"SupportURL": "",
 	"CanContainContent": false,
-	"IsBetaVersion": true,
+	"IsBetaVersion": false,
 	"IsExperimentalVersion": false,
 	"Installed": true,
 	"Modules": [
 		{
 			"Name": "MercuryCore",
 			"Type": "Runtime",
-			"LoadingPhase": "PostDefault",
-			"AdditionalDependencies": [
-				"MercuryUtilities"
+			"LoadingPhase": "PreDefault",
+			"WhitelistPlatforms": [
+				"Android",
+				"Win64"
 			]
 		},
 		{
 			"Name": "MercuryHttp",
 			"Type": "Runtime",
-			"LoadingPhase": "Default",
-			"AdditionalDependencies": [
-				"MercuryUtilities"
+			"LoadingPhase": "PreDefault",
+			"WhitelistPlatforms": [
+				"Android",
+				"Win64"
 			]
 		},
 		{
 			"Name": "MercuryJson",
 			"Type": "Runtime",
-			"LoadingPhase": "Default",
-			"AdditionalDependencies": [
-				"MercuryUtilities"
+			"LoadingPhase": "PreDefault",
+			"WhitelistPlatforms": [
+				"Android",
+				"Win64"
 			]
 		},
 		{
 			"Name": "MercuryNetwork",
 			"Type": "Runtime",
-			"LoadingPhase": "Default",
-			"AdditionalDependencies": [
-				"MercuryUtilities"
+			"LoadingPhase": "PreDefault",
+			"WhitelistPlatforms": [
+				"Android",
+				"Win64"
 			]
 		},
 		{
 			"Name": "MercuryProtocols",
 			"Type": "Runtime",
-			"LoadingPhase": "Default",
-			"AdditionalDependencies": [
-				"MercuryNetwork",
-				"MercuryUtilities"
+			"LoadingPhase": "PreDefault",
+			"WhitelistPlatforms": [
+				"Android",
+				"Win64"
 			]
 		},
 		{
 			"Name": "MercuryUtilities",
 			"Type": "Runtime",
-			"LoadingPhase": "PreDefault"
+			"LoadingPhase": "PreDefault",
+			"WhitelistPlatforms": [
+				"Android",
+				"Win64"
+			]
 		}
 	]
 }

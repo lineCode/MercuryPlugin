@@ -12,7 +12,7 @@ FString UMercuryUtilitiesLibrary::ByteArrayToString(const TArray<uint8>& In, con
 	{
 		FixedString.AppendChar(BrokenString[Index] - 1);
 	}
-	return FixedString;
+	return std::move(FixedString);
 }
 
 int32 UMercuryUtilitiesLibrary::StringToByteArray(

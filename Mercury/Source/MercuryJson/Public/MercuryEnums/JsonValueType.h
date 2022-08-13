@@ -3,6 +3,8 @@
 #pragma once
 
 #include "MercuryJson.h"
+#include "Serialization/JsonTypes.h"
+#include "UObject/ObjectMacros.h"
 
 
 UENUM(BlueprintType, meta = (Keywords = "JSON Value Type None Null Number Boolean String Array Object"))

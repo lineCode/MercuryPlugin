@@ -1,8 +1,8 @@
 ﻿// Copyright (c) 2022 Kaya Adrian
 
-#include "JsonObject.h"
+#include "JsonObjects.h"
 
-#include "JsonValue.h"
+#include "JsonValues.h"
 #include "MercuryJsonLibrary.h"
 
 
@@ -30,13 +30,13 @@ TMap<FString, UMercuryJsonValue*> UMercuryJsonObject::GetValues() const
 {
 	TMap<FString, UMercuryJsonValue*>&& MercuryJsonValues = TMap<FString, UMercuryJsonValue*>();
 	if (!HasResource())
-		return MercuryJsonValues;
+		return std::move(MercuryJsonValues);
 	
 	for (const TTuple<FString, TSharedPtr<FJsonValue>>& JsonValues : Resource->Values)
 	{
 		MercuryJsonValues[JsonValues.Key] = UMercuryJsonLibrary::CreateJsonValue(JsonValues.Value);
 	}
-	return MercuryJsonValues;
+	return std::move(MercuryJsonValues);
 }
 UMercuryJsonObject* UMercuryJsonObject::SetValues(const TMap<FString, UMercuryJsonValue*>& Value)
 {
@@ -127,7 +127,7 @@ TArray<UMercuryJsonValue*> UMercuryJsonObject::GetArrayField(const FString& Fiel
 		MercuryArrayField.Add(UMercuryJsonLibrary::CreateJsonValue(JsonValue));
 	}
 
-	return MercuryArrayField;
+	return std::move(MercuryArrayField);
 }
 
 bool UMercuryJsonObject::GetBoolField(const FString& FieldName) const

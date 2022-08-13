@@ -2,7 +2,9 @@
 
 #include "MercuryNetwork.h"
 
-ISocketSubsystem* const FMercuryNetworkModule::SocketSubsystem = ISocketSubsystem::Get(PLATFORM_SOCKETSUBSYSTEM);
+#include "Modules/ModuleManager.h"
+
+ISocketSubsystem* FMercuryNetworkModule::SocketSubsystem = nullptr;
 
 
 DEFINE_LOG_CATEGORY(LogMercuryNetwork);
@@ -12,6 +14,8 @@ DEFINE_LOG_CATEGORY(LogMercuryNetwork);
 void FMercuryNetworkModule::StartupModule()
 {
 	UE_LOG(LogMercuryNetwork, Warning, TEXT("MercuryNetwork: Log Started"));
+
+	SocketSubsystem = ISocketSubsystem::Get(PLATFORM_SOCKETSUBSYSTEM);
 }
 
 void FMercuryNetworkModule::ShutdownModule()

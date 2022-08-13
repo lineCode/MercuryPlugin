@@ -3,6 +3,8 @@
 #pragma once
 
 #include "MercuryProtocols.h"
+#include "SocketTypes.h"
+#include "UObject/ObjectMacros.h"
 
 
 UENUM(BlueprintType, meta = (Keywords = "Socket Object Wait Condition For Read Or Write"))
@@ -15,25 +17,6 @@ enum class EMercurySocketWaitCondition : uint8
 
 namespace MercuryEnums::SocketWait
 {
-	constexpr ESocketWaitConditions::Type Convert(const EMercurySocketWaitCondition& WaitCondition)
-	{
-		switch (WaitCondition)
-		{
-		case EMercurySocketWaitCondition::WaitForRead:
-			return ESocketWaitConditions::WaitForRead;
-
-		case EMercurySocketWaitCondition::WaitForWrite:
-			return ESocketWaitConditions::WaitForWrite;
-
-		case EMercurySocketWaitCondition::WaitForReadOrWrite:
-			return ESocketWaitConditions::WaitForReadOrWrite;
-
-		default:
-			UE_LOG(LogMercuryProtocols, Error, TEXT("Unknown wait condition: %d"), WaitCondition);
-			return ESocketWaitConditions::WaitForRead;
-		}
-	}
-
 	constexpr EMercurySocketWaitCondition Convert(const ESocketWaitConditions::Type& WaitCondition)
 	{
 		switch (WaitCondition)
@@ -50,6 +33,25 @@ namespace MercuryEnums::SocketWait
 		default:
 			UE_LOG(LogMercuryProtocols, Error, TEXT("Unknown wait condition: %d"), WaitCondition);
 			return EMercurySocketWaitCondition::WaitForRead;
+		}
+	}
+
+	constexpr ESocketWaitConditions::Type Convert(const EMercurySocketWaitCondition& WaitCondition)
+	{
+		switch (WaitCondition)
+		{
+		case EMercurySocketWaitCondition::WaitForRead:
+			return ESocketWaitConditions::WaitForRead;
+
+		case EMercurySocketWaitCondition::WaitForWrite:
+			return ESocketWaitConditions::WaitForWrite;
+
+		case EMercurySocketWaitCondition::WaitForReadOrWrite:
+			return ESocketWaitConditions::WaitForReadOrWrite;
+
+		default:
+			UE_LOG(LogMercuryProtocols, Error, TEXT("Unknown wait condition: %d"), WaitCondition);
+			return ESocketWaitConditions::WaitForRead;
 		}
 	}
 }

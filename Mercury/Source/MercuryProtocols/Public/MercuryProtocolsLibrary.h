@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "Kismet/BlueprintFunctionLibrary.h"
 #include "MercuryObjects/Socket.h"
 #include "MercuryObjects/TCP/Listener.h"
 #include "MercuryObjects/TCP/MultiReceiver.h"

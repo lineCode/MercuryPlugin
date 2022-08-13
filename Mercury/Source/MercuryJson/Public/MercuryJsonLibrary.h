@@ -2,7 +2,8 @@
 
 #pragma once
 
-#include "JsonObject.h"
+#include "JsonObjects.h"
+#include "Kismet/BlueprintFunctionLibrary.h"
 
 #include "MercuryJsonLibrary.generated.h"
 

@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "Kismet/BlueprintFunctionLibrary.h"
 #include "MercuryObjects/HttpRequest.h"
 #include "MercuryObjects/HttpResponse.h"
 

@@ -4,6 +4,7 @@
 
 #include "Interfaces/IHttpRequest.h"
 #include "MercuryHttp.h"
+#include "UObject/ObjectMacros.h"
 
 
 UENUM(BlueprintType, meta = (

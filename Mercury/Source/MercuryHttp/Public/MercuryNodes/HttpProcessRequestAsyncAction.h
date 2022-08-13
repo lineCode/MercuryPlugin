@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "Engine/EngineTypes.h"
 #include "Kismet/BlueprintAsyncActionBase.h"
 
 #include "HttpProcessRequestAsyncAction.generated.h"

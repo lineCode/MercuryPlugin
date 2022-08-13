@@ -3,6 +3,8 @@
 #pragma once
 
 #include "MercuryProtocols.h"
+#include "SocketTypes.h"
+#include "UObject/ObjectMacros.h"
 
 
 UENUM(BlueprintType, meta = (Keywords = "Socket Object Shutdown Mode Read Write"))

@@ -2,7 +2,9 @@
 
 #include "HttpProcessRequestAsyncAction.h"
 
+#include "Engine/World.h"
 #include "HttpRequest.h"
+#include "TimerManager.h"
 
 
 UMercuryHttpProcessRequestAsyncAction::UMercuryHttpProcessRequestAsyncAction(const FObjectInitializer& ObjectInitializer)

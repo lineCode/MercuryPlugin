@@ -1,8 +1,8 @@
 ﻿// Copyright (c) 2022 Kaya Adrian
 
-#include "JsonValue.h"
+#include "JsonValues.h"
 
-#include "JsonObject.h"
+#include "JsonObjects.h"
 #include "MercuryJsonLibrary.h"
 
 
@@ -40,7 +40,7 @@ TArray<UMercuryJsonValue*> UMercuryJsonValue::AsArray() const
 		MercuryJsonValues.Add(UMercuryJsonLibrary::CreateJsonValue(JsonValue));
 	}
 
-	return MercuryJsonValues;
+	return std::move(MercuryJsonValues);
 }
 
 bool UMercuryJsonValue::AsBool() const

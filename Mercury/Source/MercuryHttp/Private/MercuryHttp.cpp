@@ -2,7 +2,7 @@
 
 #include "MercuryHttp.h"
 
-#include "HttpModule.h"
+#include "Modules/ModuleManager.h"
 
 FHttpModule* const FMercuryHttpModule::HttpModule = &FHttpModule::Get();
 

@@ -2,7 +2,6 @@
 
 #include "NetworkEndpoint.h"
 
-#include "InternetAddr.h"
 #include "MercuryNetworkLibrary.h"
 #include "NetworkAddress.h"
 

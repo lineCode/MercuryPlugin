@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "IPAddress.h"
 #include "MercuryResourceOwner.h"
 
 #include "InternetAddr.generated.h"

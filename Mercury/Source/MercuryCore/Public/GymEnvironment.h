@@ -87,9 +87,9 @@ protected:
 	PURE_VIRTUAL(UGymEnvironment::Reset, return void(););
 
 public:
-	FORCEINLINE const TObjectPtr<const UAIDecisionData>&& GetAIDecisionData() const { return AIDecisionData; }
+	FORCEINLINE const TObjectPtr<UAIDecisionData>& GetAIDecisionData() const { return AIDecisionData; }
 	FORCEINLINE TObjectPtr<UAIDecisionData>& GetAIDecisionData() { return AIDecisionData; }
 	
-	FORCEINLINE const TObjectPtr<const UEnvironmentData>&& GetEnvironmentData() const { return EnvironmentData; }
+	FORCEINLINE const TObjectPtr<UEnvironmentData>& GetEnvironmentData() const { return EnvironmentData; }
 	FORCEINLINE TObjectPtr<UEnvironmentData>& GetEnvironmentData() { return EnvironmentData; }
 };

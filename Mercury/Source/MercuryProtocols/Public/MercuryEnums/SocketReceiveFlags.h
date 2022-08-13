@@ -3,6 +3,8 @@
 #pragma once
 
 #include "MercuryProtocols.h"
+#include "SocketTypes.h"
+#include "UObject/ObjectMacros.h"
 
 
 UENUM(BlueprintType, meta = (Keywords = "Socket Object Receive Flags None Peek Wait All"))
@@ -15,25 +17,6 @@ enum class EMercurySocketReceiveFlags : uint8
 
 namespace MercuryEnums::SocketReceive
 {
-	constexpr ESocketReceiveFlags::Type Convert(const EMercurySocketReceiveFlags& ReceiveFlags)
-	{
-		switch (ReceiveFlags)
-		{
-		case EMercurySocketReceiveFlags::None:
-			return ESocketReceiveFlags::None;
-
-		case EMercurySocketReceiveFlags::Peek:
-			return ESocketReceiveFlags::Peek;
-
-		case EMercurySocketReceiveFlags::WaitAll:
-			return ESocketReceiveFlags::WaitAll;
-
-		default:
-			UE_LOG(LogMercuryProtocols, Error, TEXT("Unknown receive flags: %d"), ReceiveFlags);
-			return ESocketReceiveFlags::None;
-		}
-	}
-
 	constexpr EMercurySocketReceiveFlags Convert(const ESocketReceiveFlags::Type& ReceiveFlags)
 	{
 		switch (ReceiveFlags)
@@ -50,6 +33,25 @@ namespace MercuryEnums::SocketReceive
 		default:
 			UE_LOG(LogMercuryProtocols, Error, TEXT("Unknown receive flags: %d"), ReceiveFlags);
 			return EMercurySocketReceiveFlags::None;
+		}
+	}
+
+	constexpr ESocketReceiveFlags::Type Convert(const EMercurySocketReceiveFlags& ReceiveFlags)
+	{
+		switch (ReceiveFlags)
+		{
+		case EMercurySocketReceiveFlags::None:
+			return ESocketReceiveFlags::None;
+
+		case EMercurySocketReceiveFlags::Peek:
+			return ESocketReceiveFlags::Peek;
+
+		case EMercurySocketReceiveFlags::WaitAll:
+			return ESocketReceiveFlags::WaitAll;
+
+		default:
+			UE_LOG(LogMercuryProtocols, Error, TEXT("Unknown receive flags: %d"), ReceiveFlags);
+			return ESocketReceiveFlags::None;
 		}
 	}
 }

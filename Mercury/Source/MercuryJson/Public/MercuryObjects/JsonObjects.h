@@ -2,10 +2,11 @@
 
 #pragma once
 
+#include "Dom/JsonObject.h"
 #include "MercuryEnums/JsonValueType.h"
 #include "MercuryResourceOwner.h"
 
-#include "JsonObject.generated.h"
+#include "JsonObjects.generated.h"
 
 class UMercuryJsonValue;
 

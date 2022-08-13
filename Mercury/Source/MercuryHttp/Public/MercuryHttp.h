@@ -3,6 +3,8 @@
 #pragma once
 
 #include "HttpModule.h"
+#include "Logging/LogMacros.h"
+#include "Modules/ModuleInterface.h"
 
 
 DECLARE_LOG_CATEGORY_EXTERN(LogMercuryHttp, All, All);
@@ -16,5 +18,5 @@ protected:
 	virtual void ShutdownModule() override;
 
 public:
-	static FHttpModule* const& GetHttpModule() { return HttpModule; }
+	FORCEINLINE static FHttpModule* const& GetHttpModule() { return HttpModule; }
 };

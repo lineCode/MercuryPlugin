@@ -4,6 +4,7 @@
 
 #include "Interfaces/IPv4/IPv4SubnetMask.h"
 #include "MercuryNetwork.h"
+#include "UObject/ObjectMacros.h"
 
 
 UENUM(BlueprintType, meta = (Keywords = "Network Subnet Mask Class Invalid A B C"))

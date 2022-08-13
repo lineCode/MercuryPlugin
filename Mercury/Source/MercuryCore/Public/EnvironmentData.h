@@ -26,6 +26,6 @@ public:
 	FORCEINLINE const double& GetReward() const { return Reward; }
 	FORCEINLINE void SetReward(const double& Value) { Reward = Value; }
 
-	FORCEINLINE bool&& IsDone() const { return bIsDone; }
+	FORCEINLINE bool IsDone() const { return bIsDone; }
 	FORCEINLINE void SetDone(const bool& bValue) { bIsDone = bValue; }
 };

@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "Kismet/BlueprintFunctionLibrary.h"
 #include "MercuryObjects/InternetAddr.h"
 #include "MercuryObjects/NetworkAddress.h"
 #include "MercuryObjects/NetworkEndpoint.h"

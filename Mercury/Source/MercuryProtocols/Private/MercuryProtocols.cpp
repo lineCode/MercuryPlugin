@@ -2,9 +2,9 @@
 
 #include "MercuryProtocols.h"
 
-#include "SocketSubsystem.h"
+#include "Modules/ModuleManager.h"
 
-ISocketSubsystem* const FMercuryProtocolsModule::SocketSubsystem = ISocketSubsystem::Get(PLATFORM_SOCKETSUBSYSTEM);
+ISocketSubsystem* FMercuryProtocolsModule::SocketSubsystem = nullptr;
 
 
 DEFINE_LOG_CATEGORY(LogMercuryProtocols);
@@ -14,6 +14,8 @@ DEFINE_LOG_CATEGORY(LogMercuryProtocols);
 void FMercuryProtocolsModule::StartupModule()
 {
 	UE_LOG(LogMercuryProtocols, Warning, TEXT("MercuryProtocols: Log Started"));
+
+	SocketSubsystem = ISocketSubsystem::Get(PLATFORM_SOCKETSUBSYSTEM);
 }
 
 void FMercuryProtocolsModule::ShutdownModule()

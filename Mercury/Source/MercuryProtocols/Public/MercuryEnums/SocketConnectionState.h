@@ -3,6 +3,8 @@
 #pragma once
 
 #include "MercuryProtocols.h"
+#include "SocketTypes.h"
+#include "UObject/ObjectMacros.h"
 
 
 UENUM(BlueprintType, meta = (Keywords = "Socket Object Connection State Connected Error Not"))
@@ -15,25 +17,6 @@ enum class EMercurySocketConnectionState : uint8
 
 namespace MercuryEnums::SocketConnection
 {
-	constexpr ESocketConnectionState Convert(const EMercurySocketConnectionState& ConnectionState)
-	{
-		switch (ConnectionState)
-		{
-		case EMercurySocketConnectionState::Connected:
-			return SCS_Connected;
-
-		case EMercurySocketConnectionState::ConnectionError:
-			return SCS_ConnectionError;
-
-		case EMercurySocketConnectionState::NotConnected:
-			return SCS_NotConnected;
-
-		default:
-			UE_LOG(LogMercuryProtocols, Error, TEXT("Unknown connection state: %d"), ConnectionState);
-			return SCS_NotConnected;
-		}
-	}
-
 	constexpr EMercurySocketConnectionState Convert(const ESocketConnectionState& ConnectionState)
 	{
 		switch (ConnectionState)
@@ -50,6 +33,25 @@ namespace MercuryEnums::SocketConnection
 		default:
 			UE_LOG(LogMercuryProtocols, Error, TEXT("Unknown connection state: %d"), ConnectionState);
 			return EMercurySocketConnectionState::NotConnected;
+		}
+	}
+
+	constexpr ESocketConnectionState Convert(const EMercurySocketConnectionState& ConnectionState)
+	{
+		switch (ConnectionState)
+		{
+		case EMercurySocketConnectionState::Connected:
+			return SCS_Connected;
+
+		case EMercurySocketConnectionState::ConnectionError:
+			return SCS_ConnectionError;
+
+		case EMercurySocketConnectionState::NotConnected:
+			return SCS_NotConnected;
+
+		default:
+			UE_LOG(LogMercuryProtocols, Error, TEXT("Unknown connection state: %d"), ConnectionState);
+			return SCS_NotConnected;
 		}
 	}
 }
