@@ -11,7 +11,7 @@ DECLARE_LOG_CATEGORY_EXTERN(LogMercuryHttp, All, All);
 
 class FMercuryHttpModule : public IModuleInterface
 {
-	static FHttpModule* const HttpModule;
+	static FHttpModule* HttpModule;
 
 protected:
 	virtual void StartupModule() override;

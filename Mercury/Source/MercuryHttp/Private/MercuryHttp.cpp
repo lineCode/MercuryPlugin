@@ -4,7 +4,7 @@
 
 #include "Modules/ModuleManager.h"
 
-FHttpModule* const FMercuryHttpModule::HttpModule = &FHttpModule::Get();
+FHttpModule* FMercuryHttpModule::HttpModule = nullptr;
 
 
 DEFINE_LOG_CATEGORY(LogMercuryHttp);
@@ -13,8 +13,10 @@ DEFINE_LOG_CATEGORY(LogMercuryHttp);
 
 void FMercuryHttpModule::StartupModule()
 {
-	check(HttpModule);
 	UE_LOG(LogMercuryHttp, Warning, TEXT("MercuryHttp: Log Started"));
+
+	HttpModule = &FHttpModule::Get();
+	check(HttpModule);
 }
 
 void FMercuryHttpModule::ShutdownModule()
