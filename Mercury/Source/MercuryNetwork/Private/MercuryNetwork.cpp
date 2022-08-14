@@ -16,6 +16,7 @@ void FMercuryNetworkModule::StartupModule()
 	UE_LOG(LogMercuryNetwork, Warning, TEXT("MercuryNetwork: Log Started"));
 
 	SocketSubsystem = ISocketSubsystem::Get(PLATFORM_SOCKETSUBSYSTEM);
+	check(SocketSubsystem);
 }
 
 void FMercuryNetworkModule::ShutdownModule()

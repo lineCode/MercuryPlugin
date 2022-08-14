@@ -16,6 +16,7 @@ void FMercuryProtocolsModule::StartupModule()
 	UE_LOG(LogMercuryProtocols, Warning, TEXT("MercuryProtocols: Log Started"));
 
 	SocketSubsystem = ISocketSubsystem::Get(PLATFORM_SOCKETSUBSYSTEM);
+	check(SocketSubsystem);
 }
 
 void FMercuryProtocolsModule::ShutdownModule()
