@@ -18,7 +18,7 @@
 		{
 			"Name": "MercuryCore",
 			"Type": "Runtime",
-			"LoadingPhase": "PreDefault",
+			"LoadingPhase": "PostDefault",
 			"WhitelistPlatforms": [
 				"Android",
 				"Win64"
@@ -27,7 +27,10 @@
 		{
 			"Name": "MercuryHttp",
 			"Type": "Runtime",
-			"LoadingPhase": "PreDefault",
+			"LoadingPhase": "Default",
+			"AdditionalDependencies": [
+				"MercuryUtilities"
+			],
 			"WhitelistPlatforms": [
 				"Android",
 				"Win64"
@@ -36,7 +39,10 @@
 		{
 			"Name": "MercuryJson",
 			"Type": "Runtime",
-			"LoadingPhase": "PreDefault",
+			"LoadingPhase": "Default",
+			"AdditionalDependencies": [
+				"MercuryUtilities"
+			],
 			"WhitelistPlatforms": [
 				"Android",
 				"Win64"
@@ -45,7 +51,10 @@
 		{
 			"Name": "MercuryNetwork",
 			"Type": "Runtime",
-			"LoadingPhase": "PreDefault",
+			"LoadingPhase": "Default",
+			"AdditionalDependencies": [
+				"MercuryUtilities"
+			],
 			"WhitelistPlatforms": [
 				"Android",
 				"Win64"
@@ -54,7 +63,11 @@
 		{
 			"Name": "MercuryProtocols",
 			"Type": "Runtime",
-			"LoadingPhase": "PreDefault",
+			"LoadingPhase": "Default",
+			"AdditionalDependencies": [
+				"MercuryNetwork",
+				"MercuryUtilities"
+			],
 			"WhitelistPlatforms": [
 				"Android",
 				"Win64"
