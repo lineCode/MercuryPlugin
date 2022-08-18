@@ -6,9 +6,77 @@
 #include "MercuryJsonLibrary.h"
 
 
-TSharedPtr<FJsonValue> UMercuryJsonValue::CreateResource()
+TSharedPtr<FJsonValue> UMercuryJsonValue::CreateResource(const std::tuple<EMercuryJsonValueType, std::any>& Arguments)
+{
+	const std::any& JsonValueParam = std::get<1>(Arguments);
+	
+	switch (const EMercuryJsonValueType& ValueType = std::get<0>(Arguments))
+	{
+	case EMercuryJsonValueType::None:
+		return nullptr;
+
+	case EMercuryJsonValueType::Null:
+		return CreateNullResource();
+
+	case EMercuryJsonValueType::Number:
+		return JsonValueParam.type() == typeid(double) ?
+			CreateNumberResource(std::any_cast<double>(JsonValueParam)) : nullptr;
+
+	case EMercuryJsonValueType::Boolean:
+		return JsonValueParam.type() == typeid(bool) ?
+			CreateBooleanResource(std::any_cast<bool>(JsonValueParam)) : nullptr;
+
+	case EMercuryJsonValueType::String:
+		return JsonValueParam.type() == typeid(FString) ?
+			CreateStringResource(std::any_cast<FString>(JsonValueParam)) : nullptr;
+
+	case EMercuryJsonValueType::Array:
+		return JsonValueParam.type() == typeid(TArray<TSharedPtr<FJsonValue>>) ?
+			CreateArrayResource(std::any_cast<TArray<TSharedPtr<FJsonValue>>>(JsonValueParam)) : nullptr;
+
+	case EMercuryJsonValueType::Object:
+		return JsonValueParam.type() == typeid(TSharedPtr<FJsonObject>) ?
+			CreateObjectResource(std::any_cast<TSharedPtr<FJsonObject>>(JsonValueParam)) : nullptr;
+
+	default:
+		UE_LOG(LogMercuryJson, Error, TEXT("Unknown value type: %d"), ValueType);
+	}
+
+	return nullptr;
+}
+
+
+TSharedPtr<FJsonValueNull> UMercuryJsonValue::CreateNullResource()
 {
 	return MakeShareable(new FJsonValueNull());
+}
+TSharedPtr<FJsonValueNumber> UMercuryJsonValue::CreateNumberResource(const std::tuple<double>& Arguments)
+{
+	return MakeShareable(new FJsonValueNumber(std::get<0>(Arguments)));
+}
+TSharedPtr<FJsonValueBoolean> UMercuryJsonValue::CreateBooleanResource(const std::tuple<bool>& Arguments)
+{
+	return MakeShareable(new FJsonValueBoolean(std::get<0>(Arguments)));
+}
+TSharedPtr<FJsonValueString> UMercuryJsonValue::CreateStringResource(const std::tuple<FString>& Arguments)
+{
+	return MakeShareable(new FJsonValueString(std::get<0>(Arguments)));
+}
+TSharedPtr<FJsonValueNumberString> UMercuryJsonValue::CreateNumberStringResource(const std::tuple<FString>& Arguments)
+{
+	return MakeShareable(new FJsonValueNumberString(std::get<0>(Arguments)));
+}
+TSharedPtr<FJsonValueArray> UMercuryJsonValue::CreateArrayResource(
+	const std::tuple<TArray<TSharedPtr<FJsonValue>>>& Arguments
+)
+{
+	return MakeShareable(new FJsonValueArray(std::get<0>(Arguments)));
+}
+TSharedPtr<FJsonValueObject> UMercuryJsonValue::CreateObjectResource(
+	const std::tuple<TSharedPtr<FJsonObject>>& Arguments
+)
+{
+	return MakeShareable(new FJsonValueObject(std::get<0>(Arguments)));
 }
 
 bool UMercuryJsonValue::HasResource() const
@@ -76,6 +144,7 @@ void UMercuryJsonValue::AsArgumentType(TArray<UMercuryJsonValue*>& Value) const
 	
 	TArray<TSharedPtr<FJsonValue>>&& JsonValues = TArray<TSharedPtr<FJsonValue>>();
 	Resource->AsArgumentType(JsonValues);
+	
 	
 	for (const TSharedPtr<FJsonValue>& JsonValue : JsonValues)
 	{

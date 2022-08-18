@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include <any>
+
 #include "Dom/JsonValue.h"
 #include "MercuryEnums/JsonValueType.h"
 #include "MercuryResourceOwner.h"
@@ -12,12 +14,25 @@ class UMercuryJsonObject;
 
 
 UCLASS(Blueprintable, BlueprintType, DisplayName = "Mercury JSON Value")
-class MERCURYJSON_API UMercuryJsonValue : public UObject, public TResourceOwner<FJsonValue>
+class MERCURYJSON_API UMercuryJsonValue : public UObject,
+public TResourceOwner<FJsonValue, EMercuryJsonValueType, std::any>
 {
 	GENERATED_BODY()
 
 public:
-	virtual TSharedPtr<FJsonValue> CreateResource() override;
+	virtual TSharedPtr<FJsonValue> CreateResource(
+		const std::tuple<EMercuryJsonValueType, std::any>& Arguments
+	) override;
+	
+	virtual TSharedPtr<FJsonValueNull> CreateNullResource();
+	virtual TSharedPtr<FJsonValueNumber> CreateNumberResource(const std::tuple<double>& Arguments);
+	virtual TSharedPtr<FJsonValueBoolean> CreateBooleanResource(const std::tuple<bool>& Arguments);
+	virtual TSharedPtr<FJsonValueString> CreateStringResource(const std::tuple<FString>& Arguments);
+	virtual TSharedPtr<FJsonValueNumberString> CreateNumberStringResource(const std::tuple<FString>& Arguments);
+	virtual TSharedPtr<FJsonValueArray> CreateArrayResource(
+		const std::tuple<TArray<TSharedPtr<FJsonValue>>>& Arguments
+	);
+	virtual TSharedPtr<FJsonValueObject> CreateObjectResource(const std::tuple<TSharedPtr<FJsonObject>>& Arguments);
 
 	UFUNCTION(BlueprintPure, DisplayName = "Has Resource", Category = "JSON|Value", meta = (
 		Keywords = "Has Mercury Resource"
