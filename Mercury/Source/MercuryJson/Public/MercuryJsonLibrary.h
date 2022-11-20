@@ -69,4 +69,16 @@ public:
 		UMercuryJsonObject* const& Value,
 		const TSharedPtr<FJsonValue>& Resource
 	);
+
+	UFUNCTION(BlueprintCallable, DisplayName = "Serialize JSON", Category = "Mercury|JSON", meta = (
+		Keywords = "Serialize Serialise JSON Object Output String"
+	))
+	static UPARAM(DisplayName = "Success") bool
+	SerializeJson(const UMercuryJsonObject* const& JsonObject, FString& OutputString);
+
+	UFUNCTION(BlueprintCallable, DisplayName = "Deserialize JSON", Category = "Mercury|JSON", meta = (
+		Keywords = "Deserialize Deserialise JSON String Output Object"
+	))
+	static UPARAM(DisplayName = "Success") bool
+	DeserializeJson(const FString& JsonString, UMercuryJsonObject*& OutputObject);
 };

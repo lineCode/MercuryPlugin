@@ -9,7 +9,7 @@
 
 
 UCLASS(Abstract, Blueprintable, BlueprintType)
-class MERCURYCORE_API UGymEnvironment : public UObject
+class MERCURYCORE_API AGymEnvironment : public AActor
 {
 	GENERATED_BODY()
 
@@ -20,12 +20,14 @@ class MERCURYCORE_API UGymEnvironment : public UObject
 	TObjectPtr<UEnvironmentData> EnvironmentData;
 
 public:
-	UFUNCTION(BlueprintNativeEvent, DisplayName = "Step", Category = "Gym|Environment", meta = (
+	explicit AGymEnvironment(const FObjectInitializer& ObjectInitializer);
+	
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, DisplayName = "Step", Category = "Gym|Environment", meta = (
 		Keywords = "Gym Environment Execute Perform Do Next Step"
 	))
 	void Step();
 
-	UFUNCTION(BlueprintNativeEvent, DisplayName = "Send Data", Category = "Gym|Environment", meta = (
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, DisplayName = "Send Data", Category = "Gym|Environment", meta = (
 		Keywords = "Gym Environment Server Exchange Data Client"
 	))
 	void ExchangeData(UAIDecisionData*& ServerData, UEnvironmentData* const& ClientData = nullptr);
@@ -37,30 +39,35 @@ public:
 		ExchangeData(const_cast<UAIDecisionData*&>(ServerData), const_cast<UEnvironmentData* const&>(ClientData));
 	}
 	
-	UFUNCTION(BlueprintNativeEvent, DisplayName = "Execute Action", Category = "Gym|Environment", meta = (
-		Keywords = "Gym Environment Execute Perform Do Action"
-	))
+	UFUNCTION(
+		BlueprintCallable, BlueprintNativeEvent, DisplayName = "Execute Action", Category = "Gym|Environment",
+		meta = (Keywords = "Gym Environment Execute Perform Do Action")
+	)
 	void ExecuteAction();
 
-	UFUNCTION(BlueprintNativeEvent, DisplayName = "Update State", Category = "Gym|Environment", meta = (
-		Keywords = "Gym Environment Update Change State"
-	))
+	UFUNCTION(
+		BlueprintCallable, BlueprintNativeEvent, DisplayName = "Update State", Category = "Gym|Environment",
+		meta = (Keywords = "Gym Environment Update Change State")
+	)
 	void UpdateState();
 
-	UFUNCTION(BlueprintNativeEvent, DisplayName = "Update Reward", Category = "Gym|Environment", meta = (
-		Keywords = "Gym Environment Update Change Reward"
-	))
+	UFUNCTION(
+		BlueprintCallable, BlueprintNativeEvent, DisplayName = "Update Reward", Category = "Gym|Environment",
+		meta = (Keywords = "Gym Environment Update Change Reward")
+	)
 	void UpdateReward();
 
-	UFUNCTION(BlueprintNativeEvent, DisplayName = "Update Done", Category = "Gym|Environment", meta = (
-		Keywords = "Gym Environment Update If When Done Finished"
-	))
+	UFUNCTION(
+		BlueprintCallable, BlueprintNativeEvent, DisplayName = "Update Done", Category = "Gym|Environment",
+		meta = (Keywords = "Gym Environment Update If When Done Finished")
+	)
 	void UpdateDone();
 
-	UFUNCTION(BlueprintNativeEvent, DisplayName = "Reset", Category = "Gym|Environment", meta = (
-		Keywords = "Gym Environment Reset"
-	))
-	void Reset();
+	UFUNCTION(
+		BlueprintCallable, BlueprintNativeEvent, DisplayName = "Reset Environment", Category = "Gym|Environment",
+		meta = (Keywords = "Gym Environment Reset")
+	)
+	void ResetEnvironment();
 
 protected:
 	virtual void Step_Implementation();
@@ -69,22 +76,22 @@ protected:
 		UAIDecisionData*& ServerData,
 		UEnvironmentData* const& ClientData = nullptr
 	)
-	PURE_VIRTUAL(UGymEnvironment::ExchangeData, return void(););
+	PURE_VIRTUAL(AGymEnvironment::ExchangeData, return void(););
 
 	virtual void ExecuteAction_Implementation()
-	PURE_VIRTUAL(UGymEnvironment::ExecuteAction, return void(););
+	PURE_VIRTUAL(AGymEnvironment::ExecuteAction, return void(););
 
 	virtual void UpdateState_Implementation()
-	PURE_VIRTUAL(UGymEnvironment::UpdateState, return void(););
+	PURE_VIRTUAL(AGymEnvironment::UpdateState, return void(););
 
 	virtual void UpdateReward_Implementation()
-	PURE_VIRTUAL(UGymEnvironment::UpdateReward, return void(););
+	PURE_VIRTUAL(AGymEnvironment::UpdateReward, return void(););
 
 	virtual void UpdateDone_Implementation()
-	PURE_VIRTUAL(UGymEnvironment::UpdateDone, return void(););
+	PURE_VIRTUAL(AGymEnvironment::UpdateDone, return void(););
 
-	virtual void Reset_Implementation()
-	PURE_VIRTUAL(UGymEnvironment::Reset, return void(););
+	virtual void ResetEnvironment_Implementation()
+	PURE_VIRTUAL(AGymEnvironment::ResetEnvironment, return void(););
 
 public:
 	FORCEINLINE const TObjectPtr<UAIDecisionData>& GetAIDecisionData() const { return AIDecisionData; }

@@ -109,7 +109,7 @@ UMercuryJsonValue* UMercuryJsonLibrary::CreateJsonValueArray(
 		ResourceValues.Add(ArrayValue->GetResource());
 	}
 	
-	JsonValue->SetResource(Resource ? Resource : JsonValue->CreateArrayResource(ResourceValues));
+	JsonValue->SetResource(JsonValue->CreateArrayResource(ResourceValues));
 	return JsonValue;
 }
 
@@ -125,4 +125,23 @@ UMercuryJsonValue* UMercuryJsonLibrary::CreateJsonValueObject(
 	UMercuryJsonValue* const&& JsonValue = NewObject<UMercuryJsonValue>();
 	JsonValue->SetResource(Resource ? Resource : JsonValue->CreateObjectResource(Value->GetResource()));
 	return JsonValue;
+}
+
+bool UMercuryJsonLibrary::SerializeJson(const UMercuryJsonObject* const& JsonObject, FString& OutputString)
+{
+	const TSharedPtr<FJsonObject>& Resource = JsonObject->GetResource();
+	
+	return Resource && FJsonSerializer::Serialize(
+		Resource.ToSharedRef(),
+		TJsonWriterFactory<>::Create(&OutputString)
+	);
+}
+
+bool UMercuryJsonLibrary::DeserializeJson(const FString& JsonString, UMercuryJsonObject*& OutputObject)
+{
+	TSharedPtr<FJsonObject> JsonParsed;
+	const bool& bSuccess = FJsonSerializer::Deserialize(TJsonReaderFactory<>::Create(JsonString), JsonParsed);
+
+	OutputObject = CreateJsonObject(JsonParsed);
+	return bSuccess;
 }
