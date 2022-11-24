@@ -4,7 +4,7 @@
 
 
 /**
- * Templated interface for managing a resource.
+ * Templated interface for managing a resource
  *
  * @tparam T Resource type
  * @tparam Args Custom types for resource creation

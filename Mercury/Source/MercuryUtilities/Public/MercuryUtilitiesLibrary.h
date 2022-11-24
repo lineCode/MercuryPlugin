@@ -7,7 +7,7 @@
 #include "MercuryUtilitiesLibrary.generated.h"
 
 
-/** Mercury utility functions compiled into a library. */
+/** Mercury utility functions compiled into a library */
 UCLASS(Abstract, DisplayName = "Mercury Utilities Blueprint Function Library")
 class MERCURYUTILITIES_API UMercuryUtilitiesLibrary : public UBlueprintFunctionLibrary
 {

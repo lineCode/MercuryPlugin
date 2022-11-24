@@ -8,7 +8,7 @@
 
 DECLARE_LOG_CATEGORY_EXTERN(LogMercuryUtilities, All, All);
 
-/** Mercury module for utilities used throughout the plugin. */
+/** Mercury module for utilities used throughout the plugin */
 class FMercuryUtilitiesModule : public IModuleInterface
 {
 	/** Logs that MercuryUtilities was loaded as a warning. */
