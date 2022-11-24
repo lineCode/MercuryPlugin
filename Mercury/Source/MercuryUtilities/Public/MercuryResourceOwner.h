@@ -22,7 +22,7 @@ public:
 	/** Creates a default resource. */
 	virtual TSharedPtr<T> CreateResource();
 	
-	/** Creates a resource using extra arguments. */
+	/** Creates a default resource using extra arguments. */
 	virtual TSharedPtr<T> CreateResource(const std::tuple<Args...>& Arguments);
 
 	/**
