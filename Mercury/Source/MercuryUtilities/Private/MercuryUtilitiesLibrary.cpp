@@ -15,21 +15,17 @@ FString UMercuryUtilitiesLibrary::ByteArrayToString(const TArray<uint8>& In, con
 	return std::move(FixedString);
 }
 
-int32 UMercuryUtilitiesLibrary::StringToByteArray(
-	const FString& String,
-	TArray<uint8>& OutBytes,
-	const int32 MaxBufferSize
-)
+int32 UMercuryUtilitiesLibrary::StringToByteArray(const FString& In, TArray<uint8>& Out, const int32 MaxBufferSize)
 {
 	uint8*&& BrokenBytes = new uint8[MaxBufferSize];
-	OutBytes.SetNumUninitialized(MaxBufferSize);
+	Out.SetNumUninitialized(MaxBufferSize);
 	
-	const int32&& BytesCopied = StringToBytes(String, BrokenBytes, MaxBufferSize);
+	const int32&& BytesCopied = StringToBytes(In, BrokenBytes, MaxBufferSize);
 	for (int32&& Index = 0; Index < BytesCopied; ++Index)
 	{
-		OutBytes[Index] = BrokenBytes[Index] + 1;
+		Out[Index] = BrokenBytes[Index] + 1;
 	}
-	OutBytes.Shrink();
+	Out.Shrink();
 
 	delete[] BrokenBytes;
 	return BytesCopied;
