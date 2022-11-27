@@ -7,6 +7,11 @@
 #include "UObject/ObjectMacros.h"
 
 
+/**
+ * Mercury implementation of ESocketReceiveFlags to allow Blueprints integration
+ *
+ * @see ESocketReceiveFlags
+ */
 UENUM(BlueprintType, meta = (Keywords = "Socket Object Receive Flags None Peek Wait All"))
 enum class EMercurySocketReceiveFlags : uint8
 {
@@ -17,6 +22,7 @@ enum class EMercurySocketReceiveFlags : uint8
 
 namespace MercuryEnums::SocketReceive
 {
+	/** Converts UE enum values to the equivalent Mercury ones. */
 	constexpr EMercurySocketReceiveFlags Convert(const ESocketReceiveFlags::Type& ReceiveFlags)
 	{
 		switch (ReceiveFlags)
@@ -36,6 +42,7 @@ namespace MercuryEnums::SocketReceive
 		}
 	}
 
+	/** Converts Mercury enum values to the equivalent UE ones. */
 	constexpr ESocketReceiveFlags::Type Convert(const EMercurySocketReceiveFlags& ReceiveFlags)
 	{
 		switch (ReceiveFlags)

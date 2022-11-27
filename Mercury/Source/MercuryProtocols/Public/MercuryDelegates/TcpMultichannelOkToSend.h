@@ -5,6 +5,15 @@
 #include "TcpMultichannelOkToSend.generated.h"
 
 
+/**
+ * Mercury implementation of FOnMultichannelTcpOkToSend to allow Blueprints integration
+ *
+ * @param Count Size of packet
+ * @param Channel Place to send packet to
+ * @return Does the bandwidth allow the packet to be sent?
+ *
+ * @see FOnMultichannelTcpOkToSend
+ */
 UDELEGATE(BlueprintCallable, DisplayName = "OK To Send Event")
 DECLARE_DYNAMIC_DELEGATE_RetVal_TwoParams(
 	bool, FMercuryTcpMultichannelOkToSendDelegate,

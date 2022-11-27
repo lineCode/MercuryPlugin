@@ -10,10 +10,6 @@ TSharedPtr<FMultichannelTcpSender> UMercuryTcpMultiSender::CreateResource(const 
 	
 	return MakeShareable(new FMultichannelTcpSender(std::get<0>(Arguments), InOkToSendDelegate));
 }
-UMercuryTcpMultiSender::UMercuryTcpMultiSender(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
-{
-	bOkToSendDone = false;
-}
 
 bool UMercuryTcpMultiSender::HasResource() const
 {
@@ -74,18 +70,8 @@ FSingleThreadRunnable* UMercuryTcpMultiSender::GetSingleThreadInterface()
 
 bool UMercuryTcpMultiSender::BindOkToSend(const int32 Count, const uint32 Channel)
 {
-	bOkToSendDone = false;
-
-	bool&& bSuccess = false;
-	if (!OnMercuryTcpMultichannelOkToSendDelegate.IsBound())
-	{
-		bOkToSendDone = true;
-		return bSuccess;
-	}
-
-	bSuccess = OnMercuryTcpMultichannelOkToSendDelegate.Execute(Count, Channel);
-	bOkToSendDone = true;
-	return bSuccess;
+	return OnMercuryTcpMultichannelOkToSendDelegate.IsBound()
+	&& OnMercuryTcpMultichannelOkToSendDelegate.Execute(Count, Channel);
 }
 
 UMercuryTcpMultiSender* UMercuryTcpMultiSender::K2_SetOkToSendEvent(

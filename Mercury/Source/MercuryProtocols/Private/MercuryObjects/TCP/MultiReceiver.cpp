@@ -10,11 +10,6 @@ TSharedPtr<FMultichannelTcpReceiver> UMercuryTcpMultiReceiver::CreateResource(co
 	
 	return MakeShareable(new FMultichannelTcpReceiver(std::get<0>(Arguments), InReceiveDelegate));
 }
-UMercuryTcpMultiReceiver::UMercuryTcpMultiReceiver(const FObjectInitializer& ObjectInitializer)
-: Super(ObjectInitializer)
-{
-	bReceiveDone = false;
-}
 
 bool UMercuryTcpMultiReceiver::HasResource() const
 {
@@ -63,15 +58,10 @@ void UMercuryTcpMultiReceiver::BindReceive(
 	const bool bNeedsByteSwap
 )
 {
-	bReceiveDone = false;
-	if (!OnMercuryTcpMultichannelReceiveDelegate.IsBound())
+	if (OnMercuryTcpMultichannelReceiveDelegate.IsBound())
 	{
-		bReceiveDone = true;
-		return;
+		OnMercuryTcpMultichannelReceiveDelegate.Execute(Data, BytesReceived, bNeedsByteSwap);
 	}
-
-	OnMercuryTcpMultichannelReceiveDelegate.Execute(Data, BytesReceived, bNeedsByteSwap);
-	bReceiveDone = true;
 }
 
 UMercuryTcpMultiReceiver* UMercuryTcpMultiReceiver::K2_SetReceiveEvent(

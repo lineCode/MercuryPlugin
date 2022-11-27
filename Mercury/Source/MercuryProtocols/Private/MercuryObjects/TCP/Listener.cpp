@@ -22,11 +22,6 @@ TSharedPtr<FTcpListener> UMercuryTcpListener::CreateResource(
 	TcpListener->OnConnectionAccepted().BindUObject(this, &UMercuryTcpListener::BindConnectionAccepted);
 	return TcpListener;
 }
-UMercuryTcpListener::UMercuryTcpListener(const FObjectInitializer& ObjectInitializer)
-: Super(ObjectInitializer)
-{
-	bConnectionAcceptedDone = false;
-}
 
 TSharedPtr<FTcpListener> UMercuryTcpListener::CreateResourceWithEndpoint(
 	const std::tuple<FIPv4Endpoint, FTimespan, bool>& Arguments
@@ -104,16 +99,8 @@ FSingleThreadRunnable* UMercuryTcpListener::GetSingleThreadInterface()
 
 bool UMercuryTcpListener::BindConnectionAccepted(FSocket* const Socket, const FIPv4Endpoint& Endpoint)
 {
-	bConnectionAcceptedDone = false;
-
-	bool&& bSuccess = false;
-	if (!OnMercuryTcpListenerConnectionAcceptedDelegate.IsBound())
-	{
-		bConnectionAcceptedDone = true;
-		return bSuccess;
-	}
-
-	bSuccess = OnMercuryTcpListenerConnectionAcceptedDelegate.Execute(
+	return OnMercuryTcpListenerConnectionAcceptedDelegate.IsBound()
+	&& OnMercuryTcpListenerConnectionAcceptedDelegate.Execute(
 		UMercuryProtocolsLibrary::CreateSocket(
 			Socket,
 			NAME_Stream,
@@ -122,8 +109,6 @@ bool UMercuryTcpListener::BindConnectionAccepted(FSocket* const Socket, const FI
 		),
 		UMercuryNetworkLibrary::CreateNetworkEndpoint(new FIPv4Endpoint(Endpoint))
 	);
-	bConnectionAcceptedDone = true;
-	return bSuccess;
 }
 
 UMercuryTcpListener* UMercuryTcpListener::K2_SetConnectionAcceptedEvent(

@@ -48,7 +48,7 @@ UMercurySocket* UMercurySocket::Accept(UMercuryInternetAddr* const& OutAddr, con
 {
 	if (!HasResource())
 		return nullptr;
-
+	
 	FSocket* const&& ClientSocket = Resource->Accept(*OutAddr->GetResource(), InSocketDescription);
 	return ClientSocket ? UMercuryProtocolsLibrary::CreateSocket(
 		ClientSocket,

@@ -9,11 +9,16 @@
 
 DECLARE_LOG_CATEGORY_EXTERN(LogMercuryProtocols, All, All);
 
+/** Mercury module which contains TCP and UDP features */
 class FMercuryProtocolsModule : public IModuleInterface
 {
+	/** Used to create sockets */
 	static ISocketSubsystem* SocketSubsystem;
-	
+
+	/** Logs that MercuryProtocols was loaded as a warning. */
 	virtual void StartupModule() override;
+	
+	/** Logs that MercuryProtocols was unloaded as a warning. */
 	virtual void ShutdownModule() override;
 
 public:

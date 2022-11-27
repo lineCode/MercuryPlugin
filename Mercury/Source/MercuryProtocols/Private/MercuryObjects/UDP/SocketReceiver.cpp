@@ -17,11 +17,6 @@ TSharedPtr<FUdpSocketReceiver> UMercuryUdpSocketReceiver::CreateResource(
 	UdpReceiver->OnDataReceived().BindUObject(this, &UMercuryUdpSocketReceiver::BindDataReceived);
 	return UdpReceiver;
 }
-UMercuryUdpSocketReceiver::UMercuryUdpSocketReceiver(const FObjectInitializer& ObjectInitializer)
-: Super(ObjectInitializer)
-{
-	bDataReceivedDone = false;
-}
 
 bool UMercuryUdpSocketReceiver::HasResource() const
 {
@@ -77,18 +72,13 @@ void UMercuryUdpSocketReceiver::SetMaxReadBufferSize(const uint32& InMaxReadBuff
 
 void UMercuryUdpSocketReceiver::BindDataReceived(const FArrayReaderPtr& Data, const FIPv4Endpoint& Endpoint)
 {
-	bDataReceivedDone = false;
-	if (!OnMercuryUdpSocketDataReceivedDelegate.IsBound())
+	if (OnMercuryUdpSocketDataReceivedDelegate.IsBound())
 	{
-		bDataReceivedDone = true;
-		return;
+		OnMercuryUdpSocketDataReceivedDelegate.Execute(
+			*Data,
+			UMercuryNetworkLibrary::CreateNetworkEndpoint(new FIPv4Endpoint(Endpoint))
+		);
 	}
-
-	OnMercuryUdpSocketDataReceivedDelegate.Execute(
-		*Data,
-		UMercuryNetworkLibrary::CreateNetworkEndpoint(new FIPv4Endpoint(Endpoint))
-	);
-	bDataReceivedDone = true;
 }
 
 UMercuryUdpSocketReceiver* UMercuryUdpSocketReceiver::K2_SetDataReceivedEvent(

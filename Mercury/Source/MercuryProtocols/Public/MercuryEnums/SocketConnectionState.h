@@ -7,6 +7,11 @@
 #include "UObject/ObjectMacros.h"
 
 
+/**
+ * Mercury implementation of ESocketConnectionState to allow Blueprints integration
+ *
+ * @see ESocketConnectionState
+ */
 UENUM(BlueprintType, meta = (Keywords = "Socket Object Connection State Connected Error Not"))
 enum class EMercurySocketConnectionState : uint8
 {
@@ -17,6 +22,7 @@ enum class EMercurySocketConnectionState : uint8
 
 namespace MercuryEnums::SocketConnection
 {
+	/** Converts UE enum values to the equivalent Mercury ones. */
 	constexpr EMercurySocketConnectionState Convert(const ESocketConnectionState& ConnectionState)
 	{
 		switch (ConnectionState)
@@ -36,6 +42,7 @@ namespace MercuryEnums::SocketConnection
 		}
 	}
 
+	/** Converts Mercury enum values to the equivalent UE ones. */
 	constexpr ESocketConnectionState Convert(const EMercurySocketConnectionState& ConnectionState)
 	{
 		switch (ConnectionState)

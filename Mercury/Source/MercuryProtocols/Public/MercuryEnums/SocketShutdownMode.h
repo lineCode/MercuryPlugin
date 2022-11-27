@@ -7,6 +7,11 @@
 #include "UObject/ObjectMacros.h"
 
 
+/**
+ * Mercury implementation of ESocketShutdownMode to allow Blueprints integration
+ *
+ * @see ESocketShutdownMode
+ */
 UENUM(BlueprintType, meta = (Keywords = "Socket Object Shutdown Mode Read Write"))
 enum class EMercurySocketShutdownMode : uint8
 {
@@ -17,6 +22,7 @@ enum class EMercurySocketShutdownMode : uint8
 
 namespace MercuryEnums::SocketShutdown
 {
+	/** Converts UE enum values to the equivalent Mercury ones. */
 	constexpr EMercurySocketShutdownMode Convert(const ESocketShutdownMode& ShutdownMode)
 	{
 		switch (ShutdownMode)
@@ -36,6 +42,7 @@ namespace MercuryEnums::SocketShutdown
 		}
 	}
 
+	/** Converts Mercury enum values to the equivalent UE ones. */
 	constexpr ESocketShutdownMode Convert(const EMercurySocketShutdownMode& ShutdownMode)
 	{
 		switch (ShutdownMode)

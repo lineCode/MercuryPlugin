@@ -7,6 +7,11 @@
 #include "UObject/ObjectMacros.h"
 
 
+/**
+ * Mercury implementation of ESocketWaitConditions to allow Blueprints integration
+ *
+ * @see ESocketWaitConditions
+ */
 UENUM(BlueprintType, meta = (Keywords = "Socket Object Wait Condition For Read Or Write"))
 enum class EMercurySocketWaitCondition : uint8
 {
@@ -17,6 +22,7 @@ enum class EMercurySocketWaitCondition : uint8
 
 namespace MercuryEnums::SocketWait
 {
+	/** Converts UE enum values to the equivalent Mercury ones. */
 	constexpr EMercurySocketWaitCondition Convert(const ESocketWaitConditions::Type& WaitCondition)
 	{
 		switch (WaitCondition)
@@ -36,6 +42,7 @@ namespace MercuryEnums::SocketWait
 		}
 	}
 
+	/** Converts Mercury enum values to the equivalent UE ones. */
 	constexpr ESocketWaitConditions::Type Convert(const EMercurySocketWaitCondition& WaitCondition)
 	{
 		switch (WaitCondition)

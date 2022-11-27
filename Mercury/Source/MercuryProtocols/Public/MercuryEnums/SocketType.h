@@ -7,6 +7,11 @@
 #include "UObject/ObjectMacros.h"
 
 
+/**
+ * Mercury implementation of ESocketType to allow Blueprints integration
+ *
+ * @see ESocketType
+ */
 UENUM(BlueprintType, meta = (Keywords = "Socket Object Type Datagram Streaming Unknown TCP UDP"))
 enum class EMercurySocketType : uint8
 {
@@ -17,6 +22,7 @@ enum class EMercurySocketType : uint8
 
 namespace MercuryEnums::SocketType
 {
+	/** Converts UE enum values to the equivalent Mercury ones. */
 	constexpr EMercurySocketType Convert(const ESocketType& SocketType)
 	{
 		switch (SocketType)
@@ -35,7 +41,8 @@ namespace MercuryEnums::SocketType
 			return EMercurySocketType::Unknown;
 		}
 	}
-	
+
+	/** Converts Mercury enum values to the equivalent UE ones. */
 	constexpr ESocketType Convert(const EMercurySocketType& SocketType)
 	{
 		switch (SocketType)
