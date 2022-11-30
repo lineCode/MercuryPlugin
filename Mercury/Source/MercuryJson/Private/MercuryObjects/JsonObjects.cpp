@@ -18,11 +18,8 @@ bool UMercuryJsonObject::HasResource() const
 
 void UMercuryJsonObject::Duplicate(const UMercuryJsonObject* const& Source, UMercuryJsonObject* const& Destination)
 {
-	if (!HasResource())
-		return;
-
-	TSharedPtr<FJsonObject>&& ResourceDestination = nullptr;
-	Resource->Duplicate(Source->GetResource(), ResourceDestination);
+	TSharedPtr<FJsonObject>&& ResourceDestination = Destination->CreateResource();
+	FJsonObject::Duplicate(Source->GetResource(), ResourceDestination);
 	Destination->SetResource(ResourceDestination);
 }
 
@@ -108,12 +105,13 @@ void UMercuryJsonObject::RemoveField(const FString& FieldName)
 	Resource->RemoveField(FieldName);
 }
 
-void UMercuryJsonObject::SetField(const FString& FieldName, const UMercuryJsonValue* const& Value)
+UMercuryJsonObject* UMercuryJsonObject::SetField(const FString& FieldName, const UMercuryJsonValue* const& Value)
 {
 	if (!HasResource())
-		return;
+		return this;
 	
 	Resource->SetField(FieldName, Value->GetResource());
+	return this;
 }
 
 TArray<UMercuryJsonValue*> UMercuryJsonObject::GetArrayField(const FString& FieldName) const
@@ -189,10 +187,10 @@ bool UMercuryJsonObject::HasTypedField(const FString& FieldName, const EMercuryJ
 	}
 }
 
-void UMercuryJsonObject::SetArrayField(const FString& FieldName, const TArray<UMercuryJsonValue*>& Array)
+UMercuryJsonObject* UMercuryJsonObject::SetArrayField(const FString& FieldName, const TArray<UMercuryJsonValue*>& Array)
 {
 	if (!HasResource())
-		return;
+		return this;
 
 	TArray<TSharedPtr<FJsonValue>>&& JsonValues = TArray<TSharedPtr<FJsonValue>>();
 	for (const UMercuryJsonValue* const& MercuryJsonValue : Array)
@@ -201,38 +199,43 @@ void UMercuryJsonObject::SetArrayField(const FString& FieldName, const TArray<UM
 	}
 	
 	Resource->SetArrayField(FieldName, JsonValues);
+	return this;
 }
 
-void UMercuryJsonObject::SetBoolField(const FString& FieldName, const bool bInValue)
+UMercuryJsonObject* UMercuryJsonObject::SetBoolField(const FString& FieldName, const bool bInValue)
 {
 	if (!HasResource())
-		return;
+		return this;
 	
 	Resource->SetBoolField(FieldName, bInValue);
+	return this;
 }
 
-void UMercuryJsonObject::SetNumberField(const FString& FieldName, const double Number)
+UMercuryJsonObject* UMercuryJsonObject::SetNumberField(const FString& FieldName, const double Number)
 {
 	if (!HasResource())
-		return;
+		return this;
 
 	Resource->SetNumberField(FieldName, Number);
+	return this;
 }
 
-void UMercuryJsonObject::SetObjectField(const FString& FieldName, const UMercuryJsonObject* const& JsonObject)
+UMercuryJsonObject* UMercuryJsonObject::SetObjectField(const FString& FieldName, const UMercuryJsonObject* const& JsonObject)
 {
 	if (!HasResource())
-		return;
+		return this;
 
 	Resource->SetObjectField(FieldName, JsonObject->GetResource());
+	return this;
 }
 
-void UMercuryJsonObject::SetStringField(const FString& FieldName, const FString& StringValue)
+UMercuryJsonObject* UMercuryJsonObject::SetStringField(const FString& FieldName, const FString& StringValue)
 {
 	if (!HasResource())
-		return;
+		return this;
 
 	Resource->SetStringField(FieldName, StringValue);
+	return this;
 }
 
 bool UMercuryJsonObject::TryGetArrayField(const FString& FieldName, TArray<UMercuryJsonValue*>& OutArray) const

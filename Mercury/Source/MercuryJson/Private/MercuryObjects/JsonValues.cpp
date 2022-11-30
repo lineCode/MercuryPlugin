@@ -50,33 +50,29 @@ TSharedPtr<FJsonValueNull> UMercuryJsonValue::CreateNullResource()
 {
 	return MakeShareable(new FJsonValueNull());
 }
-TSharedPtr<FJsonValueNumber> UMercuryJsonValue::CreateNumberResource(const std::tuple<double>& Arguments)
+TSharedPtr<FJsonValueNumber> UMercuryJsonValue::CreateNumberResource(const double& Argument)
 {
-	return MakeShareable(new FJsonValueNumber(std::get<0>(Arguments)));
+	return MakeShareable(new FJsonValueNumber(Argument));
 }
-TSharedPtr<FJsonValueBoolean> UMercuryJsonValue::CreateBooleanResource(const std::tuple<bool>& Arguments)
+TSharedPtr<FJsonValueBoolean> UMercuryJsonValue::CreateBooleanResource(const bool& bArgument)
 {
-	return MakeShareable(new FJsonValueBoolean(std::get<0>(Arguments)));
+	return MakeShareable(new FJsonValueBoolean(bArgument));
 }
-TSharedPtr<FJsonValueString> UMercuryJsonValue::CreateStringResource(const std::tuple<FString>& Arguments)
+TSharedPtr<FJsonValueString> UMercuryJsonValue::CreateStringResource(const FString& Argument)
 {
-	return MakeShareable(new FJsonValueString(std::get<0>(Arguments)));
+	return MakeShareable(new FJsonValueString(Argument));
 }
-TSharedPtr<FJsonValueNumberString> UMercuryJsonValue::CreateNumberStringResource(const std::tuple<FString>& Arguments)
+TSharedPtr<FJsonValueNumberString> UMercuryJsonValue::CreateNumberStringResource(const FString& Argument)
 {
-	return MakeShareable(new FJsonValueNumberString(std::get<0>(Arguments)));
+	return MakeShareable(new FJsonValueNumberString(Argument));
 }
-TSharedPtr<FJsonValueArray> UMercuryJsonValue::CreateArrayResource(
-	const std::tuple<TArray<TSharedPtr<FJsonValue>>>& Arguments
-)
+TSharedPtr<FJsonValueArray> UMercuryJsonValue::CreateArrayResource(const TArray<TSharedPtr<FJsonValue>>& Argument)
 {
-	return MakeShareable(new FJsonValueArray(std::get<0>(Arguments)));
+	return MakeShareable(new FJsonValueArray(Argument));
 }
-TSharedPtr<FJsonValueObject> UMercuryJsonValue::CreateObjectResource(
-	const std::tuple<TSharedPtr<FJsonObject>>& Arguments
-)
+TSharedPtr<FJsonValueObject> UMercuryJsonValue::CreateObjectResource(const TSharedPtr<FJsonObject>& Argument)
 {
-	return MakeShareable(new FJsonValueObject(std::get<0>(Arguments)));
+	return MakeShareable(new FJsonValueObject(Argument));
 }
 
 bool UMercuryJsonValue::HasResource() const
@@ -233,18 +229,15 @@ bool UMercuryJsonValue::TryGetString(FString& OutString) const
 
 UMercuryJsonValue* UMercuryJsonValue::Duplicate(const UMercuryJsonValue* const& Source)
 {
-	return UMercuryJsonLibrary::CreateJsonValue(
-		HasResource() ? Resource->Duplicate(Source->GetResource()) : nullptr
-	);
+	return UMercuryJsonLibrary::CreateJsonValue(FJsonValue::Duplicate(Source->GetResource()));
 }
 
-bool UMercuryJsonValue::CompareEqual(const UMercuryJsonValue* const& Left, const UMercuryJsonValue* const& Right) const
+bool UMercuryJsonValue::CompareEqual(const UMercuryJsonValue* const& Left, const UMercuryJsonValue* const& Right)
 {
 	const FJsonValue* const&& LeftResource = Left->GetResource().Get();
 	const FJsonValue* const&& RightResource = Right->GetResource().Get();
 	
-	return LeftResource && RightResource
-	&& HasResource() && Resource->CompareEqual(*LeftResource, *RightResource);
+	return LeftResource && RightResource && FJsonValue::CompareEqual(*LeftResource, *RightResource);
 }
 
 void UMercuryJsonValue::K2_AsArgumentTypeArray(TArray<UMercuryJsonValue*>& Value) const

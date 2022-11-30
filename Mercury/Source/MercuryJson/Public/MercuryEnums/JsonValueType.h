@@ -7,6 +7,11 @@
 #include "UObject/ObjectMacros.h"
 
 
+/**
+ * Mercury implementation of EMercuryJsonValueType to allow Blueprints integration
+ *
+ * @see EMercuryJsonValueType
+ */
 UENUM(BlueprintType, meta = (Keywords = "JSON Value Type None Null Number Boolean String Array Object"))
 enum class EMercuryJsonValueType : uint8
 {
@@ -21,6 +26,7 @@ enum class EMercuryJsonValueType : uint8
 
 namespace MercuryEnums::JsonValue
 {
+	/** Converts UE enum values to the equivalent Mercury ones. */
 	constexpr EMercuryJsonValueType Convert(const EJson& ValueType)
 	{
 		switch (ValueType)
@@ -52,6 +58,7 @@ namespace MercuryEnums::JsonValue
 		}
 	}
 
+	/** Converts Mercury enum values to the equivalent UE ones. */
 	constexpr EJson Convert(const EMercuryJsonValueType& ValueType)
 	{
 		switch (ValueType)
