@@ -8,7 +8,7 @@
 #include "MercuryJsonLibrary.generated.h"
 
 
-/** Library for creating Mercury JSON Objects and Values */
+/** Library for creating Mercury JSON structures and (de)serializing them */
 UCLASS(Abstract, DisplayName = "Mercury JSON Blueprint Function Library")
 class MERCURYJSON_API UMercuryJsonLibrary : public UBlueprintFunctionLibrary
 {
