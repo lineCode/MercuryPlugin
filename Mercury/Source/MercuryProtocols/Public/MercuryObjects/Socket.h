@@ -65,10 +65,7 @@ public:
 	 * @param InSocketDescription Description of socket for debugging purposes
 	 * @return A new socket or NULL if failed
 	 */
-	virtual UMercurySocket* Accept(
-		UMercuryInternetAddr* const& OutAddr,
-		const FString& InSocketDescription
-	);
+	virtual UMercurySocket* Accept(UMercuryInternetAddr* const& OutAddr, const FString& InSocketDescription);
 
 	/**
 	 * Bind to a network address.
