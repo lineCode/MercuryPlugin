@@ -7,6 +7,11 @@
 #include "UObject/ObjectMacros.h"
 
 
+/**
+ * Mercury implementation of EIPv4SubnetClasses to allow Blueprints integration
+ *
+ * @see EIPv4SubnetClasses
+ */
 UENUM(BlueprintType, meta = (Keywords = "Network Subnet Mask Class Invalid A B C"))
 enum class EMercuryNetworkSubnetClass : uint8
 {
@@ -18,6 +23,7 @@ enum class EMercuryNetworkSubnetClass : uint8
 
 namespace MercuryEnums::SubnetMask
 {
+	/** Converts UE enum values to the equivalent Mercury ones. */
 	constexpr EMercuryNetworkSubnetClass Convert(const EIPv4SubnetClasses::Type& SubnetClass)
 	{
 		switch (SubnetClass)
@@ -40,6 +46,7 @@ namespace MercuryEnums::SubnetMask
 		}
 	}
 
+	/** Converts Mercury enum values to the equivalent UE ones. */
 	constexpr EIPv4SubnetClasses::Type Convert(const EMercuryNetworkSubnetClass& SubnetClass)
 	{
 		switch (SubnetClass)

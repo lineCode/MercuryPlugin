@@ -95,8 +95,8 @@ UMercuryNetworkMask* UMercuryNetworkMask::SetValue(const int32 Value)
 	return this;
 }
 
-void UMercuryNetworkMask::Parse(const FString& MaskString, UMercuryNetworkMask*& OutMask)
+bool UMercuryNetworkMask::Parse(const FString& MaskString, UMercuryNetworkMask*& OutMask)
 {
 	OutMask = UMercuryNetworkLibrary::CreateNetworkMask();
-	FIPv4SubnetMask::Parse(MaskString, *OutMask->GetResource());
+	return FIPv4SubnetMask::Parse(MaskString, *OutMask->GetResource());
 }

@@ -143,10 +143,10 @@ const UMercuryNetworkAddress* const& UMercuryNetworkAddress::GetAny()
 	return Address;
 }
 
-void UMercuryNetworkAddress::Parse(const FString& AddressString, UMercuryNetworkAddress*& OutAddress)
+bool UMercuryNetworkAddress::Parse(const FString& AddressString, UMercuryNetworkAddress*& OutAddress)
 {
 	OutAddress = UMercuryNetworkLibrary::CreateNetworkAddress();
-	FIPv4Address::Parse(AddressString, *OutAddress->GetResource());
+	return FIPv4Address::Parse(AddressString, *OutAddress->GetResource());
 }
 
 const UMercuryNetworkAddress* const& UMercuryNetworkAddress::GetInternalLoopback()

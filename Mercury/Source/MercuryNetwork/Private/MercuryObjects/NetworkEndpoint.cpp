@@ -43,10 +43,10 @@ void UMercuryNetworkEndpoint::Initialize()
 	FIPv4Endpoint::Initialize();
 }
 
-void UMercuryNetworkEndpoint::Parse(const FString& EndpointString, UMercuryNetworkEndpoint*& OutEndpoint)
+bool UMercuryNetworkEndpoint::Parse(const FString& EndpointString, UMercuryNetworkEndpoint*& OutEndpoint)
 {
 	OutEndpoint = UMercuryNetworkLibrary::CreateNetworkEndpoint();
-	FIPv4Endpoint::Parse(EndpointString, *OutEndpoint->GetResource());
+	return FIPv4Endpoint::Parse(EndpointString, *OutEndpoint->GetResource());
 }
 
 uint16 UMercuryNetworkEndpoint::GetPort() const

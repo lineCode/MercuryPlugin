@@ -66,8 +66,8 @@ FText UMercuryNetworkSubnet::ToText() const
 	return HasResource() ? Resource->ToText() : FText::GetEmpty();
 }
 
-void UMercuryNetworkSubnet::Parse(const FString& SubnetString, UMercuryNetworkSubnet*& OutSubnet)
+bool UMercuryNetworkSubnet::Parse(const FString& SubnetString, UMercuryNetworkSubnet*& OutSubnet)
 {
 	OutSubnet = UMercuryNetworkLibrary::CreateNetworkSubnet();
-	FIPv4Subnet::Parse(SubnetString, *OutSubnet->GetResource());
+	return FIPv4Subnet::Parse(SubnetString, *OutSubnet->GetResource());
 }
