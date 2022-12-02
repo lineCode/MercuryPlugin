@@ -23,5 +23,5 @@ void AGymEnvironment::Step_Implementation()
 	}
 	
 	UpdateState();
-	ExchangeData(AIDecisionData.Get(), EnvironmentData.Get());
+	ExchangeData();
 }

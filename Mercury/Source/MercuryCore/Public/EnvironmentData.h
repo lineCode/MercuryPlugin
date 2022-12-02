@@ -5,17 +5,21 @@
 #include "EnvironmentData.generated.h"
 
 
+/** Container for environment data */
 UCLASS(Blueprintable, BlueprintType)
 class MERCURYCORE_API UEnvironmentData : public UObject
 {
 	GENERATED_BODY()
 
+	/** Current state of the environment */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data|Environment", meta = (AllowPrivateAccess = "true"))
 	TArray<double> State;
-	
+
+	/** Current reward for the inputted action */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data|Environment", meta = (AllowPrivateAccess = "true"))
 	double Reward;
 
+	/** Is the episode over? */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data|Environment", meta = (AllowPrivateAccess = "true"))
 	uint8 bIsDone : 1;
 	

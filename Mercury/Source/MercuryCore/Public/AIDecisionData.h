@@ -5,15 +5,18 @@
 #include "AIDecisionData.generated.h"
 
 
+/** Container for AI input */
 UCLASS(Blueprintable, BlueprintType)
 class MERCURYCORE_API UAIDecisionData : public UObject
 {
 	GENERATED_BODY()
 
+	/** Representation of the AI's actions */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data|AI Decision", meta = (AllowPrivateAccess = "true"))
 	TArray<double> Input;
 	
 public:
+	/** Checks if the AI wants to reset the environment. */
 	UFUNCTION(BlueprintPure, DisplayName = "Wants Reset", Category = "Data|AI Decision", meta = (
 		CompactNodeTitle = "Reset?",
 		Keywords = "Gym Environment Data AI Decision Server Wants Reset"
