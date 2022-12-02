@@ -7,6 +7,11 @@
 #include "UObject/ObjectMacros.h"
 
 
+/**
+ * Mercury implementation of EHttpRequestStatus to allow Blueprints integration
+ *
+ * @see EHttpRequestStatus
+ */
 UENUM(BlueprintType, meta = (
 	Keywords = "HTTP Request Status Not Started Processing Failed Connection Error Succeeded Unknown"
 ))
@@ -21,6 +26,7 @@ enum class EMercuryHttpRequestStatus : uint8
 
 namespace MercuryEnums::HttpRequest
 {
+	/** Converts UE enum values to the equivalent Mercury ones. */
 	constexpr EMercuryHttpRequestStatus Convert(const EHttpRequestStatus::Type& RequestStatus)
 	{
 		switch (RequestStatus)
@@ -46,6 +52,7 @@ namespace MercuryEnums::HttpRequest
 		}
 	}
 
+	/** Converts Mercury enum values to the equivalent UE ones. */
 	constexpr EHttpRequestStatus::Type Convert(const EMercuryHttpRequestStatus& RequestStatus)
 	{
 		switch (RequestStatus)

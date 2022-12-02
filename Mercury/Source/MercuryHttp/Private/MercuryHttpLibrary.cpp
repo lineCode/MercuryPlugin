@@ -33,7 +33,7 @@ UMercuryHttpResponse* UMercuryHttpLibrary::CreateHttpResponse(const TSharedPtr<I
 	return HttpResponse;
 }
 
-void UMercuryHttpLibrary::RequestDataWithPayload(
+bool UMercuryHttpLibrary::RequestDataWithPayload(
 	const FString& URL,
 	const FString& Verb,
 	const TMap<FString, FString>& Headers,
@@ -46,7 +46,7 @@ void UMercuryHttpLibrary::RequestDataWithPayload(
 {
 	UMercuryHttpRequest* const&& Request = CreateHttpRequest();
 	Request->SetContent(ContentPayload);
-	RequestData(
+	return RequestData(
 		Request,
 		URL,
 		Verb,
@@ -58,7 +58,7 @@ void UMercuryHttpLibrary::RequestDataWithPayload(
 	);
 }
 
-void UMercuryHttpLibrary::RequestDataWithStringContent(
+bool UMercuryHttpLibrary::RequestDataWithStringContent(
 	const FString& URL,
 	const FString& Verb,
 	const TMap<FString, FString>& Headers,
@@ -71,7 +71,7 @@ void UMercuryHttpLibrary::RequestDataWithStringContent(
 {
 	UMercuryHttpRequest* const&& Request = CreateHttpRequest();
 	Request->SetContentAsString(Content);
-	RequestData(
+	return RequestData(
 		Request,
 		URL,
 		Verb,
@@ -83,7 +83,7 @@ void UMercuryHttpLibrary::RequestDataWithStringContent(
 	);
 }
 
-void UMercuryHttpLibrary::RequestDataFromStream(
+bool UMercuryHttpLibrary::RequestDataFromStream(
 	const FString& URL,
 	const FString& Verb,
 	const TMap<FString, FString>& Headers,
@@ -96,7 +96,7 @@ void UMercuryHttpLibrary::RequestDataFromStream(
 {
 	UMercuryHttpRequest* const&& Request = CreateHttpRequest();
 	Request->SetContentFromStream(Stream);
-	RequestData(
+	return RequestData(
 		Request,
 		URL,
 		Verb,
@@ -108,7 +108,7 @@ void UMercuryHttpLibrary::RequestDataFromStream(
 	);
 }
 
-void UMercuryHttpLibrary::RequestDataWithStreamedFile(
+bool UMercuryHttpLibrary::RequestDataWithStreamedFile(
 	const FString& URL,
 	const FString& Verb,
 	const TMap<FString, FString>& Headers,
@@ -121,7 +121,7 @@ void UMercuryHttpLibrary::RequestDataWithStreamedFile(
 {
 	UMercuryHttpRequest* const&& Request = CreateHttpRequest();
 	Request->SetContentAsStreamedFile(Filename);
-	RequestData(
+	return RequestData(
 		Request,
 		URL,
 		Verb,
@@ -133,7 +133,7 @@ void UMercuryHttpLibrary::RequestDataWithStreamedFile(
 	);
 }
 
-void UMercuryHttpLibrary::RequestData(
+bool UMercuryHttpLibrary::RequestData(
 	UMercuryHttpRequest* const& Request,
 	const FString& URL,
 	const FString& Verb,
@@ -168,13 +168,10 @@ void UMercuryHttpLibrary::RequestData(
 		Request->OnHeaderReceived() = *HeaderReceived;
 	}
 	
-	if (!Request->ProcessRequest())
-	{
-		UE_LOG(LogMercuryHttp, Error, TEXT("Failed to request data: Could not process the request!"));
-	}
+	return Request->ProcessRequest();
 }
 
-void UMercuryHttpLibrary::K2_RequestDataWithPayload(
+bool UMercuryHttpLibrary::K2_RequestDataWithPayload(
 	const FString& URL,
 	const FString& Verb,
 	const TMap<FString, FString>& Headers,
@@ -185,7 +182,7 @@ void UMercuryHttpLibrary::K2_RequestDataWithPayload(
 	const FMercuryHttpHeaderReceivedDelegate& HeaderReceived
 )
 {
-	RequestDataWithPayload(
+	return RequestDataWithPayload(
 		URL,
 		Verb,
 		Headers,
@@ -197,7 +194,7 @@ void UMercuryHttpLibrary::K2_RequestDataWithPayload(
 	);
 }
 
-void UMercuryHttpLibrary::K2_RequestDataWithStringContent(
+bool UMercuryHttpLibrary::K2_RequestDataWithStringContent(
 	const FString& URL,
 	const FString& Verb,
 	const TMap<FString, FString>& Headers,
@@ -208,7 +205,7 @@ void UMercuryHttpLibrary::K2_RequestDataWithStringContent(
 	const FMercuryHttpHeaderReceivedDelegate& HeaderReceived
 )
 {
-	RequestDataWithStringContent(
+	return RequestDataWithStringContent(
 		URL,
 		Verb,
 		Headers,
@@ -220,7 +217,7 @@ void UMercuryHttpLibrary::K2_RequestDataWithStringContent(
 	);
 }
 
-void UMercuryHttpLibrary::K2_RequestDataWithStreamedFile(
+bool UMercuryHttpLibrary::K2_RequestDataWithStreamedFile(
 	const FString& URL,
 	const FString& Verb,
 	const TMap<FString, FString>& Headers,
@@ -231,7 +228,7 @@ void UMercuryHttpLibrary::K2_RequestDataWithStreamedFile(
 	const FMercuryHttpHeaderReceivedDelegate& HeaderReceived
 )
 {
-	RequestDataWithStreamedFile(
+	return RequestDataWithStreamedFile(
 		URL,
 		Verb,
 		Headers,

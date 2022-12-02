@@ -24,7 +24,6 @@ public class MercuryHttp : ModuleRules
 		{
 			Path.Combine(ModuleDirectory, "Public/MercuryDelegates"),
 			Path.Combine(ModuleDirectory, "Public/MercuryEnums"),
-			Path.Combine(ModuleDirectory, "Public/MercuryNodes"),
 			Path.Combine(ModuleDirectory, "Public/MercuryObjects")
 		});
 	}

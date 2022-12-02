@@ -7,6 +7,15 @@
 class UMercuryHttpRequest;
 
 
+/**
+ * Mercury implementation of FHttpRequestProgressDelegate to allow Blueprints integration
+ *
+ * @param Request Original HTTP request 
+ * @param BytesSent Amount of bytes sent
+ * @param BytesReceived Amount of bytes received
+ *
+ * @see FHttpRequestProgressDelegate
+ */
 UDELEGATE(BlueprintCallable, DisplayName = "Request Progress Event")
 DECLARE_DYNAMIC_DELEGATE_ThreeParams(
 	FMercuryHttpRequestProgressDelegate,

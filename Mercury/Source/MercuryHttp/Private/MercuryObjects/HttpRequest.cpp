@@ -15,15 +15,6 @@ TSharedPtr<IHttpRequest> UMercuryHttpRequest::CreateResource()
 	Request->OnHeaderReceived().BindUObject(this, &UMercuryHttpRequest::BindHeaderReceived);
 	return Request;
 }
-UMercuryHttpRequest::UMercuryHttpRequest(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
-{
-	MercuryHttpResponse = UMercuryHttpLibrary::CreateHttpResponse();
-
-	bProcessRequestCompleteDone = false;
-	bRequestProgressDone = false;
-	bRequestWillRetryDone = false;
-	bHeaderReceivedDone = false;
-}
 
 bool UMercuryHttpRequest::HasResource() const
 {
@@ -204,11 +195,22 @@ UMercuryHttpRequest* UMercuryHttpRequest::CancelRequest()
 	return this;
 }
 
+UMercuryHttpResponse* UMercuryHttpRequest::GetResponse() const
+{
+	return Resource ? UMercuryHttpLibrary::CreateHttpResponse(Resource->GetResponse()) : nullptr;
+}
+
 EMercuryHttpRequestStatus UMercuryHttpRequest::GetStatus() const
 {
 	return MercuryEnums::HttpRequest::Convert(
 		HasResource() ? Resource->GetStatus() : EHttpRequestStatus::Failed_ConnectionError
 	);
+}
+
+float UMercuryHttpRequest::GetTimeout() const
+{
+	const float& DefaultTimeout = FMercuryHttpModule::GetHttpModule()->GetHttpTimeout();
+	return Resource ? Resource->GetTimeout().Get(DefaultTimeout) : DefaultTimeout;
 }
 
 UMercuryHttpRequest* UMercuryHttpRequest::Tick(const float DeltaSeconds)
@@ -231,19 +233,14 @@ void UMercuryHttpRequest::BindProcessRequestComplete(
 	const bool bConnectedSuccessfully
 )
 {
-	bProcessRequestCompleteDone = false;
-	if (!OnMercuryHttpProcessRequestCompleteDelegate.IsBound())
+	if (OnMercuryHttpProcessRequestCompleteDelegate.IsBound())
 	{
-		bProcessRequestCompleteDone = true;
-		return;
+		OnMercuryHttpProcessRequestCompleteDelegate.Execute(
+			UMercuryHttpLibrary::CreateHttpRequest(Request),
+			UMercuryHttpLibrary::CreateHttpResponse(Response),
+			bConnectedSuccessfully
+		);
 	}
-	
-	UMercuryHttpRequest* const&& MercuryRequest = UMercuryHttpLibrary::CreateHttpRequest(Request);
-	UMercuryHttpResponse* const&& MercuryResponse = UMercuryHttpLibrary::CreateHttpResponse(Response);
-	MercuryRequest->GetMercuryHttpResponse() = MercuryResponse;
-	
-	OnMercuryHttpProcessRequestCompleteDelegate.Execute(MercuryRequest, MercuryResponse, bConnectedSuccessfully);
-	bProcessRequestCompleteDone = true;
 }
 
 void UMercuryHttpRequest::BindRequestProgress(
@@ -252,19 +249,14 @@ void UMercuryHttpRequest::BindRequestProgress(
 	const int32 BytesReceived
 )
 {
-	bRequestProgressDone = false;
-	if (!OnMercuryHttpRequestProgressDelegate.IsBound())
+	if (OnMercuryHttpRequestProgressDelegate.IsBound())
 	{
-		bRequestProgressDone = true;
-		return;
+		OnMercuryHttpRequestProgressDelegate.Execute(
+			UMercuryHttpLibrary::CreateHttpRequest(Request),
+			BytesSent,
+			BytesReceived
+		);
 	}
-	
-	OnMercuryHttpRequestProgressDelegate.Execute(
-		UMercuryHttpLibrary::CreateHttpRequest(Request),
-		BytesSent,
-		BytesReceived
-	);
-	bRequestProgressDone = true;
 }
 
 void UMercuryHttpRequest::BindRequestWillRetry(
@@ -273,19 +265,14 @@ void UMercuryHttpRequest::BindRequestWillRetry(
 	const float SecondsToRetry
 )
 {
-	bRequestWillRetryDone = false;
-	if (!OnMercuryHttpRequestWillRetryDelegate.IsBound())
+	if (OnMercuryHttpRequestWillRetryDelegate.IsBound())
 	{
-		bRequestWillRetryDone = true;
-		return;
+		OnMercuryHttpRequestWillRetryDelegate.Execute(
+			UMercuryHttpLibrary::CreateHttpRequest(Request),
+			UMercuryHttpLibrary::CreateHttpResponse(Response),
+			SecondsToRetry
+		);
 	}
-	
-	UMercuryHttpRequest* const&& MercuryRequest = UMercuryHttpLibrary::CreateHttpRequest(Request);
-	UMercuryHttpResponse* const&& MercuryResponse = UMercuryHttpLibrary::CreateHttpResponse(Response);
-	MercuryRequest->GetMercuryHttpResponse() = MercuryResponse;
-	
-	OnMercuryHttpRequestWillRetryDelegate.Execute(MercuryRequest, MercuryResponse, SecondsToRetry);
-	bRequestWillRetryDone = true;
 }
 
 void UMercuryHttpRequest::BindHeaderReceived(
@@ -294,19 +281,14 @@ void UMercuryHttpRequest::BindHeaderReceived(
 	const FString& NewHeaderValue
 )
 {
-	bHeaderReceivedDone = false;
-	if (!OnMercuryHttpHeaderReceivedDelegate.IsBound())
+	if (OnMercuryHttpHeaderReceivedDelegate.IsBound())
 	{
-		bHeaderReceivedDone = true;
-		return;
+		OnMercuryHttpHeaderReceivedDelegate.Execute(
+			UMercuryHttpLibrary::CreateHttpRequest(Request),
+			HeaderName,
+			NewHeaderValue
+		);
 	}
-	
-	OnMercuryHttpHeaderReceivedDelegate.Execute(
-		UMercuryHttpLibrary::CreateHttpRequest(Request),
-		HeaderName,
-		NewHeaderValue
-	);
-	bHeaderReceivedDone = true;
 }
 
 UMercuryHttpRequest* UMercuryHttpRequest::K2_SetProcessRequestCompleteEvent(
@@ -333,7 +315,7 @@ UMercuryHttpRequest* UMercuryHttpRequest::K2_SetRequestWillRetryEvent(const FMer
 {
 	if (!HasResource())
 		return nullptr;
-
+	
 	OnMercuryHttpRequestWillRetryDelegate = Event;
 	return this;
 }
